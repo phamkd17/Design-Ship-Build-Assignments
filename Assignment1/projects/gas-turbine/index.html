@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gas Turbine — Design Process Gallery</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #0f0f0f;
+      color: #e0e0e0;
+      padding: 48px 24px;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    header { margin-bottom: 48px; }
+    h1 { font-size: 2rem; font-weight: 700; margin-bottom: 8px; }
+    .subtitle { color: #888; font-size: 1rem; line-height: 1.6; max-width: 600px; }
+    .section-title {
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #555;
+      margin: 48px 0 16px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 16px;
+    }
+    .card {
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 8px;
+      overflow: hidden;
+      text-decoration: none;
+      color: inherit;
+      transition: border-color 0.2s;
+    }
+    .card:hover { border-color: #555; }
+    .card-thumb {
+      width: 100%;
+      aspect-ratio: 16/9;
+      background: #222;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      color: #444;
+    }
+    .card-body { padding: 16px; }
+    .card-label { font-size: 0.75rem; color: #555; margin-bottom: 4px; }
+    .card-title { font-size: 0.95rem; font-weight: 600; margin-bottom: 6px; }
+    .card-desc { font-size: 0.82rem; color: #888; line-height: 1.5; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>How a Gas Turbine Works</h1>
+    <p class="subtitle">
+      25 versions of a landing page, moving from wide exploration to a final design.
+      Each card links to a version and notes what was tried and learned.
+    </p>
+  </header>
+
+  <p class="section-title">Exploration — v1 to v10</p>
+  <div class="grid">
+
+    <a class="card" href="versions/v01.html">
+      <div class="card-thumb">⚙️</div>
+      <div class="card-body">
+        <div class="card-label">v01</div>
+        <div class="card-title">Plain text, no style</div>
+        <div class="card-desc">Raw content first — just the words, nothing else. Establishes what needs to be said.</div>
+      </div>
+    </a>
+
+  </div>
+
+  <p class="section-title">Refinement — v11 to v20</p>
+  <div class="grid" id="refinement">
+    <!-- versions 11–20 will be added here -->
+  </div>
+
+  <p class="section-title">Final — v21 to v25</p>
+  <div class="grid" id="final">
+    <!-- versions 21–25 will be added here -->
+  </div>
+
+</body>
+</html>
