@@ -157,13 +157,32 @@
     </svg>
   </div>
 
-  <!-- Hero: full sectioned GE J85 turbojet -->
-  <div class="hero">
-    <img
-      src="https://upload.wikimedia.org/wikipedia/commons/b/b7/Jet_engine_numbered.svg"
-      alt="Labeled cross-section schematic of a turbojet engine showing all internal components"
-    >
-    <p class="hero-caption">Labeled cross-section schematic of a turbojet engine — numbers mark each major component from intake (left) to exhaust (right). (Wikimedia Commons / CC BY-SA)</p>
+  <!-- Hero: annotated schematic -->
+  <div style="max-width:820px;margin:32px auto 56px;">
+    <div style="position:relative;border-radius:12px;overflow:hidden;background:#1a1a1a;">
+      <img
+        src="../jet_engine.svg"
+        alt="Cross-section schematic of a turbojet engine"
+        style="width:100%;display:block;"
+      >
+      <!-- Stage highlight overlays (% positions tuned to engine regions) -->
+      <!-- Intake: ~0–14% -->
+      <div style="position:absolute;top:0;left:0%;width:14%;height:100%;background:rgba(91,184,245,0.18);border-right:2px solid rgba(91,184,245,0.6);pointer-events:none;"></div>
+      <div style="position:absolute;top:6%;left:1%;font-size:0.7rem;font-weight:700;color:#5bb8f5;letter-spacing:0.08em;text-transform:uppercase;pointer-events:none;">Intake</div>
+
+      <!-- Compression: ~14–52% -->
+      <div style="position:absolute;top:0;left:14%;width:38%;height:100%;background:rgba(245,215,110,0.12);border-right:2px solid rgba(245,215,110,0.5);pointer-events:none;"></div>
+      <div style="position:absolute;top:6%;left:28%;font-size:0.7rem;font-weight:700;color:#f5d76e;letter-spacing:0.08em;text-transform:uppercase;pointer-events:none;">Compression</div>
+
+      <!-- Combustion: ~52–72% -->
+      <div style="position:absolute;top:0;left:52%;width:20%;height:100%;background:rgba(245,130,80,0.16);border-right:2px solid rgba(245,130,80,0.55);pointer-events:none;"></div>
+      <div style="position:absolute;top:6%;left:53%;font-size:0.7rem;font-weight:700;color:#f5824f;letter-spacing:0.08em;text-transform:uppercase;pointer-events:none;">Combustion</div>
+
+      <!-- Power Out: ~72–100% -->
+      <div style="position:absolute;top:0;left:72%;width:28%;height:100%;background:rgba(111,207,122,0.13);pointer-events:none;"></div>
+      <div style="position:absolute;top:6%;left:80%;font-size:0.7rem;font-weight:700;color:#6fcf7a;letter-spacing:0.08em;text-transform:uppercase;pointer-events:none;">Power Out</div>
+    </div>
+    <p style="text-align:center;font-size:0.78rem;color:#555;margin-top:8px;">Cross-section schematic of a turbojet engine — four stages highlighted. (Wikimedia Commons / CC BY-SA)</p>
   </div>
 
   <div class="stages">
