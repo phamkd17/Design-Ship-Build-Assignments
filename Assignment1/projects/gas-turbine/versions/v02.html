@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How a Gas Turbine Works — v02</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #f5f5f5;
+      color: #111;
+      padding: 48px 24px;
+    }
+    h1 {
+      text-align: center;
+      font-size: 2rem;
+      margin-bottom: 8px;
+    }
+    .lead {
+      text-align: center;
+      color: #555;
+      max-width: 560px;
+      margin: 0 auto 56px;
+      line-height: 1.6;
+    }
+    .stages {
+      display: flex;
+      flex-direction: column;
+      gap: 64px;
+      max-width: 760px;
+      margin: 0 auto;
+    }
+    .stage {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      align-items: center;
+    }
+    .stage.flip { direction: rtl; }
+    .stage.flip > * { direction: ltr; }
+    .stage-text h2 {
+      font-size: 1.3rem;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .stage-num {
+      background: #111;
+      color: #fff;
+      border-radius: 50%;
+      width: 28px;
+      height: 28px;
+      font-size: 0.8rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .stage-text p {
+      color: #444;
+      line-height: 1.7;
+      font-size: 0.95rem;
+    }
+    svg { width: 100%; height: auto; border-radius: 10px; }
+    .back {
+      display: block;
+      text-align: center;
+      margin-top: 64px;
+      color: #888;
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+    .back:hover { color: #111; }
+
+    @media (max-width: 600px) {
+      .stage, .stage.flip { grid-template-columns: 1fr; direction: ltr; }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>How a Gas Turbine Works</h1>
+  <p class="lead">A gas turbine turns the chemical energy of burning fuel into mechanical power — in four continuous stages.</p>
+
+  <div class="stages">
+
+    <!-- STAGE 1: INTAKE -->
+    <div class="stage">
+      <div class="stage-text">
+        <h2><span class="stage-num">1</span> Intake</h2>
+        <p>Fresh air is drawn into the engine through the inlet. The large fan at the front accelerates a massive volume of air into the compressor section every second.</p>
+      </div>
+      <svg viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg" style="background:#e8f4fd;">
+        <!-- Engine body -->
+        <rect x="80" y="60" width="200" height="60" rx="8" fill="#b0c8e0"/>
+        <!-- Inlet cone -->
+        <polygon points="40,90 80,65 80,115" fill="#7aafd4"/>
+        <!-- Fan blades -->
+        <line x1="80" y1="70" x2="80" y2="110" stroke="#4a8ab5" stroke-width="4"/>
+        <line x1="70" y1="80" x2="90" y2="100" stroke="#4a8ab5" stroke-width="3"/>
+        <line x1="70" y1="100" x2="90" y2="80" stroke="#4a8ab5" stroke-width="3"/>
+        <!-- Air arrows -->
+        <g fill="none" stroke="#2176ae" stroke-width="2" marker-end="url(#arrowBlue)">
+          <line x1="10" y1="75" x2="55" y2="80"/>
+          <line x1="10" y1="90" x2="55" y2="90"/>
+          <line x1="10" y1="105" x2="55" y2="100"/>
+        </g>
+        <defs>
+          <marker id="arrowBlue" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L8,3 z" fill="#2176ae"/>
+          </marker>
+        </defs>
+        <!-- Label -->
+        <text x="160" y="150" text-anchor="middle" font-size="13" fill="#2176ae" font-family="sans-serif">Air enters the engine</text>
+      </svg>
+    </div>
+
+    <!-- STAGE 2: COMPRESSION -->
+    <div class="stage flip">
+      <div class="stage-text">
+        <h2><span class="stage-num">2</span> Compression</h2>
+        <p>Rows of rotating blades squeeze the incoming air, raising its pressure up to 40× atmospheric. Higher pressure means more energy available for combustion.</p>
+      </div>
+      <svg viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg" style="background:#fdf6e8;">
+        <!-- Compressor body tapering -->
+        <polygon points="60,50 240,65 240,115 60,130" fill="#e8c97a"/>
+        <!-- Blade stages -->
+        <g stroke="#b8860b" stroke-width="2.5">
+          <line x1="100" y1="55" x2="100" y2="125"/>
+          <line x1="130" y1="58" x2="130" y2="122"/>
+          <line x1="160" y1="61" x2="160" y2="119"/>
+          <line x1="190" y1="63" x2="190" y2="117"/>
+          <line x1="220" y1="65" x2="220" y2="115"/>
+        </g>
+        <!-- Pressure arrows converging -->
+        <g fill="#b8860b" font-size="18" font-family="sans-serif" text-anchor="middle">
+          <text x="160" y="22">↓ pressure rising ↓</text>
+        </g>
+        <text x="160" y="155" text-anchor="middle" font-size="13" fill="#b8860b" font-family="sans-serif">Air is squeezed tighter</text>
+      </svg>
+    </div>
+
+    <!-- STAGE 3: COMBUSTION -->
+    <div class="stage">
+      <div class="stage-text">
+        <h2><span class="stage-num">3</span> Combustion</h2>
+        <p>Fuel (jet fuel or natural gas) is injected into the compressed air and ignited. The mixture burns continuously, producing a high-temperature, high-pressure stream of gas.</p>
+      </div>
+      <svg viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg" style="background:#fff0eb;">
+        <!-- Combustion chamber -->
+        <rect x="70" y="50" width="180" height="80" rx="10" fill="#f4a261"/>
+        <!-- Flame -->
+        <ellipse cx="160" cy="85" rx="28" ry="35" fill="#e76f51" opacity="0.8"/>
+        <ellipse cx="160" cy="80" rx="18" ry="25" fill="#f4d35e" opacity="0.9"/>
+        <ellipse cx="160" cy="78" rx="9" ry="14" fill="#fff" opacity="0.7"/>
+        <!-- Fuel injector -->
+        <rect x="148" y="30" width="24" height="28" rx="4" fill="#999"/>
+        <text x="160" y="26" text-anchor="middle" font-size="11" fill="#555" font-family="sans-serif">fuel</text>
+        <!-- Hot gas arrows out -->
+        <g fill="none" stroke="#c1121f" stroke-width="2.5" marker-end="url(#arrowRed)">
+          <line x1="250" y1="75" x2="295" y2="70"/>
+          <line x1="250" y1="90" x2="295" y2="90"/>
+          <line x1="250" y1="105" x2="295" y2="110"/>
+        </g>
+        <defs>
+          <marker id="arrowRed" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L8,3 z" fill="#c1121f"/>
+          </marker>
+        </defs>
+        <text x="160" y="155" text-anchor="middle" font-size="13" fill="#c1121f" font-family="sans-serif">Fuel burns, gas expands</text>
+      </svg>
+    </div>
+
+    <!-- STAGE 4: EXHAUST / POWER -->
+    <div class="stage flip">
+      <div class="stage-text">
+        <h2><span class="stage-num">4</span> Power Extraction</h2>
+        <p>Hot gas blasts through turbine blades, spinning them at thousands of RPM. This rotation drives the compressor (and a generator or propeller), producing useful power.</p>
+      </div>
+      <svg viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg" style="background:#eef6ee;">
+        <!-- Turbine body expanding -->
+        <polygon points="80,65 240,50 240,130 80,115" fill="#90c18a"/>
+        <!-- Turbine blades -->
+        <g stroke="#2d6a4f" stroke-width="2.5">
+          <line x1="100" y1="67" x2="100" y2="113"/>
+          <line x1="130" y1="64" x2="130" y2="116"/>
+          <line x1="160" y1="61" x2="160" y2="119"/>
+          <line x1="190" y1="57" x2="190" y2="123"/>
+          <line x1="220" y1="54" x2="220" y2="126"/>
+        </g>
+        <!-- Rotation arc -->
+        <path d="M 148,60 A 42,42 0 0,1 172,60" fill="none" stroke="#2d6a4f" stroke-width="2" marker-end="url(#arrowGreen)"/>
+        <defs>
+          <marker id="arrowGreen" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L8,3 z" fill="#2d6a4f"/>
+          </marker>
+        </defs>
+        <!-- Shaft out -->
+        <rect x="240" y="83" width="50" height="14" rx="4" fill="#2d6a4f"/>
+        <text x="275" y="72" text-anchor="middle" font-size="11" fill="#2d6a4f" font-family="sans-serif">shaft</text>
+        <text x="160" y="155" text-anchor="middle" font-size="13" fill="#2d6a4f" font-family="sans-serif">Blades spin → useful work</text>
+      </svg>
+    </div>
+
+  </div>
+
+  <a class="back" href="../index.html">← Back to gallery</a>
+
+</body>
+</html>
