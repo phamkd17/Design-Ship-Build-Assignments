@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gas Turbine Thermodynamics: The Brayton Cycle — v23</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #0d0d0d; color: #d8d8d8; line-height: 1.7; }
+
+    /* Layout */
+    .wrap { max-width: 860px; margin: 0 auto; padding: 0 28px; }
+
+    /* Header */
+    header { border-bottom: 1px solid #1e1e1e; padding: 64px 28px 48px; max-width: 860px; margin: 0 auto; }
+    header .label { font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase; color: #555; margin-bottom: 16px; }
+    header h1 { font-size: clamp(1.8rem, 3.5vw, 2.6rem); font-weight: 700; letter-spacing: -0.02em; color: #f0f0f0; margin-bottom: 12px; line-height: 1.15; }
+    header .subtitle { color: #666; font-size: 1rem; max-width: 620px; }
+
+    /* Section */
+    section { padding: 56px 0; border-bottom: 1px solid #1a1a1a; }
+    section h2 { font-size: 1.2rem; font-weight: 700; color: #f0f0f0; margin-bottom: 24px; letter-spacing: -0.01em; }
+    section h3 { font-size: 0.95rem; font-weight: 700; color: #ccc; margin: 28px 0 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+    section p { color: #aaa; font-size: 0.95rem; margin-bottom: 14px; }
+
+    /* Equation blocks */
+    .eq-block { background: #111; border: 1px solid #222; border-radius: 8px; padding: 20px 24px; margin: 16px 0; font-family: "SF Mono", "Fira Code", "Consolas", monospace; }
+    .eq-block .eq-label { font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: #555; margin-bottom: 10px; }
+    .eq { font-size: 1rem; color: #e0e0e0; margin-bottom: 6px; }
+    .eq-note { font-size: 0.8rem; color: #555; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    code { font-family: "SF Mono", "Fira Code", "Consolas", monospace; background: #181818; color: #a8d8a8; padding: 2px 6px; border-radius: 4px; font-size: 0.9em; }
+
+    /* Param table */
+    table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 16px 0; }
+    th { text-align: left; font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: #555; padding: 8px 12px; border-bottom: 1px solid #1e1e1e; }
+    td { padding: 10px 12px; border-bottom: 1px solid #161616; color: #bbb; vertical-align: top; }
+    td:first-child { color: #e0e0e0; font-family: "SF Mono", "Fira Code", "Consolas", monospace; font-size: 0.85rem; }
+    tr:hover td { background: #111; }
+
+    /* Stage cards */
+    .stage-card { background: #111; border: 1px solid #1e1e1e; border-radius: 10px; padding: 28px; margin-bottom: 20px; }
+    .stage-card .stage-tag { font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 12px; font-weight: 700; }
+    .stage-card h3 { font-size: 1.05rem; color: #f0f0f0; margin: 0 0 16px; letter-spacing: 0; text-transform: none; }
+    .stage-card p { margin-bottom: 10px; }
+    .stage-card img { width: 100%; border-radius: 8px; display: block; max-height: 220px; object-fit: cover; margin-bottom: 16px; }
+    .badge { display: inline-block; font-family: "SF Mono", "Fira Code", "Consolas", monospace; font-size: 0.8rem; font-weight: 700; padding: 2px 8px; border-radius: 4px; margin: 2px 0; }
+
+    /* Advances */
+    .advance { border-left: 2px solid #333; padding-left: 20px; margin-bottom: 24px; }
+    .advance h3 { font-size: 0.9rem; color: #ccc; margin: 0 0 6px; text-transform: none; letter-spacing: 0; }
+    .advance p { font-size: 0.88rem; color: #888; margin-bottom: 0; }
+
+    /* Schematics */
+    .engine-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 24px; }
+    .engine-card { background: #111; border: 1px solid #1e1e1e; border-radius: 10px; padding: 20px; }
+    .engine-card .elabel { font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 12px; font-weight: 700; }
+    .engine-card img { width: 100%; display: block; border-radius: 6px; }
+    .engine-card p { font-size: 0.82rem; color: #666; margin-top: 10px; }
+
+    /* Footnote */
+    .footnote { font-size: 0.78rem; color: #444; margin-top: 8px; font-style: italic; }
+
+    footer { text-align: center; padding: 40px 24px; border-top: 1px solid #1a1a1a; margin-top: 0; }
+    footer a { color: #444; text-decoration: none; font-size: 0.9rem; }
+    footer a:hover { color: #fff; }
+
+    @media (max-width: 600px) { .engine-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="label">Turbomachinery — Technical Reference</div>
+    <h1>Gas Turbine Thermodynamics:<br>The Brayton Cycle</h1>
+    <p class="subtitle">Ideal cycle analysis, real-cycle deviations, stage-level performance parameters, and current research frontiers.</p>
+  </header>
+
+  <div class="wrap">
+
+    <!-- Brayton Cycle -->
+    <section>
+      <h2>1. The Brayton Cycle: Ideal and Real</h2>
+      <p>The ideal Brayton cycle consists of three internally reversible processes: isentropic compression (1→2s), constant-pressure heat addition (2→3), and isentropic expansion (3→4s). In the ideal cycle, all compression and expansion work are perfectly recovered and no pressure losses occur in the combustor or ducts.</p>
+      <p>Real cycles deviate significantly. Compression and expansion are polytropic (irreversible), the combustor introduces stagnation pressure losses (typically 3–5% of inlet total pressure), and heat transfer losses occur across all components. These deviations are captured through component efficiencies and pressure recovery factors.</p>
+
+      <h3>Ideal Cycle Thermal Efficiency</h3>
+      <div class="eq-block">
+        <div class="eq-label">Thermal efficiency (ideal, simple-cycle)</div>
+        <div class="eq">η<sub>th</sub> = 1 − (T₁ / T₂) = 1 − OPR<sup>−(γ−1)/γ</sup></div>
+        <div class="eq-note">γ ≈ 1.4 (air, cold), γ ≈ 1.33 (combustion products). Efficiency is independent of TIT in the ideal cycle; TIT sets specific work output.</div>
+      </div>
+    </section>
+
+    <!-- Key Performance Parameters -->
+    <section>
+      <h2>2. Key Performance Parameters</h2>
+
+      <div class="eq-block">
+        <div class="eq-label">Overall pressure ratio</div>
+        <div class="eq">OPR = P₃ / P₁</div>
+        <div class="eq-note">Modern high-bypass turbofans: OPR 40–60. Industrial gas turbines: OPR 18–35.</div>
+      </div>
+
+      <div class="eq-block">
+        <div class="eq-label">Isentropic efficiency — compressor</div>
+        <div class="eq">η<sub>c</sub> = (T<sub>2s</sub> − T₁) / (T₂ − T₁)</div>
+        <div class="eq-note">T₂s = isentropic exit temperature. Typical η<sub>c</sub>: 0.85–0.90 for multi-stage axial compressors.</div>
+      </div>
+
+      <div class="eq-block">
+        <div class="eq-label">Isentropic efficiency — turbine</div>
+        <div class="eq">η<sub>t</sub> = (T₃ − T₄) / (T₃ − T<sub>4s</sub>)</div>
+        <div class="eq-note">Typical η<sub>t</sub>: 0.88–0.92 for HPT with blade cooling accounted for.</div>
+      </div>
+
+      <div class="eq-block">
+        <div class="eq-label">Net specific work output</div>
+        <div class="eq">W<sub>net</sub> = c<sub>p</sub> [(T₃ − T₄) − (T₂ − T₁)]</div>
+        <div class="eq-note">c<sub>p</sub> ≈ 1.005 kJ/(kg·K) for air. Turbine inlet temperature (TIT / TET) is the primary driver of specific work; increasing TIT by 30 K yields roughly 1% more specific work.</div>
+      </div>
+
+      <div class="eq-block">
+        <div class="eq-label">Specific fuel consumption (SFC)</div>
+        <div class="eq">SFC = ṁ<sub>f</sub> / F = f / (V<sub>e</sub> − V<sub>0</sub>)</div>
+        <div class="eq-note">f = fuel-air ratio (≈0.025–0.035 at stoichiometry). SFC improvements drive the majority of engine development cost.</div>
+      </div>
+
+      <table>
+        <tr><th>Parameter</th><th>Symbol</th><th>Typical Range</th><th>Notes</th></tr>
+        <tr><td>Overall pressure ratio</td><td><code>OPR</code></td><td>18 – 60</td><td>Higher OPR ↑ η<sub>th</sub>, ↑ T₂, ↑ cooling load</td></tr>
+        <tr><td>Turbine inlet temperature</td><td><code>TIT / TET</code></td><td>1,500 – 1,900 K</td><td>Limited by blade material and cooling capability</td></tr>
+        <tr><td>Bypass ratio</td><td><code>BPR</code></td><td>0 – 15</td><td>Higher BPR ↑ propulsive efficiency, ↓ specific thrust</td></tr>
+        <tr><td>Polytropic efficiency (comp.)</td><td><code>η<sub>p,c</sub></code></td><td>0.88 – 0.92</td><td>Stage-stacking compound loss</td></tr>
+        <tr><td>Combustor pressure loss</td><td><code>ΔP/P</code></td><td>3 – 6%</td><td>Includes diffuser and liner losses</td></tr>
+      </table>
+    </section>
+
+    <!-- Stage Analysis -->
+    <section>
+      <h2>3. Stage-by-Stage Analysis</h2>
+
+      <div class="stage-card">
+        <div class="stage-tag" style="color:#5bb8f5;">Stage 1 — Intake / Inlet</div>
+        <h3>Ram pressure recovery and inlet total pressure ratio</h3>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/e/e3/Air_intake%2C_fan_and_compressor_of_sectioned_Rolls-Royce_Turbom%C3%A9ca_Adour_turbofan_01.jpg" alt="Turbofan inlet">
+        <p>The inlet must decelerate the incoming flow from flight Mach number to approximately Mach 0.5–0.6 at the compressor face with minimal total pressure loss. For subsonic inlets, ram pressure recovery <code>η<sub>r</sub> = P<sub>t,2</sub>/P<sub>t,0</sub></code> approaches 0.97–0.995. Supersonic inlets (mixed compression or external compression) introduce oblique shocks; MIL-SPEC recovery: <code>η<sub>r</sub> = 1 − 0.075(M₀ − 1)^1.35</code> for M₀ &lt; 5.</p>
+        <p>Inlet total pressure distortion (circumferential and radial) can trigger compressor stall; distortion tolerance is characterized by the inlet distortion descriptor <code>DC60</code> or <code>AIP</code> survey data.</p>
+      </div>
+
+      <div class="stage-card">
+        <div class="stage-tag" style="color:#f5d76e;">Stage 2 — Compressor</div>
+        <h3>Stage loading, degree of reaction, surge margin</h3>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/c/ca/Axial_compressor.gif" alt="Axial compressor">
+        <p>Stage work coefficient: <code>ψ = ΔH₀ / U² = (V<sub>θ2</sub> − V<sub>θ1</sub>) / U</code>. Typical ψ: 0.3–0.45. Degree of reaction: <code>R = 1 − (V<sub>θ1</sub> + V<sub>θ2</sub>) / 2U</code> ≈ 0.5 for symmetric stages. Polytropic efficiency accounts for stage-stacking: <code>η<sub>p,c</sub> = (γ−1)/γ × ln(OPR) / ln(T₂/T₁)</code>.</p>
+        <p>Surge margin: <code>SM = (PR<sub>surge</sub> − PR<sub>op</sub>) / PR<sub>op</sub> × (ṁ<sub>op</sub> / ṁ<sub>surge</sub>)</code>. Minimum SM requirement typically 15–20%. Active surge control (bleed valves, variable stator vanes) extends the stable operating range. Online compressor washing reduces fouling-induced PR degradation; offline washing with detergent restores ≈1% efficiency annually.</p>
+        <p class="footnote">Borescope inspection: typical interval 4,000–8,000 equivalent operating hours (EOH) per OEM schedule.</p>
+      </div>
+
+      <div class="stage-card">
+        <div class="stage-tag" style="color:#f5824f;">Stage 3 — Combustor</div>
+        <h3>Combustion efficiency, pattern factor, NOx formation</h3>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/64/Combustor_of_sectioned_Rolls-Royce_Turbom%C3%A9ca_Adour_turbofan.jpg" alt="Combustor">
+        <p>Combustion efficiency <code>η<sub>b</sub> ≥ 0.9995</code> across the operating envelope. Pattern factor: <code>PF = (T<sub>max,exit</sub> − T<sub>mean,exit</sub>) / (T<sub>mean,exit</sub> − T<sub>inlet</sub>)</code>. Target PF &lt; 0.25 to protect HPT first-stage blades from hot streaks.</p>
+        <p>Thermal NOx follows the Zeldovich mechanism: <code>N₂ + O → NO + N</code>, <code>N + O₂ → NO + O</code>. NOx production is exponentially sensitive to flame temperature; lean premixed prevaporized (LPP) combustors and rich-burn/quick-quench/lean-burn (RQL) architectures reduce EINOx by 50–80% vs. conventional diffusion flames. Idle CO and UHC emissions constrain minimum flame temperatures at low power.</p>
+      </div>
+
+      <div class="stage-card">
+        <div class="stage-tag" style="color:#6fcf7a;">Stage 4 — Turbine</div>
+        <h3>Blade cooling, creep life, tip clearance, TBC condition</h3>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/e/e9/J79_GenElectr_BMW-liz_1961_%28Starfighter_F4%29_MTU-Museum_20231112_08w.jpg" alt="Turbine section">
+        <p>HPT blades operate at gas temperatures exceeding <code>T<sub>gas</sub> = 1,800 K</code> with substrate alloy (single-crystal Ni superalloy, e.g., CMSX-4) safe limit around <code>T<sub>wall</sub> = 1,150 K</code>. Cooling effectiveness: <code>θ = (T<sub>gas</sub> − T<sub>wall</sub>) / (T<sub>gas</sub> − T<sub>coolant</sub>)</code>; target θ ≈ 0.55–0.65. Cooling air penalty: every 1% of compressor delivery air used for cooling reduces cycle efficiency by ~0.3%.</p>
+        <p>Larson–Miller parameter governs creep life: <code>LMP = T(log t<sub>r</sub> + C)</code>. Tip clearance management (active clearance control, ACC) using thermal actuation of casing reduces steady-state clearance to 0.2–0.4% of blade span, improving turbine efficiency by 0.5–1%.</p>
+        <p>TBC (7 wt% Y₂O₃ stabilised ZrO₂, 100–300 μm EB-PVD) reduces metal temperature by 100–200 K and extends hot-section life 2–3×.</p>
+      </div>
+    </section>
+
+    <!-- Advances -->
+    <section>
+      <h2>4. Current Research Frontiers</h2>
+
+      <div class="advance">
+        <h3>Ceramic Matrix Composites (CMC)</h3>
+        <p>SiC/SiC CMC components (combustor liners, HPT shrouds, nozzle guide vanes) reduce component mass by 30–40% vs. Ni superalloys and permit 100–200 K higher operating temperatures. GE Aviation CFM LEAP and GE9X production engines incorporate CMC combustor liners and HPT stage-1 shrouds. Primary challenges: environmental barrier coatings (EBC) for water vapour recession, interlaminar shear strength, and NDE inspection methodologies.</p>
+      </div>
+
+      <div class="advance">
+        <h3>Additive Manufacturing for Cooling Channels</h3>
+        <p>Laser powder bed fusion (LPBF) and directed energy deposition (DED) enable conformal cooling channel geometries impossible with conventional investment casting. Lattice structures and micro-channel networks reduce cooling air demand by 10–20%, directly improving cycle efficiency. Current OEM certification barriers: anisotropic fatigue properties, surface finish Ra, and powder traceability.</p>
+      </div>
+
+      <div class="advance">
+        <h3>Hydrogen Combustion</h3>
+        <p>H₂ LHV: 120 MJ/kg (vs. 43 MJ/kg for Jet-A). Key challenges: (1) NOx — H₂/air adiabatic flame temperature ≈ 2,480 K vs. 2,230 K for CH₄/air; Zeldovich NOx increases exponentially; lean premixed ultra-low-NOx burner architectures required. (2) Flashback — H₂ laminar flame speed ≈ 3.2 m/s vs. 0.4 m/s for CH₄; autoignition delay times orders of magnitude shorter. (3) Embrittlement of high-strength steels in fuel system components. Siemens, Mitsubishi, and GE have demonstrated 100% H₂ combustion at laboratory scale; phased blending (20–30% H₂ by volume) is near-term commercial pathway.</p>
+      </div>
+    </section>
+
+    <!-- Applications -->
+    <section>
+      <h2>5. Applications and Cycle Configurations</h2>
+      <table>
+        <tr><th>Application</th><th>Engine type</th><th>Key metric</th><th>Notes</th></tr>
+        <tr><td>Commercial aviation</td><td>Turbofan, BPR 10–15</td><td>SFC, TSFC</td><td>OPR 40–60; TIT 1,900 K; η<sub>propulsive</sub> ↑ with BPR</td></tr>
+        <tr><td>Military aviation</td><td>Low-BPR turbofan / turbojet</td><td>Specific thrust, SFC</td><td>Afterburner adds 50–70% thrust, triples SFC</td></tr>
+        <tr><td>Power generation (simple-cycle)</td><td>Heavy-frame or aero-derivative</td><td>η<sub>th</sub>, $/kWh</td><td>η<sub>th</sub> ≈ 38–42%; startup &lt;10 min</td></tr>
+        <tr><td>Combined-cycle (CCGT)</td><td>Gas turbine + HRSG + steam turbine</td><td>η<sub>cc</sub></td><td>η<sub>cc</sub> up to 63%; Rankine bottoming cycle recovers exhaust enthalpy</td></tr>
+        <tr><td>Marine propulsion</td><td>Aero-derivative turboshaft/turboprop</td><td>Power density, kW/kg</td><td>Gas turbine-electric or COGAG/CODAG arrangements</td></tr>
+      </table>
+
+      <p style="margin-top:20px;">Propulsive efficiency: <code>η<sub>p</sub> = 2V₀ / (V<sub>e</sub> + V₀)</code>. For fixed thrust, increasing BPR lowers V<sub>e</sub> toward V₀, raising η<sub>p</sub> asymptotically. This is the primary thermodynamic driver for ultra-high-bypass ratio (UHBR) and open-rotor architectures.</p>
+
+      <div class="engine-grid" style="margin-top:28px;">
+        <div class="engine-card">
+          <div class="elabel" style="color:#5bb8f5;">Turbofan — thrust configuration</div>
+          <img src="https://upload.wikimedia.org/wikipedia/commons/7/75/Turbofan_operation.svg" alt="Turbofan schematic">
+          <p>BPR determines η<sub>p</sub>. Fan pressure ratio (FPR) ≈ 1.3–1.5 for UHBR engines.</p>
+        </div>
+        <div class="engine-card">
+          <div class="elabel" style="color:#6fcf7a;">Turboshaft — shaft power configuration</div>
+          <img src="https://upload.wikimedia.org/wikipedia/commons/6/69/Turboshaft_operation_%28multilanguage%29.svg" alt="Turboshaft schematic">
+          <p>Power turbine decoupled from gas generator; output shaft speed matched to load via reduction gearbox.</p>
+        </div>
+      </div>
+    </section>
+
+  </div><!-- end wrap -->
+
+  <footer><a href="../index.html">← Back to gallery</a></footer>
+
+</body>
+</html>
