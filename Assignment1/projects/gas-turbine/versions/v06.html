@@ -357,8 +357,27 @@
           <img src="https://upload.wikimedia.org/wikipedia/commons/6/69/Turboshaft_operation_%28multilanguage%29.svg"
                alt="Turboshaft engine schematic showing shaft power output"
                style="width:100%;display:block;">
+          <!-- Generator connected to shaft output -->
+          <svg viewBox="0 0 320 80" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;margin-top:4px;">
+            <!-- Shaft line from turbine to generator -->
+            <line x1="0" y1="40" x2="160" y2="40" stroke="#6fcf7a" stroke-width="3" stroke-dasharray="6,4"/>
+            <polygon points="158,34 172,40 158,46" fill="#6fcf7a"/>
+            <!-- Generator body -->
+            <rect x="172" y="16" width="96" height="48" rx="8" fill="#1e3a2a" stroke="#6fcf7a" stroke-width="1.5"/>
+            <!-- Generator symbol — G in circle -->
+            <circle cx="220" cy="40" r="16" fill="none" stroke="#6fcf7a" stroke-width="1.5"/>
+            <text x="220" y="45" text-anchor="middle" font-size="14" font-weight="700" fill="#6fcf7a" font-family="sans-serif">G</text>
+            <!-- Electricity output lines -->
+            <line x1="268" y1="28" x2="310" y2="28" stroke="#f5d76e" stroke-width="2"/>
+            <line x1="268" y1="40" x2="310" y2="40" stroke="#f5d76e" stroke-width="2"/>
+            <line x1="268" y1="52" x2="310" y2="52" stroke="#f5d76e" stroke-width="2"/>
+            <!-- Shaft label -->
+            <text x="80" y="33" text-anchor="middle" font-size="9" fill="#6aaa74" font-family="sans-serif" letter-spacing="0.5">SHAFT</text>
+            <!-- Electricity label -->
+            <text x="292" y="22" text-anchor="middle" font-size="9" fill="#d4be6a" font-family="sans-serif">⚡ AC</text>
+          </svg>
         </div>
-        <p style="font-size:0.82rem;color:#888;margin-top:10px;line-height:1.55;">Turboshaft — all turbine energy is extracted as shaft power, with no net thrust from exhaust. Drives helicopter rotors, ship propellers, and power generators.</p>
+        <p style="font-size:0.82rem;color:#888;margin-top:10px;line-height:1.55;">Turboshaft — all turbine energy is extracted as shaft power, driving a generator that produces electricity. Used in power plants, naval ships, and oil &amp; gas facilities.</p>
       </div>
 
     </div>
