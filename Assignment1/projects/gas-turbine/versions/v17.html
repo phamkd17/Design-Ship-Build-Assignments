@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How a Gas Turbine Works — v17</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #111;
+      color: #f0f0f0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    h1 { font-size: 1.1rem; font-weight: 600; color: #555; letter-spacing: 0.04em; margin-bottom: 32px; text-align: center; }
+
+    .card {
+      background: #161616;
+      border: 1px solid #2a2a2a;
+      border-radius: 16px;
+      max-width: 600px;
+      width: 100%;
+      overflow: hidden;
+      box-shadow: 0 32px 80px rgba(0,0,0,0.5);
+    }
+
+    .card-img {
+      width: 100%;
+      aspect-ratio: 16/9;
+      object-fit: cover;
+      display: block;
+    }
+
+    .card-body { padding: 32px; }
+
+    .card-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+    .stage-label { font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 700; }
+    .progress-text { font-size: 0.78rem; color: #444; }
+
+    .card-body h2 { font-size: 1.8rem; font-weight: 700; letter-spacing: -0.03em; margin-bottom: 14px; line-height: 1.2; }
+    .card-body p { color: #999; line-height: 1.78; font-size: 0.95rem; }
+    .stat { display: inline-block; font-size: 0.82rem; font-weight: 700; padding: 2px 8px; border-radius: 4px; }
+
+    /* Progress bar */
+    .progress-bar { height: 3px; background: #1e1e1e; margin-top: 28px; border-radius: 2px; overflow: hidden; }
+    .progress-fill { height: 100%; border-radius: 2px; transition: width 0.3s ease; }
+
+    /* Nav buttons */
+    .nav { display: flex; gap: 12px; justify-content: space-between; margin-top: 24px; }
+    .btn {
+      flex: 1;
+      padding: 12px;
+      border-radius: 10px;
+      border: 1px solid #2a2a2a;
+      background: #1a1a1a;
+      color: #888;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+      font-family: inherit;
+    }
+    .btn:hover:not(:disabled) { border-color: #555; color: #fff; background: #222; }
+    .btn:disabled { opacity: 0.3; cursor: default; }
+    .btn-next { color: #fff; }
+
+    .cap { font-size: 0.68rem; color: #333; margin-top: 10px; line-height: 1.4; }
+
+    footer { margin-top: 32px; }
+    footer a { color: #333; text-decoration: none; font-size: 0.85rem; }
+    footer a:hover { color: #fff; }
+  </style>
+</head>
+<body>
+
+  <h1>How a Gas Turbine Works</h1>
+
+  <div class="card">
+    <img class="card-img" id="stageImg" src="" alt="">
+    <div class="card-body">
+      <div class="card-meta">
+        <span class="stage-label" id="stageLabel"></span>
+        <span class="progress-text" id="progressText"></span>
+      </div>
+      <h2 id="stageTitle"></h2>
+      <p id="stageBody"></p>
+      <p class="cap" id="stageCap"></p>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+      <div class="nav">
+        <button class="btn" id="btnPrev" onclick="go(-1)">← Prev</button>
+        <button class="btn btn-next" id="btnNext" onclick="go(1)">Next →</button>
+      </div>
+    </div>
+  </div>
+
+  <footer><a href="../index.html">← Back to gallery</a></footer>
+
+  <script>
+    const stages = [
+      {
+        label: 'Stage 1 — Intake',
+        labelColor: '#5bb8f5',
+        barColor: '#5bb8f5',
+        title: 'Air enters the engine',
+        body: 'Atmospheric air is drawn in through the front inlet. The intake duct slows and smooths the flow before compression. A large fan accelerates the air — a commercial turbofan swallows <span style="background:#0e1e2e;color:#5bb8f5;font-weight:700;padding:1px 7px;border-radius:4px;">1,000 kg/s</span> at cruise altitude.',
+        img: 'https://upload.wikimedia.org/wikipedia/commons/e/e3/Air_intake%2C_fan_and_compressor_of_sectioned_Rolls-Royce_Turbom%C3%A9ca_Adour_turbofan_01.jpg',
+        cap: 'Sectioned Rolls-Royce Turbomeca Adour turbofan — intake and fan. (Wikimedia Commons / CC BY-SA)',
+      },
+      {
+        label: 'Stage 2 — Compression',
+        labelColor: '#f5d76e',
+        barColor: '#f5d76e',
+        title: 'Air squeezed to 40× pressure',
+        body: 'Alternating rotating blades (rotors) and fixed blades (stators) progressively compress the air. By the compressor exit, pressure reaches <span style="background:#1e1c0e;color:#f5d76e;font-weight:700;padding:1px 7px;border-radius:4px;">40× atmospheric</span> — the highest this pressure ratio, the more energy from each kg of fuel.',
+        img: 'https://upload.wikimedia.org/wikipedia/commons/c/ca/Axial_compressor.gif',
+        cap: 'Axial compressor — alternating rotor and stator blade rows. (Wikimedia Commons)',
+      },
+      {
+        label: 'Stage 3 — Combustion',
+        labelColor: '#f5824f',
+        barColor: '#f5824f',
+        title: 'Continuous flame at 1,500°C',
+        body: 'Fuel is injected and ignited. Unlike a piston engine, combustion never stops. Temperatures exceed <span style="background:#1e0e08;color:#f5824f;font-weight:700;padding:1px 7px;border-radius:4px;">1,500°C</span> — hotter than lava. Hollow blades and ceramic coatings protect the turbine downstream.',
+        img: 'https://upload.wikimedia.org/wikipedia/commons/6/64/Combustor_of_sectioned_Rolls-Royce_Turbom%C3%A9ca_Adour_turbofan.jpg',
+        cap: 'Combustor of a sectioned Rolls-Royce Turbomeca Adour turbofan. (Wikimedia Commons / CC BY-SA)',
+      },
+      {
+        label: 'Stage 4 — Power Out',
+        labelColor: '#6fcf7a',
+        barColor: '#6fcf7a',
+        title: 'Hot gas spins the turbine',
+        body: 'Expanding exhaust blasts through turbine blades at thousands of RPM. The turbine drives the compressor via a shared shaft. The remaining energy becomes thrust, shaft torque for a generator or helicopter rotor, or both.',
+        img: 'https://upload.wikimedia.org/wikipedia/commons/e/e9/J79_GenElectr_BMW-liz_1961_%28Starfighter_F4%29_MTU-Museum_20231112_08w.jpg',
+        cap: 'Three-stage turbine of a GE J79 engine at the MTU Museum. (Wikimedia Commons / CC BY-SA)',
+      },
+    ];
+
+    let current = 0;
+
+    function render() {
+      const s = stages[current];
+      document.getElementById('stageImg').src = s.img;
+      document.getElementById('stageImg').alt = s.title;
+      document.getElementById('stageLabel').textContent = s.label;
+      document.getElementById('stageLabel').style.color = s.labelColor;
+      document.getElementById('progressText').textContent = `${current + 1} of ${stages.length}`;
+      document.getElementById('stageTitle').textContent = s.title;
+      document.getElementById('stageBody').innerHTML = s.body;
+      document.getElementById('stageCap').textContent = s.cap;
+      document.getElementById('progressFill').style.width = `${((current + 1) / stages.length) * 100}%`;
+      document.getElementById('progressFill').style.background = s.barColor;
+      document.getElementById('btnPrev').disabled = current === 0;
+      document.getElementById('btnNext').disabled = current === stages.length - 1;
+      document.getElementById('btnNext').style.color = current === stages.length - 1 ? '#555' : s.labelColor;
+    }
+
+    function go(dir) {
+      current = Math.max(0, Math.min(stages.length - 1, current + dir));
+      render();
+    }
+
+    render();
+  </script>
+
+</body>
+</html>

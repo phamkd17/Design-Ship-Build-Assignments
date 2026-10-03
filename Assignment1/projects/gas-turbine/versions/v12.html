@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How a Gas Turbine Works — v12</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #111; color: #f0f0f0; padding: 48px 24px; }
+    header { max-width: 700px; margin: 0 auto 56px; text-align: center; }
+    h1 { font-size: 2.2rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 10px; }
+    header p { color: #666; font-size: 1rem; }
+
+    .accordion { max-width: 700px; margin: 0 auto; display: flex; flex-direction: column; gap: 8px; }
+
+    .acc-item { border: 1px solid #2a2a2a; border-radius: 12px; overflow: hidden; transition: border-color 0.2s; }
+    .acc-item.open { border-color: var(--c); }
+
+    .acc-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 22px 24px;
+      cursor: pointer;
+      user-select: none;
+      background: #161616;
+      transition: background 0.15s;
+    }
+    .acc-item.open .acc-header { background: var(--bg); }
+    .acc-header:hover { background: #1c1c1c; }
+    .acc-item.open .acc-header:hover { background: var(--bg); }
+
+    .acc-num { font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: #444; min-width: 48px; }
+    .acc-title { flex: 1; }
+    .acc-name { font-size: 1.05rem; font-weight: 700; color: var(--c); }
+    .acc-teaser { font-size: 0.82rem; color: #555; margin-top: 2px; }
+    .acc-chevron { color: #444; font-size: 1rem; transition: transform 0.25s; }
+    .acc-item.open .acc-chevron { transform: rotate(180deg); color: var(--c); }
+
+    .acc-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease;
+    }
+    .acc-item.open .acc-body { max-height: 800px; }
+
+    .acc-content {
+      padding: 0 24px 28px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+      align-items: start;
+      background: #161616;
+    }
+    .acc-content img { width: 100%; border-radius: 10px; display: block; max-height: 220px; object-fit: cover; }
+    .acc-content .cap { font-size: 0.7rem; color: #444; margin-top: 6px; line-height: 1.4; }
+    .acc-content p { color: #aaa; font-size: 0.93rem; line-height: 1.78; }
+    .stat { display: inline-block; font-size: 0.8rem; font-weight: 700; padding: 1px 7px; border-radius: 4px; }
+
+    footer { text-align: center; margin-top: 72px; padding-top: 32px; border-top: 1px solid #1a1a1a; }
+    footer a { color: #444; text-decoration: none; font-size: 0.9rem; }
+    footer a:hover { color: #fff; }
+
+    @media (max-width: 560px) {
+      .acc-content { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>How a Gas Turbine Works</h1>
+    <p>Tap a stage to expand it.</p>
+  </header>
+
+  <div class="accordion">
+
+    <div class="acc-item" id="s1" style="--c:#5bb8f5;--bg:#0c1a26;">
+      <div class="acc-header" onclick="toggle('s1')">
+        <span class="acc-num">Stage 01</span>
+        <div class="acc-title">
+          <div class="acc-name">Intake</div>
+          <div class="acc-teaser">Air is drawn in and smoothed before compression</div>
+        </div>
+        <span class="acc-chevron">▾</span>
+      </div>
+      <div class="acc-body">
+        <div class="acc-content">
+          <div>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/e/e3/Air_intake%2C_fan_and_compressor_of_sectioned_Rolls-Royce_Turbom%C3%A9ca_Adour_turbofan_01.jpg" alt="Rolls-Royce Adour turbofan intake">
+            <p class="cap">Sectioned Rolls-Royce Turbomeca Adour turbofan — intake and fan. (Wikimedia Commons / CC BY-SA)</p>
+          </div>
+          <div>
+            <p>Atmospheric air is drawn in through the front inlet. The intake duct slows and smooths the airflow before the compression stage. A large fan at the front accelerates the air — a commercial turbofan swallows <span class="stat" style="background:#0e1e2e;color:#5bb8f5;">1,000 kg/s</span> at cruise altitude. The quality of the intake flow has a direct effect on how efficiently the compressor can do its job.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="acc-item" id="s2" style="--c:#f5d76e;--bg:#1a1800;">
+      <div class="acc-header" onclick="toggle('s2')">
+        <span class="acc-num">Stage 02</span>
+        <div class="acc-title">
+          <div class="acc-name">Compression</div>
+          <div class="acc-teaser">Pressure rises to 40× atmospheric in the axial compressor</div>
+        </div>
+        <span class="acc-chevron">▾</span>
+      </div>
+      <div class="acc-body">
+        <div class="acc-content">
+          <div>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/c/ca/Axial_compressor.gif" alt="Axial compressor animation">
+            <p class="cap">Axial compressor — alternating rotor and stator blade rows. (Wikimedia Commons)</p>
+          </div>
+          <div>
+            <p>The axial compressor is a series of alternating rotating blades (rotors) and fixed blades (stators). Each stage squeezes the air a little tighter. By the exit, pressure has reached <span class="stat" style="background:#1e1c0e;color:#f5d76e;">40× atmospheric</span>. The higher the pressure ratio, the more chemical energy is unlocked from each kilogram of fuel — pressure ratio is the single biggest lever on efficiency.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="acc-item" id="s3" style="--c:#f5824f;--bg:#1a0c06;">
+      <div class="acc-header" onclick="toggle('s3')">
+        <span class="acc-num">Stage 03</span>
+        <div class="acc-title">
+          <div class="acc-name">Combustion</div>
+          <div class="acc-teaser">Fuel burns continuously at over 1,500°C</div>
+        </div>
+        <span class="acc-chevron">▾</span>
+      </div>
+      <div class="acc-body">
+        <div class="acc-content">
+          <div>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/6/64/Combustor_of_sectioned_Rolls-Royce_Turbom%C3%A9ca_Adour_turbofan.jpg" alt="Rolls-Royce Adour combustor">
+            <p class="cap">Combustor of a sectioned Rolls-Royce Turbomeca Adour turbofan. (Wikimedia Commons / CC BY-SA)</p>
+          </div>
+          <div>
+            <p>Fuel is injected into the combustion chamber and ignited. Unlike a piston engine, combustion is continuous — the flame never stops. Temperatures exceed <span class="stat" style="background:#1e0e08;color:#f5824f;">1,500°C</span>. Turbine blades survive this environment only through hollow cooling passages and ceramic thermal barrier coatings, among the most sophisticated materials in engineering.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="acc-item" id="s4" style="--c:#6fcf7a;--bg:#0a1a0c;">
+      <div class="acc-header" onclick="toggle('s4')">
+        <span class="acc-num">Stage 04</span>
+        <div class="acc-title">
+          <div class="acc-name">Power Out</div>
+          <div class="acc-teaser">Exhaust spins the turbine and delivers useful work</div>
+        </div>
+        <span class="acc-chevron">▾</span>
+      </div>
+      <div class="acc-body">
+        <div class="acc-content">
+          <div>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/e/e9/J79_GenElectr_BMW-liz_1961_%28Starfighter_F4%29_MTU-Museum_20231112_08w.jpg" alt="GE J79 turbine section">
+            <p class="cap">Three-stage turbine of a GE J79 engine at the MTU Museum. (Wikimedia Commons / CC BY-SA)</p>
+          </div>
+          <div>
+            <p>The high-energy exhaust blasts through turbine blades at thousands of RPM. The turbine drives the compressor via a shared shaft — keeping the cycle self-sustaining. Depending on the application, remaining energy becomes raw thrust out the back of a jet, shaft torque for a helicopter rotor or ship propeller, or electricity from a coupled generator.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <footer><a href="../index.html">← Back to gallery</a></footer>
+
+  <script>
+    function toggle(id) {
+      const all = document.querySelectorAll('.acc-item');
+      all.forEach(item => {
+        if (item.id === id) {
+          item.classList.toggle('open');
+        } else {
+          item.classList.remove('open');
+        }
+      });
+    }
+    // Open first by default
+    document.getElementById('s1').classList.add('open');
+  </script>
+
+</body>
+</html>

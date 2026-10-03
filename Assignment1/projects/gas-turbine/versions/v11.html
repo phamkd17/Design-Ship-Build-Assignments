@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How a Gas Turbine Works — v11</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #111; color: #f0f0f0; }
+
+    /* Sticky nav */
+    .stage-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(17,17,17,0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid #222;
+      padding: 12px 24px;
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+    }
+    .nav-pill {
+      padding: 6px 18px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      color: #555;
+      border: 1px solid #2a2a2a;
+      background: transparent;
+      cursor: pointer;
+      text-decoration: none;
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
+    }
+    .nav-pill[data-stage="1"].active { color: #5bb8f5; border-color: #5bb8f5; background: rgba(91,184,245,0.08); }
+    .nav-pill[data-stage="2"].active { color: #f5d76e; border-color: #f5d76e; background: rgba(245,215,110,0.08); }
+    .nav-pill[data-stage="3"].active { color: #f5824f; border-color: #f5824f; background: rgba(245,130,80,0.08); }
+    .nav-pill[data-stage="4"].active { color: #6fcf7a; border-color: #6fcf7a; background: rgba(111,207,122,0.08); }
+
+    /* Hero */
+    header { padding: 72px 24px 48px; text-align: center; }
+    header h1 { font-size: 2.4rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 12px; }
+    header p { color: #666; font-size: 1rem; max-width: 500px; margin: 0 auto; }
+
+    /* Stage sections */
+    .stage-section {
+      min-height: 80vh;
+      display: flex;
+      align-items: center;
+      padding: 80px 24px;
+      border-top: 1px solid #1a1a1a;
+    }
+    .stage-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 56px;
+      align-items: center;
+    }
+    .stage-inner.flip .stage-media { order: 2; }
+    .stage-inner.flip .stage-text { order: 1; }
+    .stage-media img { width: 100%; border-radius: 12px; display: block; max-height: 340px; object-fit: cover; }
+    .stage-media .cap { font-size: 0.7rem; color: #444; margin-top: 8px; line-height: 1.5; }
+    .stage-label { font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 14px; font-weight: 700; }
+    .stage-text h2 { font-size: 2rem; font-weight: 700; letter-spacing: -0.03em; margin-bottom: 18px; line-height: 1.2; }
+    .stage-text p { color: #999; line-height: 1.8; font-size: 0.97rem; }
+    .stat { display: inline-block; font-size: 0.82rem; font-weight: 700; padding: 2px 8px; border-radius: 4px; margin: 2px 0; }
+
+    footer { text-align: center; padding: 48px 24px; border-top: 1px solid #1a1a1a; }
+    footer a { color: #444; text-decoration: none; font-size: 0.9rem; }
+    footer a:hover { color: #fff; }
+
+    @media (max-width: 640px) {
+      .stage-inner, .stage-inner.flip { grid-template-columns: 1fr; }
+      .stage-inner.flip .stage-media, .stage-inner.flip .stage-text { order: unset; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="stage-nav">
+    <a class="nav-pill" data-stage="1" href="#intake">Intake</a>
+    <a class="nav-pill" data-stage="2" href="#compression">Compression</a>
+    <a class="nav-pill" data-stage="3" href="#combustion">Combustion</a>
+    <a class="nav-pill" data-stage="4" href="#power">Power Out</a>
+  </nav>
+
+  <header>
+    <h1>How a Gas Turbine Works</h1>
+    <p>Scroll through the four stages that turn air and fuel into power.</p>
+  </header>
+
+  <section class="stage-section" id="intake" data-stage="1">
+    <div class="stage-inner">
+      <div class="stage-media">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/e/e3/Air_intake%2C_fan_and_compressor_of_sectioned_Rolls-Royce_Turbom%C3%A9ca_Adour_turbofan_01.jpg" alt="Rolls-Royce Adour turbofan intake">
+        <p class="cap">Sectioned Rolls-Royce Turbomeca Adour turbofan — intake and fan. (Wikimedia Commons / CC BY-SA)</p>
+      </div>
+      <div class="stage-text">
+        <p class="stage-label" style="color:#5bb8f5;">Stage 1 — Intake</p>
+        <h2>Air enters the engine</h2>
+        <p>Atmospheric air is drawn in through the front inlet. The intake duct is shaped to smooth the airflow before compression begins. A large fan accelerates the air — a commercial turbofan swallows <span class="stat" style="background:#0e1e2e;color:#5bb8f5;">1,000 kg/s</span> at cruise.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="stage-section" id="compression" data-stage="2">
+    <div class="stage-inner flip">
+      <div class="stage-media">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/c/ca/Axial_compressor.gif" alt="Axial compressor animation">
+        <p class="cap">Axial compressor — alternating rotor and stator blade rows. (Wikimedia Commons)</p>
+      </div>
+      <div class="stage-text">
+        <p class="stage-label" style="color:#f5d76e;">Stage 2 — Compression</p>
+        <h2>Air squeezed to 40× pressure</h2>
+        <p>Alternating rotating and fixed blade rows compress the air progressively. By the end of the compressor, pressure reaches <span class="stat" style="background:#1e1c0e;color:#f5d76e;">40× atmospheric</span>. Higher pressure means more energy from the same amount of fuel.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="stage-section" id="combustion" data-stage="3">
+    <div class="stage-inner">
+      <div class="stage-media">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/64/Combustor_of_sectioned_Rolls-Royce_Turbom%C3%A9ca_Adour_turbofan.jpg" alt="Rolls-Royce Adour combustor">
+        <p class="cap">Combustor of a sectioned Rolls-Royce Turbomeca Adour turbofan. (Wikimedia Commons / CC BY-SA)</p>
+      </div>
+      <div class="stage-text">
+        <p class="stage-label" style="color:#f5824f;">Stage 3 — Combustion</p>
+        <h2>Continuous flame at 1,500°C</h2>
+        <p>Fuel is injected and ignited. Unlike a piston engine, the flame burns continuously. Temperatures exceed <span class="stat" style="background:#1e0e08;color:#f5824f;">1,500°C</span> — hotter than most metals can survive without advanced hollow-blade cooling and ceramic coatings.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="stage-section" id="power" data-stage="4">
+    <div class="stage-inner flip">
+      <div class="stage-media">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/e/e9/J79_GenElectr_BMW-liz_1961_%28Starfighter_F4%29_MTU-Museum_20231112_08w.jpg" alt="GE J79 turbine section">
+        <p class="cap">Three-stage turbine of a GE J79 engine at the MTU Museum. (Wikimedia Commons / CC BY-SA)</p>
+      </div>
+      <div class="stage-text">
+        <p class="stage-label" style="color:#6fcf7a;">Stage 4 — Power Out</p>
+        <h2>Hot gas spins the turbine</h2>
+        <p>Expanding exhaust blasts through turbine blades at thousands of RPM, spinning the shaft. The shaft drives the compressor at the front, keeping the cycle running. Remaining energy becomes thrust, generator output, or rotor torque.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer><a href="../index.html">← Back to gallery</a></footer>
+
+  <script>
+    const sections = document.querySelectorAll('.stage-section');
+    const pills = document.querySelectorAll('.nav-pill');
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const stage = entry.target.dataset.stage;
+          pills.forEach(p => p.classList.toggle('active', p.dataset.stage === stage));
+        }
+      });
+    }, { threshold: 0.4 });
+
+    sections.forEach(s => observer.observe(s));
+  </script>
+
+</body>
+</html>
