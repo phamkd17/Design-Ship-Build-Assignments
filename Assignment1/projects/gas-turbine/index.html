@@ -37,18 +37,30 @@
       text-decoration: none;
       color: inherit;
       transition: border-color 0.2s;
+      display: block;
     }
     .card:hover { border-color: #555; }
+
+    /* Preview thumbnail using scaled iframe */
     .card-thumb {
+      position: relative;
       width: 100%;
       aspect-ratio: 16/9;
-      background: #222;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 2rem;
-      color: #444;
+      overflow: hidden;
+      background: #161616;
+      cursor: pointer;
     }
+    .card-thumb iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 1280px;
+      height: 720px;
+      border: none;
+      pointer-events: none;
+      transform-origin: top left;
+    }
+
     .card-body { padding: 16px; }
     .card-label { font-size: 0.75rem; color: #555; margin-bottom: 4px; }
     .card-title { font-size: 0.95rem; font-weight: 600; margin-bottom: 6px; }
@@ -68,7 +80,9 @@
   <div class="grid">
 
     <a class="card" href="versions/v01.html">
-      <div class="card-thumb">⚙️</div>
+      <div class="card-thumb">
+        <iframe src="versions/v01.html" loading="lazy" scrolling="no" tabindex="-1" title="v01 preview"></iframe>
+      </div>
       <div class="card-body">
         <div class="card-label">v01</div>
         <div class="card-title">Plain text, no style</div>
@@ -77,7 +91,9 @@
     </a>
 
     <a class="card" href="versions/v02.html">
-      <div class="card-thumb">🔷</div>
+      <div class="card-thumb">
+        <iframe src="versions/v02.html" loading="lazy" scrolling="no" tabindex="-1" title="v02 preview"></iframe>
+      </div>
       <div class="card-body">
         <div class="card-label">v02</div>
         <div class="card-title">SVG stage diagrams</div>
@@ -86,7 +102,9 @@
     </a>
 
     <a class="card" href="versions/v03.html">
-      <div class="card-thumb">📷</div>
+      <div class="card-thumb">
+        <iframe src="versions/v03.html" loading="lazy" scrolling="no" tabindex="-1" title="v03 preview"></iframe>
+      </div>
       <div class="card-body">
         <div class="card-label">v03</div>
         <div class="card-title">Real engine photos</div>
@@ -95,7 +113,9 @@
     </a>
 
     <a class="card" href="versions/v04.html">
-      <div class="card-thumb">🗺️</div>
+      <div class="card-thumb">
+        <iframe src="versions/v04.html" loading="lazy" scrolling="no" tabindex="-1" title="v04 preview"></iframe>
+      </div>
       <div class="card-body">
         <div class="card-label">v04</div>
         <div class="card-title">Schematic + stage highlights</div>
@@ -104,7 +124,9 @@
     </a>
 
     <a class="card" href="versions/v05.html">
-      <div class="card-thumb">🌐</div>
+      <div class="card-thumb">
+        <iframe src="versions/v05.html" loading="lazy" scrolling="no" tabindex="-1" title="v05 preview"></iframe>
+      </div>
       <div class="card-body">
         <div class="card-label">v05</div>
         <div class="card-title">Applications section</div>
@@ -113,7 +135,9 @@
     </a>
 
     <a class="card" href="versions/v06.html">
-      <div class="card-thumb">📝</div>
+      <div class="card-thumb">
+        <iframe src="versions/v06.html" loading="lazy" scrolling="no" tabindex="-1" title="v06 preview"></iframe>
+      </div>
       <div class="card-body">
         <div class="card-label">v06</div>
         <div class="card-title">Why it matters + engine type schematics</div>
@@ -122,7 +146,9 @@
     </a>
 
     <a class="card" href="versions/v07.html">
-      <div class="card-thumb">📊</div>
+      <div class="card-thumb">
+        <iframe src="versions/v07.html" loading="lazy" scrolling="no" tabindex="-1" title="v07 preview"></iframe>
+      </div>
       <div class="card-body">
         <div class="card-label">v07</div>
         <div class="card-title">Big numbers first</div>
@@ -131,7 +157,9 @@
     </a>
 
     <a class="card" href="versions/v08.html">
-      <div class="card-thumb">🖱️</div>
+      <div class="card-thumb">
+        <iframe src="versions/v08.html" loading="lazy" scrolling="no" tabindex="-1" title="v08 preview"></iframe>
+      </div>
       <div class="card-body">
         <div class="card-label">v08</div>
         <div class="card-title">Interactive stage explorer</div>
@@ -140,7 +168,9 @@
     </a>
 
     <a class="card" href="versions/v09.html">
-      <div class="card-thumb">📰</div>
+      <div class="card-thumb">
+        <iframe src="versions/v09.html" loading="lazy" scrolling="no" tabindex="-1" title="v09 preview"></iframe>
+      </div>
       <div class="card-body">
         <div class="card-label">v09</div>
         <div class="card-title">Editorial / light mode</div>
@@ -149,7 +179,9 @@
     </a>
 
     <a class="card" href="versions/v10.html">
-      <div class="card-thumb">↕️</div>
+      <div class="card-thumb">
+        <iframe src="versions/v10.html" loading="lazy" scrolling="no" tabindex="-1" title="v10 preview"></iframe>
+      </div>
       <div class="card-body">
         <div class="card-label">v10</div>
         <div class="card-title">Scroll-reveal storytelling</div>
@@ -168,6 +200,21 @@
   <div class="grid" id="final">
     <!-- versions 21–25 will be added here -->
   </div>
+
+  <script>
+    function scaleIframes() {
+      document.querySelectorAll('.card-thumb').forEach(thumb => {
+        const iframe = thumb.querySelector('iframe');
+        if (!iframe) return;
+        const scale = thumb.offsetWidth / 1280;
+        iframe.style.transform = `scale(${scale})`;
+        iframe.style.height = (thumb.offsetHeight / scale) + 'px';
+      });
+    }
+    window.addEventListener('load', scaleIframes);
+    window.addEventListener('resize', scaleIframes);
+    scaleIframes();
+  </script>
 
 </body>
 </html>
