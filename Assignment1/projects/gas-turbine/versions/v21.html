@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How a Gas Turbine Works — v21</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* ── Base ── */
+    body {
+      font-family: Georgia, "Times New Roman", serif;
+      background: #fafaf8;
+      color: #111;
+    }
+
+    /* ── Sticky nav ── */
+    .stage-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(250,250,248,0.92);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid #e8e8e4;
+      padding: 10px 24px;
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+    }
+    .nav-pill {
+      padding: 6px 20px;
+      border-radius: 999px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      color: #999;
+      border: 1px solid #ddd;
+      background: transparent;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .nav-pill[data-stage="1"].active { color: #2a7ab5; border-color: #5bb8f5; background: #eef7ff; }
+    .nav-pill[data-stage="2"].active { color: #8a6e00; border-color: #c9a800; background: #fdf8e6; }
+    .nav-pill[data-stage="3"].active { color: #a84a1e; border-color: #e07b39; background: #fdf0e8; }
+    .nav-pill[data-stage="4"].active { color: #1f7a35; border-color: #4daf62; background: #edf7ef; }
+
+    /* ── Hero ── */
+    .hero {
+      background: #111;
+      color: #fff;
+      padding: 96px 24px 80px;
+      text-align: center;
+    }
+    .hero-eyebrow {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #666;
+      margin-bottom: 24px;
+    }
+    .hero h1 {
+      font-size: clamp(2.4rem, 5.5vw, 4rem);
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      line-height: 1.12;
+      max-width: 720px;
+      margin: 0 auto 28px;
+    }
+    .hero h1 em { font-style: italic; color: #bbb; }
+    .hero-sub {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 1rem;
+      color: #777;
+      max-width: 520px;
+      margin: 0 auto;
+      line-height: 1.75;
+    }
+
+    /* ── Body wrapper ── */
+    .wrap { max-width: 780px; margin: 0 auto; padding: 0 24px; }
+
+    /* ── Stats ── */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2px;
+      background: #e4e4e0;
+      border-radius: 14px;
+      overflow: hidden;
+      margin: 64px 0 0;
+    }
+    .stat { background: #fafaf8; padding: 32px 16px; text-align: center; }
+    .stat-num {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 2.4rem;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .stat-label {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #999;
+      line-height: 1.4;
+    }
+
+    /* ── Pull quote ── */
+    .pull-quote {
+      border-left: 3px solid #111;
+      padding: 4px 0 4px 28px;
+      margin: 64px 0 32px;
+      font-size: 1.4rem;
+      line-height: 1.5;
+      color: #222;
+      font-style: italic;
+    }
+
+    /* ── Editorial body ── */
+    .editorial-body {
+      font-size: 1.05rem;
+      line-height: 1.9;
+      color: #333;
+    }
+
+    /* ── Section eyebrow ── */
+    .eyebrow {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.68rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #aaa;
+      margin-bottom: 20px;
+    }
+
+    /* ── Applications ── */
+    .apps-section { margin: 64px 0 0; }
+    .apps-divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .apps-divider-line { height: 1px; flex: 1; background: #e0e0da; }
+    .apps-divider-label {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+    .apps-sub {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.82rem;
+      color: #aaa;
+      margin-bottom: 14px;
+      line-height: 1.5;
+    }
+    .apps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+      gap: 12px;
+      margin-bottom: 36px;
+    }
+    .app-card {
+      border-radius: 10px;
+      padding: 20px 16px;
+      border: 1px solid;
+    }
+    .app-card .app-icon { font-size: 1.8rem; margin-bottom: 10px; }
+    .app-card .app-name {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-weight: 700;
+      font-size: 0.9rem;
+      margin-bottom: 6px;
+    }
+    .app-card .app-desc {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.8rem;
+      line-height: 1.5;
+    }
+    .thrust-card { background: #f0f7ff; border-color: #c8dff5; }
+    .thrust-card .app-name { color: #1a5f8a; }
+    .thrust-card .app-desc { color: #5a7a96; }
+    .power-card  { background: #f0faf2; border-color: #bde0c5; }
+    .power-card  .app-name { color: #1a6632; }
+    .power-card  .app-desc { color: #4a7a57; }
+
+    /* ── Schematic ── */
+    .schematic-section { margin: 64px 0 0; }
+    .schematic-wrap {
+      position: relative;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #1a1a1a;
+      cursor: pointer;
+      margin-top: 16px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    }
+    .schematic-wrap img { width: 100%; display: block; }
+    .ov {
+      position: absolute; top: 0; height: 100%;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.35s ease;
+    }
+    .ov.active { opacity: 1; }
+    #ov1 { left:0;   width:14%; background:rgba(91,184,245,0.30); border-right:2px solid rgba(91,184,245,0.8); }
+    #ov2 { left:14%; width:38%; background:rgba(245,215,110,0.24); border-right:2px solid rgba(245,215,110,0.7); }
+    #ov3 { left:52%; width:20%; background:rgba(245,130,80,0.30); border-right:2px solid rgba(245,130,80,0.7); }
+    #ov4 { left:72%; width:28%; background:rgba(111,207,122,0.24); }
+    .ov-label {
+      position:absolute; top:7%;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size:0.68rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase;
+      pointer-events:none;
+    }
+    .schematic-hint {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.75rem;
+      color: #bbb;
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    /* ── Stage sections ── */
+    hr.stage-divider { border: none; border-top: 1px solid #e8e8e4; margin: 0; }
+    .stage-section {
+      padding: 80px 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 56px;
+      align-items: center;
+    }
+    .stage-section.flip .stage-media { order: 2; }
+    .stage-section.flip .stage-text  { order: 1; }
+    .stage-media img {
+      width: 100%; display: block;
+      border-radius: 8px;
+      max-height: 300px;
+      object-fit: cover;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+    }
+    .stage-media .cap {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.7rem;
+      color: #bbb;
+      margin-top: 8px;
+      line-height: 1.4;
+    }
+    .stage-overline {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.68rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .stage-text h2 {
+      font-size: 1.9rem;
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: 18px;
+    }
+    .stage-text p {
+      font-size: 1rem;
+      line-height: 1.85;
+      color: #444;
+    }
+    .stat-chip {
+      display: inline-block;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 2px 9px;
+      border-radius: 5px;
+      vertical-align: baseline;
+    }
+
+    /* ── Engine schematics ── dark section ── */
+    .engine-section {
+      background: #111;
+      color: #f0f0f0;
+      margin-top: 80px;
+      padding: 72px 24px;
+    }
+    .engine-inner { max-width: 780px; margin: 0 auto; }
+    .engine-eyebrow {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.68rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #555;
+      margin-bottom: 32px;
+    }
+    .engine-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+    .engine-card { background: #1a1a1a; border-radius: 12px; padding: 20px; }
+    .engine-label {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+    .engine-card img { width: 100%; display: block; border-radius: 6px; }
+    .engine-card .engine-desc {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.82rem;
+      color: #777;
+      margin-top: 12px;
+      line-height: 1.6;
+    }
+
+    /* ── Footer ── */
+    footer {
+      background: #111;
+      border-top: 1px solid #1e1e1e;
+      text-align: center;
+      padding: 40px 24px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    footer a { color: #555; text-decoration: none; font-size: 0.9rem; }
+    footer a:hover { color: #fff; }
+
+    @media (max-width: 640px) {
+      .stats { grid-template-columns: repeat(2, 1fr); }
+      .stage-section, .stage-section.flip { grid-template-columns: 1fr; }
+      .stage-section.flip .stage-media, .stage-section.flip .stage-text { order: unset; }
+      .engine-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sticky nav -->
+  <nav class="stage-nav">
+    <a class="nav-pill" data-stage="1" href="#s1">Intake</a>
+    <a class="nav-pill" data-stage="2" href="#s2">Compression</a>
+    <a class="nav-pill" data-stage="3" href="#s3">Combustion</a>
+    <a class="nav-pill" data-stage="4" href="#s4">Power Out</a>
+  </nav>
+
+  <!-- Hero -->
+  <div class="hero">
+    <p class="hero-eyebrow">Engineering Explained</p>
+    <h1>One of humanity's most powerful engines — <em>in four stages.</em></h1>
+    <p class="hero-sub">Gas turbines power the flights we take, the electricity in our homes, and the ships that guard our seas. Here is how they work.</p>
+  </div>
+
+  <!-- Stats -->
+  <div class="wrap">
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-num" style="color:#2a7ab5;">1,000<span style="font-size:1.1rem;">kg/s</span></div>
+        <div class="stat-label">Air intake<br>at cruise</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num" style="color:#8a6e00;">40×</div>
+        <div class="stat-label">Pressure<br>ratio</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num" style="color:#a84a1e;">1,500<span style="font-size:1.1rem;">°C</span></div>
+        <div class="stat-label">Combustion<br>temperature</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num" style="color:#1f7a35;">60<span style="font-size:1.1rem;">%</span></div>
+        <div class="stat-label">Peak cycle<br>efficiency</div>
+      </div>
+    </div>
+
+    <!-- Pull quote -->
+    <div class="pull-quote">
+      "Every time you board a flight or switch on a light, there is a good chance a gas turbine made it possible."
+    </div>
+
+    <!-- Why It Matters -->
+    <p class="editorial-body">
+      The gas turbine is arguably the defining machine of the modern age. Its extraordinary power-to-weight ratio — producing thousands of horsepower from an engine small enough to fit in a living room — makes it irreplaceable anywhere size and weight are critical. Unlike a steam turbine, which takes hours to warm up, a gas turbine reaches full power in minutes, making it the world's most important tool for meeting sudden spikes in electricity demand. As renewables grow, gas turbines increasingly serve as the grid's shock absorber — spinning up instantly to balance intermittent wind and solar. Far from becoming obsolete, they continue to evolve through ceramic blade materials, additive manufacturing, and hydrogen combustion, positioning them as a bridge technology toward a lower-carbon future.
+    </p>
+
+    <!-- Applications -->
+    <div class="apps-section">
+      <p class="eyebrow">Where Gas Turbines Are Used</p>
+
+      <div class="apps-divider">
+        <div class="apps-divider-line"></div>
+        <span class="apps-divider-label" style="color:#2a7ab5;">Thrust Production</span>
+        <div class="apps-divider-line"></div>
+      </div>
+      <p class="apps-sub">The turbine's exhaust is directed rearward at high velocity to push the vehicle forward.</p>
+      <div class="apps-grid">
+        <div class="app-card thrust-card">
+          <div class="app-icon">✈️</div>
+          <div class="app-name">Commercial Aviation</div>
+          <div class="app-desc">Turbofan engines power nearly every commercial aircraft — from the 737 to the A380.</div>
+        </div>
+        <div class="app-card thrust-card">
+          <div class="app-icon">🪖</div>
+          <div class="app-name">Military Aircraft</div>
+          <div class="app-desc">Fighter jets use afterburning turbofans to reach supersonic speeds.</div>
+        </div>
+        <div class="app-card thrust-card">
+          <div class="app-icon">🚀</div>
+          <div class="app-name">Cruise Missiles</div>
+          <div class="app-desc">Small turbojets propel cruise missiles over long distances at high subsonic speed.</div>
+        </div>
+      </div>
+
+      <div class="apps-divider">
+        <div class="apps-divider-line"></div>
+        <span class="apps-divider-label" style="color:#1f7a35;">Power Production</span>
+        <div class="apps-divider-line"></div>
+      </div>
+      <p class="apps-sub">The turbine shaft drives a generator, propeller, or pump instead of producing direct thrust.</p>
+      <div class="apps-grid">
+        <div class="app-card power-card">
+          <div class="app-icon">⚡</div>
+          <div class="app-name">Power Generation</div>
+          <div class="app-desc">Gas turbines produce ~20% of the world's electricity and spin up in minutes for peak demand.</div>
+        </div>
+        <div class="app-card power-card">
+          <div class="app-icon">🚢</div>
+          <div class="app-name">Naval Ships</div>
+          <div class="app-desc">Destroyers and frigates use marine gas turbines for their rapid acceleration.</div>
+        </div>
+        <div class="app-card power-card">
+          <div class="app-icon">🚁</div>
+          <div class="app-name">Helicopters</div>
+          <div class="app-desc">Turboshaft engines deliver shaft power to rotor systems at exceptional power-to-weight.</div>
+        </div>
+        <div class="app-card power-card">
+          <div class="app-icon">🛢️</div>
+          <div class="app-name">Oil &amp; Gas</div>
+          <div class="app-desc">Gas turbines drive compressor stations pushing gas through thousands of miles of pipeline.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Interactive schematic -->
+    <div class="schematic-section">
+      <p class="eyebrow">Cross-section — click to highlight a stage</p>
+      <div class="schematic-wrap" onclick="cycleStage()">
+        <img src="../jet_engine.svg" alt="Gas turbine cross-section schematic">
+        <div class="ov" id="ov1"><div class="ov-label" style="left:1%;color:#5bb8f5;">Intake</div></div>
+        <div class="ov" id="ov2"><div class="ov-label" style="left:18%;color:#f5d76e;">Compression</div></div>
+        <div class="ov" id="ov3"><div class="ov-label" style="left:2%;color:#f5824f;">Combustion</div></div>
+        <div class="ov" id="ov4"><div class="ov-label" style="left:10%;color:#6fcf7a;">Power Out</div></div>
+      </div>
+      <p class="schematic-hint">Click the schematic to step through each stage</p>
+    </div>
+
+    <!-- Stage 1 -->
+    <hr class="stage-divider" style="margin-top:64px;">
+    <section class="stage-section" id="s1" data-stage="1">
+      <div class="stage-media">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/e/e3/Air_intake%2C_fan_and_compressor_of_sectioned_Rolls-Royce_Turbom%C3%A9ca_Adour_turbofan_01.jpg" alt="Rolls-Royce Adour turbofan intake">
+        <p class="cap">Sectioned Rolls-Royce Turbomeca Adour turbofan — intake and fan. (Wikimedia Commons / CC BY-SA)</p>
+      </div>
+      <div class="stage-text">
+        <p class="stage-overline" style="color:#2a7ab5;">Stage One</p>
+        <h2>Air enters the engine</h2>
+        <p>Everything begins with air. Atmospheric air is drawn into the engine through a carefully shaped inlet designed to slow and smooth the flow. In a commercial turbofan, a large fan at the front does much of the work, accelerating <span class="stat-chip" style="background:#eef7ff;color:#2a7ab5;">1,000 kg/s</span> of air at cruise altitude.</p>
+      </div>
+    </section>
+
+    <!-- Stage 2 -->
+    <hr class="stage-divider">
+    <section class="stage-section flip" id="s2" data-stage="2">
+      <div class="stage-media">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/c/ca/Axial_compressor.gif" alt="Axial compressor animation">
+        <p class="cap">Axial compressor — alternating rotating and stationary blade rows. (Wikimedia Commons)</p>
+      </div>
+      <div class="stage-text">
+        <p class="stage-overline" style="color:#8a6e00;">Stage Two</p>
+        <h2>Air is squeezed under enormous pressure</h2>
+        <p>Alternating rotating blades (rotors) and fixed blades (stators) compress the air progressively tighter. By the exit, pressure reaches <span class="stat-chip" style="background:#fdf8e6;color:#8a6e00;">40× atmospheric</span> — the single biggest lever on engine efficiency.</p>
+      </div>
+    </section>
+
+    <!-- Stage 3 -->
+    <hr class="stage-divider">
+    <section class="stage-section" id="s3" data-stage="3">
+      <div class="stage-media">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/64/Combustor_of_sectioned_Rolls-Royce_Turbom%C3%A9ca_Adour_turbofan.jpg" alt="Rolls-Royce Adour combustor">
+        <p class="cap">Combustor of a sectioned Rolls-Royce Turbomeca Adour turbofan. (Wikimedia Commons / CC BY-SA)</p>
+      </div>
+      <div class="stage-text">
+        <p class="stage-overline" style="color:#a84a1e;">Stage Three</p>
+        <h2>Fuel burns — continuously, at extreme heat</h2>
+        <p>Fuel is injected and ignited. Unlike a car engine's intermittent explosions, the flame burns <em>continuously</em> at <span class="stat-chip" style="background:#fdf0e8;color:#a84a1e;">1,500°C</span>. Hollow blades and ceramic coatings protect the turbine from heat that would otherwise destroy it.</p>
+      </div>
+    </section>
+
+    <!-- Stage 4 -->
+    <hr class="stage-divider">
+    <section class="stage-section flip" id="s4" data-stage="4">
+      <div class="stage-media">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/e/e9/J79_GenElectr_BMW-liz_1961_%28Starfighter_F4%29_MTU-Museum_20231112_08w.jpg" alt="GE J79 turbine section">
+        <p class="cap">Three-stage turbine of a GE J79 engine at the MTU Museum. (Wikimedia Commons / CC BY-SA)</p>
+      </div>
+      <div class="stage-text">
+        <p class="stage-overline" style="color:#1f7a35;">Stage Four</p>
+        <h2>Hot gas spins the turbine — and drives the world</h2>
+        <p>Expanding exhaust blasts through the turbine blades at immense velocity, spinning the shaft. Part drives the compressor, keeping the cycle self-sustaining. The remainder becomes thrust, shaft torque for a helicopter's rotor, or electrical power from a coupled generator — <span class="stat-chip" style="background:#edf7ef;color:#1f7a35;">60% efficiency</span> in combined-cycle plants.</p>
+      </div>
+    </section>
+
+  </div><!-- end .wrap -->
+
+  <!-- Engine schematics — dark section -->
+  <div class="engine-section">
+    <div class="engine-inner">
+      <p class="engine-eyebrow">Two Types of Gas Turbine</p>
+      <div class="engine-grid">
+
+        <div class="engine-card">
+          <p class="engine-label" style="color:#5bb8f5;">Thrust Engine — Turbofan</p>
+          <img src="https://upload.wikimedia.org/wikipedia/commons/7/75/Turbofan_operation.svg" alt="Turbofan engine schematic">
+          <p class="engine-desc">A large fan pushes most air around the core as bypass flow, producing efficient thrust. Used in commercial jets and fighter aircraft.</p>
+        </div>
+
+        <div class="engine-card">
+          <p class="engine-label" style="color:#6fcf7a;">Power Engine — Turboshaft</p>
+          <img src="https://upload.wikimedia.org/wikipedia/commons/6/69/Turboshaft_operation_%28multilanguage%29.svg" alt="Turboshaft engine schematic">
+          <svg viewBox="0 0 320 80" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;margin-top:4px;">
+            <line x1="0" y1="40" x2="160" y2="40" stroke="#6fcf7a" stroke-width="3" stroke-dasharray="6,4"/>
+            <polygon points="158,34 172,40 158,46" fill="#6fcf7a"/>
+            <rect x="172" y="16" width="96" height="48" rx="8" fill="#1e3a2a" stroke="#6fcf7a" stroke-width="1.5"/>
+            <circle cx="220" cy="40" r="16" fill="none" stroke="#6fcf7a" stroke-width="1.5"/>
+            <text x="220" y="45" text-anchor="middle" font-size="14" font-weight="700" fill="#6fcf7a" font-family="sans-serif">G</text>
+            <line x1="268" y1="28" x2="310" y2="28" stroke="#f5d76e" stroke-width="2"/>
+            <line x1="268" y1="40" x2="310" y2="40" stroke="#f5d76e" stroke-width="2"/>
+            <line x1="268" y1="52" x2="310" y2="52" stroke="#f5d76e" stroke-width="2"/>
+            <text x="80" y="33" text-anchor="middle" font-size="9" fill="#6aaa74" font-family="sans-serif" letter-spacing="0.5">SHAFT</text>
+            <text x="292" y="22" text-anchor="middle" font-size="9" fill="#d4be6a" font-family="sans-serif">⚡ AC</text>
+          </svg>
+          <p class="engine-desc">All turbine energy extracted as shaft power, driving a generator, helicopter rotor, or ship propeller.</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <footer><a href="../index.html">← Back to gallery</a></footer>
+
+  <script>
+    const sections = document.querySelectorAll('[data-stage]');
+    const pills    = document.querySelectorAll('.nav-pill');
+    const ovEls    = { 1: document.getElementById('ov1'), 2: document.getElementById('ov2'), 3: document.getElementById('ov3'), 4: document.getElementById('ov4') };
+
+    // Scroll-spy
+    const spy = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const n = parseInt(entry.target.dataset.stage);
+          pills.forEach(p => p.classList.toggle('active', parseInt(p.dataset.stage) === n));
+          Object.values(ovEls).forEach(o => o.classList.remove('active'));
+          ovEls[n].classList.add('active');
+        }
+      });
+    }, { threshold: 0.45 });
+
+    sections.forEach(s => spy.observe(s));
+
+    // Click-to-cycle schematic
+    let schematicStage = 0;
+    function cycleStage() {
+      schematicStage = (schematicStage % 4) + 1;
+      Object.values(ovEls).forEach(o => o.classList.remove('active'));
+      ovEls[schematicStage].classList.add('active');
+    }
+  </script>
+
+</body>
+</html>
