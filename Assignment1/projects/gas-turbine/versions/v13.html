@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>How a Gas Turbine Works — v13</title>
+  <title>Gas Turbines in Renewable Energy & Grid Balancing — v13</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #111; color: #f0f0f0; }
@@ -91,67 +91,57 @@
 
       <div style="padding:32px;background:#161616;border:1px solid #2a2a2a;border-radius:12px;margin-bottom:40px;">
         <p style="font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;color:#555;margin-bottom:16px;">Why It Matters</p>
-        <p style="font-size:1.05rem;line-height:1.85;color:#ccc;">Gas turbines are one of the most consequential technologies in modern civilization. Every time you board a flight, switch on a light, or heat your home, there is a good chance a gas turbine made it possible. Their extraordinary power-to-weight ratio — producing thousands of horsepower from an engine you could fit in a living room — makes them irreplaceable in applications where size and weight are critical. Unlike steam turbines, which take hours to reach operating temperature, a gas turbine can reach full power in minutes, making it the backbone of electrical grids worldwide for meeting sudden spikes in demand. As the global energy mix shifts toward renewables, gas turbines are taking on a new role: balancing intermittent wind and solar power by providing instant, reliable backup generation. Far from becoming obsolete, the gas turbine continues to evolve — with advances in ceramic blade materials, additive manufacturing, and hydrogen combustion positioning it as a key bridge technology toward a lower-carbon future.</p>
+        <p style="font-size:1.05rem;line-height:1.85;color:#ccc;">As solar and wind capacity surges, grid operators face a relentless challenge: the sun does not always shine and the wind does not always blow. Gas turbines are the essential complement — starting from cold in under 10 minutes, ramping at over 100 MW per minute, and capable of co-firing hydrogen blends as the fuel mix evolves. Modern combined-cycle gas turbine (CCGT) plants already exceed 60% thermal efficiency — the highest of any dispatchable generation technology. Peaker units cover demand spikes that batteries cannot yet economically fill. As storage costs fall, gas turbines will shift from baseload toward backup and frequency regulation — but the physics of energy density mean they remain the grid's most reliable insurance policy for decades to come.</p>
       </div>
 
       <div style="margin-bottom:40px;">
-        <p style="font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;color:#555;margin-bottom:24px;">Where Gas Turbines Are Used</p>
-        <div style="margin-bottom:28px;">
-          <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;"><div style="height:1px;flex:1;background:#2a2a2a;"></div><span style="font-size:0.75rem;letter-spacing:0.1em;text-transform:uppercase;color:#5bb8f5;font-weight:600;">Thrust Production</span><div style="height:1px;flex:1;background:#2a2a2a;"></div></div>
-          <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;">
-            <div style="background:#111d2b;border:1px solid #1e3048;border-radius:10px;padding:16px;"><div style="font-size:1.8rem;margin-bottom:8px;">✈️</div><div style="font-weight:700;font-size:0.9rem;margin-bottom:4px;">Commercial Aviation</div><div style="font-size:0.78rem;color:#777;line-height:1.4;">Turbofan engines power nearly every commercial aircraft.</div></div>
-            <div style="background:#111d2b;border:1px solid #1e3048;border-radius:10px;padding:16px;"><div style="font-size:1.8rem;margin-bottom:8px;">🪖</div><div style="font-weight:700;font-size:0.9rem;margin-bottom:4px;">Military Aircraft</div><div style="font-size:0.78rem;color:#777;line-height:1.4;">Fighter jets use afterburning turbofans for supersonic speeds.</div></div>
-            <div style="background:#111d2b;border:1px solid #1e3048;border-radius:10px;padding:16px;"><div style="font-size:1.8rem;margin-bottom:8px;">🚀</div><div style="font-weight:700;font-size:0.9rem;margin-bottom:4px;">Cruise Missiles</div><div style="font-size:0.78rem;color:#777;line-height:1.4;">Small turbojets propel missiles over long distances.</div></div>
-          </div>
-        </div>
-        <div>
-          <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;"><div style="height:1px;flex:1;background:#2a2a2a;"></div><span style="font-size:0.75rem;letter-spacing:0.1em;text-transform:uppercase;color:#6fcf7a;font-weight:600;">Power Production</span><div style="height:1px;flex:1;background:#2a2a2a;"></div></div>
-          <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;">
-            <div style="background:#111d1a;border:1px solid #1e3022;border-radius:10px;padding:16px;"><div style="font-size:1.8rem;margin-bottom:8px;">⚡</div><div style="font-weight:700;font-size:0.9rem;margin-bottom:4px;">Power Generation</div><div style="font-size:0.78rem;color:#777;line-height:1.4;">~20% of the world's electricity, spinning up in minutes.</div></div>
-            <div style="background:#111d1a;border:1px solid #1e3022;border-radius:10px;padding:16px;"><div style="font-size:1.8rem;margin-bottom:8px;">🚢</div><div style="font-weight:700;font-size:0.9rem;margin-bottom:4px;">Naval Ships</div><div style="font-size:0.78rem;color:#777;line-height:1.4;">Destroyers and frigates for power-to-weight and rapid acceleration.</div></div>
-            <div style="background:#111d1a;border:1px solid #1e3022;border-radius:10px;padding:16px;"><div style="font-size:1.8rem;margin-bottom:8px;">🚁</div><div style="font-weight:700;font-size:0.9rem;margin-bottom:4px;">Helicopters</div><div style="font-size:0.78rem;color:#777;line-height:1.4;">Turboshafts deliver rotor power with exceptional efficiency.</div></div>
-            <div style="background:#111d1a;border:1px solid #1e3022;border-radius:10px;padding:16px;"><div style="font-size:1.8rem;margin-bottom:8px;">🛢️</div><div style="font-weight:700;font-size:0.9rem;margin-bottom:4px;">Pipelines</div><div style="font-size:0.78rem;color:#777;line-height:1.4;">Drive compressor stations for natural gas pipelines.</div></div>
-          </div>
+        <p style="font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;color:#555;margin-bottom:24px;">Grid & Renewable Energy Applications</p>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;">
+          <div style="background:#111d1a;border:1px solid #1e3022;border-radius:10px;padding:16px;"><div style="font-size:1.8rem;margin-bottom:8px;">⚡</div><div style="font-weight:700;font-size:0.9rem;margin-bottom:4px;">Peaker Plants</div><div style="font-size:0.78rem;color:#777;line-height:1.4;">Simple-cycle turbines spin up in &lt;10 min to cover demand spikes. 1–400 MW.</div></div>
+          <div style="background:#111d1a;border:1px solid #1e3022;border-radius:10px;padding:16px;"><div style="font-size:1.8rem;margin-bottom:8px;">🔄</div><div style="font-weight:700;font-size:0.9rem;margin-bottom:4px;">CCGT Plants</div><div style="font-size:0.78rem;color:#777;line-height:1.4;">Exhaust heat to HRSG drives a steam turbine — up to 63% thermal efficiency.</div></div>
+          <div style="background:#111d1a;border:1px solid #1e3022;border-radius:10px;padding:16px;"><div style="font-size:1.8rem;margin-bottom:8px;">📡</div><div style="font-weight:700;font-size:0.9rem;margin-bottom:4px;">Frequency Regulation</div><div style="font-size:0.78rem;color:#777;line-height:1.4;">Ramp 100+ MW/min to stabilize grid frequency alongside renewables.</div></div>
+          <div style="background:#111d1a;border:1px solid #1e3022;border-radius:10px;padding:16px;"><div style="font-size:1.8rem;margin-bottom:8px;">☀️</div><div style="font-weight:700;font-size:0.9rem;margin-bottom:4px;">Solar Backup</div><div style="font-size:0.78rem;color:#777;line-height:1.4;">Dispatchable backup for hybrid solar+gas plants when irradiance drops.</div></div>
+          <div style="background:#111d1a;border:1px solid #1e3022;border-radius:10px;padding:16px;"><div style="font-size:1.8rem;margin-bottom:8px;">🌿</div><div style="font-weight:700;font-size:0.9rem;margin-bottom:4px;">H₂ Co-Firing</div><div style="font-size:0.78rem;color:#777;line-height:1.4;">30% H₂ blends commercially available; GE targets 100% H₂ turbines by 2030.</div></div>
         </div>
       </div>
 
       <div class="stage-block" data-stage="1">
         <p class="stage-tag" style="color:#5bb8f5;">Stage 1 — Intake</p>
-        <h2>Air enters the engine</h2>
-        <p>The intake duct draws atmospheric air in and smooths the flow. A large fan accelerates the air — a commercial turbofan swallows <span class="stat" style="background:#0e1e2e;color:#5bb8f5;">1,000 kg/s</span> at cruise altitude.</p>
+        <h2>Filtered air — up to 800 kg/s</h2>
+        <p>Utility-scale gas turbines ingest <span class="stat" style="background:#0e1e2e;color:#5bb8f5;">400–800 kg/s</span> through multi-stage inlet filter houses. Evaporative coolers or mechanical chillers lower inlet temperature by 10–15°C, recovering 15%+ of output lost on hot summer days when grid demand peaks highest.</p>
         <img src="https://upload.wikimedia.org/wikipedia/commons/e/e3/Air_intake%2C_fan_and_compressor_of_sectioned_Rolls-Royce_Turbom%C3%A9ca_Adour_turbofan_01.jpg" alt="Rolls-Royce Adour turbofan intake">
         <p class="cap">Sectioned Rolls-Royce Turbomeca Adour turbofan — intake and fan. (Wikimedia Commons / CC BY-SA)</p>
       </div>
 
       <div class="stage-block" data-stage="2">
         <p class="stage-tag" style="color:#f5d76e;">Stage 2 — Compression</p>
-        <h2>Pressure rises to 40× atmospheric</h2>
-        <p>Alternating rotating and fixed blade rows squeeze the air in stages. Pressure reaches <span class="stat" style="background:#1e1c0e;color:#f5d76e;">40× atmospheric</span> — the foundation of the engine's power.</p>
+        <h2>OPR 23:1 — the efficiency lever</h2>
+        <p>The GE 7HA.03 achieves an overall pressure ratio of <span class="stat" style="background:#1e1c0e;color:#f5d76e;">OPR 23.5:1</span> across 14 stages. Inter-stage bleed air supports DLN combustor premixing — critical for meeting EPA Tier 4 and EU IED NOx limits that grid operators must demonstrate to regulators.</p>
         <img src="https://upload.wikimedia.org/wikipedia/commons/c/ca/Axial_compressor.gif" alt="Axial compressor animation">
         <p class="cap">Axial compressor — rotor and stator blade rows. (Wikimedia Commons)</p>
       </div>
 
       <div class="stage-block" data-stage="3">
         <p class="stage-tag" style="color:#f5824f;">Stage 3 — Combustion</p>
-        <h2>Continuous flame at 1,500°C</h2>
-        <p>Fuel burns without interruption, sustaining temperatures of <span class="stat" style="background:#1e0e08;color:#f5824f;">1,500°C</span>. Hollow blades and ceramic coatings protect the turbine from the extreme heat.</p>
+        <h2>DLN burners — &lt;25 ppm NOx</h2>
+        <p>Dry Low-NOx (DLN) combustors premix fuel and air before ignition, holding flame temperature precisely at <span class="stat" style="background:#1e0e08;color:#f5824f;">TIT 1,400°C</span>. H₂ co-firing up to 30% is commercially deployed today; 100% hydrogen combustion is in pilot testing for 2030 fleet availability.</p>
         <img src="https://upload.wikimedia.org/wikipedia/commons/6/64/Combustor_of_sectioned_Rolls-Royce_Turbom%C3%A9ca_Adour_turbofan.jpg" alt="Rolls-Royce Adour combustor">
         <p class="cap">Combustor of a sectioned Rolls-Royce Turbomeca Adour turbofan. (Wikimedia Commons / CC BY-SA)</p>
       </div>
 
       <div class="stage-block" data-stage="4">
         <p class="stage-tag" style="color:#6fcf7a;">Stage 4 — Power Out</p>
-        <h2>Hot gas spins the turbine</h2>
-        <p>Expanding exhaust blasts through turbine blades at thousands of RPM. The turbine drives the compressor and delivers thrust, shaft torque, or electrical power depending on the application.</p>
+        <h2>400–600 MW per CCGT train</h2>
+        <p>The power turbine drives a generator at 3,000 or 3,600 RPM, producing up to <span class="stat" style="background:#0e1e15;color:#6fcf7a;">400 MW</span> per block. In CCGT configuration, 570°C exhaust feeds a heat recovery steam generator (HRSG), adding 200 MW more and pushing plant efficiency above 63%. Grid response from standby to full load: under 30 minutes.</p>
         <img src="https://upload.wikimedia.org/wikipedia/commons/e/e9/J79_GenElectr_BMW-liz_1961_%28Starfighter_F4%29_MTU-Museum_20231112_08w.jpg" alt="GE J79 turbine section">
         <p class="cap">Three-stage turbine of a GE J79 engine at the MTU Museum. (Wikimedia Commons / CC BY-SA)</p>
       </div>
 
       <div style="margin-top:60px;">
-        <p style="font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;color:#555;margin-bottom:32px;">Two Types of Gas Turbine</p>
+        <p style="font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;color:#555;margin-bottom:32px;">Simple-Cycle vs. Combined-Cycle</p>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
-          <div><p style="font-size:0.78rem;font-weight:700;color:#5bb8f5;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:12px;">Thrust Engine</p><div style="background:#1a1a1a;border-radius:10px;overflow:hidden;padding:12px;"><img src="https://upload.wikimedia.org/wikipedia/commons/7/75/Turbofan_operation.svg" alt="Turbofan schematic" style="width:100%;display:block;"></div><p style="font-size:0.78rem;color:#888;margin-top:8px;line-height:1.5;">Turbofan — bypass air produces efficient thrust. Used in jets and fighter aircraft.</p></div>
-          <div><p style="font-size:0.78rem;font-weight:700;color:#6fcf7a;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:12px;">Power Engine</p><div style="background:#1a1a1a;border-radius:10px;overflow:hidden;padding:12px;"><img src="https://upload.wikimedia.org/wikipedia/commons/6/69/Turboshaft_operation_%28multilanguage%29.svg" alt="Turboshaft schematic" style="width:100%;display:block;"><svg viewBox="0 0 320 80" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;margin-top:4px;"><line x1="0" y1="40" x2="160" y2="40" stroke="#6fcf7a" stroke-width="3" stroke-dasharray="6,4"/><polygon points="158,34 172,40 158,46" fill="#6fcf7a"/><rect x="172" y="16" width="96" height="48" rx="8" fill="#1e3a2a" stroke="#6fcf7a" stroke-width="1.5"/><circle cx="220" cy="40" r="16" fill="none" stroke="#6fcf7a" stroke-width="1.5"/><text x="220" y="45" text-anchor="middle" font-size="14" font-weight="700" fill="#6fcf7a" font-family="sans-serif">G</text><line x1="268" y1="28" x2="310" y2="28" stroke="#f5d76e" stroke-width="2"/><line x1="268" y1="40" x2="310" y2="40" stroke="#f5d76e" stroke-width="2"/><line x1="268" y1="52" x2="310" y2="52" stroke="#f5d76e" stroke-width="2"/><text x="80" y="33" text-anchor="middle" font-size="9" fill="#6aaa74" font-family="sans-serif">SHAFT</text><text x="292" y="22" text-anchor="middle" font-size="9" fill="#d4be6a" font-family="sans-serif">⚡ AC</text></svg></div><p style="font-size:0.78rem;color:#888;margin-top:8px;line-height:1.5;">Turboshaft — shaft power drives generators, rotors, and propellers.</p></div>
+          <div><p style="font-size:0.78rem;font-weight:700;color:#5bb8f5;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:12px;">Peaker (Simple-Cycle)</p><div style="background:#1a1a1a;border-radius:10px;overflow:hidden;padding:12px;"><img src="https://upload.wikimedia.org/wikipedia/commons/7/75/Turbofan_operation.svg" alt="Turbofan schematic" style="width:100%;display:block;"></div><p style="font-size:0.78rem;color:#888;margin-top:8px;line-height:1.5;">Open-cycle turbine — spins up from cold in under 10 min for fast grid response. Efficiency ~38%.</p></div>
+          <div><p style="font-size:0.78rem;font-weight:700;color:#6fcf7a;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:12px;">CCGT (Combined-Cycle)</p><div style="background:#1a1a1a;border-radius:10px;overflow:hidden;padding:12px;"><img src="https://upload.wikimedia.org/wikipedia/commons/6/69/Turboshaft_operation_%28multilanguage%29.svg" alt="Turboshaft schematic" style="width:100%;display:block;"><svg viewBox="0 0 320 80" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;margin-top:4px;"><line x1="0" y1="40" x2="160" y2="40" stroke="#6fcf7a" stroke-width="3" stroke-dasharray="6,4"/><polygon points="158,34 172,40 158,46" fill="#6fcf7a"/><rect x="172" y="16" width="96" height="48" rx="8" fill="#1e3a2a" stroke="#6fcf7a" stroke-width="1.5"/><circle cx="220" cy="40" r="16" fill="none" stroke="#6fcf7a" stroke-width="1.5"/><text x="220" y="45" text-anchor="middle" font-size="14" font-weight="700" fill="#6fcf7a" font-family="sans-serif">G</text><line x1="268" y1="28" x2="310" y2="28" stroke="#f5d76e" stroke-width="2"/><line x1="268" y1="40" x2="310" y2="40" stroke="#f5d76e" stroke-width="2"/><line x1="268" y1="52" x2="310" y2="52" stroke="#f5d76e" stroke-width="2"/><text x="80" y="33" text-anchor="middle" font-size="9" fill="#6aaa74" font-family="sans-serif">SHAFT</text><text x="292" y="22" text-anchor="middle" font-size="9" fill="#d4be6a" font-family="sans-serif">⚡ AC</text></svg></div><p style="font-size:0.78rem;color:#888;margin-top:8px;line-height:1.5;">CCGT plant — HRSG recovers exhaust heat to drive a steam turbine. Efficiency 60–63%+.</p></div>
         </div>
       </div>
 
