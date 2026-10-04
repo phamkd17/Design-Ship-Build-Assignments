@@ -28,8 +28,59 @@
     .nav-pill[data-stage="3"].active { color: #f5824f; border-color: #f5824f; background: rgba(245,130,80,0.08); }
     .nav-pill[data-stage="4"].active { color: #6fcf7a; border-color: #6fcf7a; background: rgba(111,207,122,0.08); }
 
-    /* ── Editorial header ── */
-    .editorial { max-width: 860px; margin: 0 auto; padding: 72px 24px 0; }
+    /* ── Dark hero ── */
+    .hero {
+      background: #0a0a0a;
+      padding: 100px 24px 88px;
+      text-align: center;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    .hero-eyebrow {
+      font-size: 0.72rem; letter-spacing: 0.22em; text-transform: uppercase;
+      color: #555; margin-bottom: 28px;
+    }
+    .hero h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2.8rem, 6vw, 5rem);
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      color: #fff;
+      max-width: 820px;
+      margin: 0 auto 28px;
+    }
+    .hero h1 em { font-style: italic; color: #888; }
+    .hero-sub {
+      font-size: 1rem; color: #666; max-width: 540px;
+      margin: 0 auto; line-height: 1.75;
+    }
+
+    /* ── Pull quote + editorial body ── */
+    .editorial-wrap {
+      background: #0f0f0f;
+      border-bottom: 1px solid #1a1a1a;
+      padding: 72px 24px;
+    }
+    .editorial-inner { max-width: 740px; margin: 0 auto; }
+    .pull-quote {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.45rem;
+      font-style: italic;
+      color: #ccc;
+      line-height: 1.55;
+      border-left: 3px solid #444;
+      padding: 4px 0 4px 28px;
+      margin-bottom: 40px;
+    }
+    .editorial-body {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.05rem;
+      line-height: 1.9;
+      color: #888;
+    }
+
+    /* ── Editorial header (now just a spacer into stats) ── */
+    .editorial { max-width: 860px; margin: 0 auto; padding: 56px 24px 0; }
     .editorial h1 { font-size: clamp(2.2rem, 4.5vw, 3.4rem); font-weight: 700; letter-spacing: -0.03em; line-height: 1.12; margin-bottom: 16px; }
     .editorial .lead { color: #666; font-size: 1rem; max-width: 560px; line-height: 1.75; }
 
@@ -154,10 +205,28 @@
     <a class="nav-pill" data-stage="4" href="#s4">Power Out</a>
   </nav>
 
-  <!-- Editorial header -->
-  <div class="editorial">
-    <h1>How a Gas Turbine Works</h1>
-    <p class="lead">One machine. Seven industries. Select an application to see how each stage changes across turbofan jets, power plants, naval vessels, helicopters, and more.</p>
+  <!-- Dark hero -->
+  <div class="hero">
+    <p class="hero-eyebrow">Engineering Explained</p>
+    <h1>One of humanity's most powerful engines — <em>in four stages.</em></h1>
+    <p class="hero-sub">Gas turbines power the flights we take, the electricity in our homes, and the ships that guard our seas. Here is how they work.</p>
+  </div>
+
+  <!-- Pull quote + editorial body -->
+  <div class="editorial-wrap">
+    <div class="editorial-inner">
+      <div class="pull-quote">
+        "Every time you board a flight or switch on a light, there is a good chance a gas turbine made it possible."
+      </div>
+      <p class="editorial-body">
+        The gas turbine is arguably the defining machine of the modern age. Its extraordinary power-to-weight ratio — producing thousands of horsepower from an engine small enough to fit in a living room — makes it irreplaceable anywhere size and weight are critical. In commercial aviation, high-bypass turbofans have cut fuel burn by 40% since 1990. In military aircraft, afterburning turbojets push fighters past Mach 2. In power generation and renewable grid balancing, gas turbines spin up in under ten minutes to absorb demand spikes that batteries cannot yet fill. Naval destroyers sprint past 30 knots on marine gas turbines; helicopter turboshafts deliver shaft power at altitudes where piston engines fail; oil and gas pipeline compressors run continuously for 25,000+ hours on direct mechanical drive. Far from becoming obsolete, the gas turbine continues to evolve — through ceramic blade materials, additive manufacturing, and hydrogen combustion — remaining the engine at the center of modern civilization.
+      </p>
+    </div>
+  </div>
+
+  <!-- Stats label -->
+  <div class="editorial" style="padding-bottom:0;">
+    <p style="font-size:0.68rem;letter-spacing:0.16em;text-transform:uppercase;color:#444;">Key Numbers — select an application above to update</p>
   </div>
 
   <!-- Stats (dynamic) -->
@@ -183,7 +252,7 @@
   <!-- Why It Matters -->
   <div class="why">
     <p class="eyebrow">Why It Matters</p>
-    <p id="why-text">Gas turbines are one of the most consequential technologies in modern civilization. Every time you board a flight, switch on a light, or heat your home, there is a good chance a gas turbine made it possible. Their extraordinary power-to-weight ratio — producing thousands of horsepower from an engine small enough to fit in a living room — makes them irreplaceable in applications where size and weight are critical.</p>
+    <p id="why-text">Gas turbines serve seven distinct industries — each demanding something different from the same four-stage thermodynamic cycle. In commercial aviation, high-bypass turbofans achieve bypass ratios of 12:1 and TSFC below 0.50 kg/kN·h. Military fighter jets add afterburners for 180 kN of thrust. Renewable energy peaker plants ramp at 100 MW per minute to balance wind and solar. Utility CCGT plants exceed 63% thermal efficiency. Naval destroyers rely on marine gas turbines to sprint past 30 knots in under two minutes. Helicopter turboshafts deliver free-shaft-power at 15,000 ft where piston engines cannot. And oil and gas pipeline compressors run 25,000+ hours on direct mechanical drive with API 616 fuel conditioning. Select an application above to see how each stage changes.</p>
   </div>
 
   <!-- Applications overview -->
