@@ -178,7 +178,7 @@
     .stage-tag { font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 700; margin-bottom: 14px; }
     .stage-h2 { font-size: 1.85rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 16px; line-height: 1.2; transition: opacity 0.2s; }
     .stage-body { color: #999; line-height: 1.82; font-size: 0.95rem; max-width: 480px; margin-bottom: 20px; transition: opacity 0.2s; }
-    .stage-block img { width: 100%; border-radius: 10px; max-height: 220px; object-fit: cover; display: block; }
+    .stage-block img { width: 100%; border-radius: 10px; max-height: 220px; object-fit: cover; display: block; transition: opacity 0.2s; }
     .cap { font-size: 0.7rem; color: #444; margin-top: 6px; line-height: 1.4; }
     .chip { display: inline-block; font-size: 0.8rem; font-weight: 700; padding: 2px 8px; border-radius: 4px; }
 
@@ -337,32 +337,32 @@
         <p class="stage-tag" style="color:#5bb8f5;">Stage 1 — Intake</p>
         <h2 class="stage-h2" id="h1">Large fan ingests 800+ kg/s</h2>
         <p class="stage-body" id="b1">A high-bypass turbofan's large front fan accelerates <span class="chip" style="background:#0e1e2e;color:#5bb8f5;">800 kg/s</span> of air, with ~85% bypassing the core as cold thrust stream. The inlet duct is precisely contoured to avoid flow separation at all speeds and angles of attack. Bypass ratio (BPR 12:1 on CFM LEAP) is the primary driver of fuel economy — the higher the ratio, the more thrust per kilogram of fuel burned.</p>
-        <img src="https://upload.wikimedia.org/wikipedia/commons/e/e3/Air_intake%2C_fan_and_compressor_of_sectioned_Rolls-Royce_Turbom%C3%A9ca_Adour_turbofan_01.jpg" alt="Turbofan intake">
-        <p class="cap">Sectioned Rolls-Royce Turbomeca Adour turbofan — intake and fan. (Wikimedia Commons / CC BY-SA)</p>
+        <img id="img1" src="https://upload.wikimedia.org/wikipedia/commons/e/e3/Air_intake%2C_fan_and_compressor_of_sectioned_Rolls-Royce_Turbom%C3%A9ca_Adour_turbofan_01.jpg" alt="Turbofan intake">
+        <p class="cap" id="cap1">Sectioned Rolls-Royce Turbomeca Adour turbofan — large front fan and bypass duct. High BPR (12:1 on CFM LEAP) is the primary driver of commercial aviation fuel economy. (Wikimedia Commons / CC BY-SA)</p>
       </div>
 
       <div class="stage-block" id="s2" data-stage="2">
         <p class="stage-tag" style="color:#f5d76e;">Stage 2 — Compression</p>
         <h2 class="stage-h2" id="h2">17-stage HPC — OPR 40:1</h2>
         <p class="stage-body" id="b2">The high-pressure compressor squeezes air to <span class="chip" style="background:#1e1c0e;color:#f5d76e;">40× atmospheric</span> across 17 stages (CFM56/LEAP). Variable inlet guide vanes and stator vanes adjust to maintain surge margin across the full flight envelope — from sea-level takeoff to Mach 0.85 cruise at 12,000 m. Tip clearance control via active thermal management keeps efficiency above 90%.</p>
-        <img src="https://upload.wikimedia.org/wikipedia/commons/c/ca/Axial_compressor.gif" alt="Axial compressor animation">
-        <p class="cap">Axial compressor — alternating rotor and stator blade rows. (Wikimedia Commons)</p>
+        <img id="img2" src="https://upload.wikimedia.org/wikipedia/commons/c/ca/Axial_compressor.gif" alt="Axial compressor animation">
+        <p class="cap" id="cap2">Axial compressor — 17+ alternating rotor and stator rows compress air to 40× atmospheric in a modern turbofan. Variable inlet guide vanes maintain surge margin across the flight envelope. (Wikimedia Commons)</p>
       </div>
 
       <div class="stage-block" id="s3" data-stage="3">
         <p class="stage-tag" style="color:#f5824f;">Stage 3 — Combustion</p>
         <h2 class="stage-h2" id="h3">Annular combustor at 1,600°C TIT</h2>
         <p class="stage-body" id="b3">An annular combustor burns Jet-A or SAF continuously at a turbine inlet temperature of <span class="chip" style="background:#1e0e08;color:#f5824f;">1,600°C</span> — far above nickel alloy melting point. Transpiration and film cooling plus thermal barrier coatings protect HPT blades. Modern TAPS (Twin Annular Pre-Swirl) combustors achieve ultra-low NOx while maintaining combustion stability from idle to max thrust.</p>
-        <img src="https://upload.wikimedia.org/wikipedia/commons/6/64/Combustor_of_sectioned_Rolls-Royce_Turbom%C3%A9ca_Adour_turbofan.jpg" alt="Combustor">
-        <p class="cap">Combustor of a sectioned Rolls-Royce Turbomeca Adour turbofan. (Wikimedia Commons / CC BY-SA)</p>
+        <img id="img3" src="https://upload.wikimedia.org/wikipedia/commons/6/64/Combustor_of_sectioned_Rolls-Royce_Turbom%C3%A9ca_Adour_turbofan.jpg" alt="Combustor">
+        <p class="cap" id="cap3">Annular combustor — burns Jet-A or SAF continuously at 1,600°C TIT. TAPS (Twin Annular Pre-Swirl) design achieves ultra-low NOx while maintaining stability from idle to max thrust. (Wikimedia Commons / CC BY-SA)</p>
       </div>
 
       <div class="stage-block" id="s4" data-stage="4">
         <p class="stage-tag" style="color:#6fcf7a;">Stage 4 — Power Out</p>
         <h2 class="stage-h2" id="h4">HPT drives core; LPT drives fan</h2>
         <p class="stage-body" id="b4">A single-stage HPT (TBC-coated, cooled) extracts energy to drive the HPC on the high-speed shaft. A multi-stage LPT on the low-speed shaft drives the large front fan, producing ~75–100 kN of net thrust. The cold bypass stream and hot core exhaust mix at the nozzle, with TSFC of <span class="chip" style="background:#0e1e15;color:#6fcf7a;">0.50 kg/kN·h</span> — the best in class for long-haul aircraft.</p>
-        <img src="https://upload.wikimedia.org/wikipedia/commons/e/e9/J79_GenElectr_BMW-liz_1961_%28Starfighter_F4%29_MTU-Museum_20231112_08w.jpg" alt="GE J79 turbine">
-        <p class="cap">Three-stage turbine section of a GE J79 engine. (Wikimedia Commons / CC BY-SA)</p>
+        <img id="img4" src="https://upload.wikimedia.org/wikipedia/commons/e/e9/J79_GenElectr_BMW-liz_1961_%28Starfighter_F4%29_MTU-Museum_20231112_08w.jpg" alt="GE J79 turbine">
+        <p class="cap" id="cap4">Three-stage turbine — single HPT drives the HPC, multi-stage LPT drives the front fan. Together they deliver 75–100 kN net thrust at TSFC 0.50 kg/kN·h. (Wikimedia Commons / CC BY-SA)</p>
       </div>
 
       <footer><a href="../index.html">← Back to gallery</a></footer>
@@ -370,6 +370,14 @@
   </div>
 
   <script>
+    // ── Fallback images (known-working Wikimedia URLs) ────────────────
+    const FB = [
+      'https://upload.wikimedia.org/wikipedia/commons/e/e3/Air_intake%2C_fan_and_compressor_of_sectioned_Rolls-Royce_Turbom%C3%A9ca_Adour_turbofan_01.jpg',
+      'https://upload.wikimedia.org/wikipedia/commons/c/ca/Axial_compressor.gif',
+      'https://upload.wikimedia.org/wikipedia/commons/6/64/Combustor_of_sectioned_Rolls-Royce_Turbom%C3%A9ca_Adour_turbofan.jpg',
+      'https://upload.wikimedia.org/wikipedia/commons/e/e9/J79_GenElectr_BMW-liz_1961_%28Starfighter_F4%29_MTU-Museum_20231112_08w.jpg'
+    ];
+
     // ── Application data ──────────────────────────────────────────────
     const apps = [
       {
@@ -381,6 +389,12 @@
           ["17-stage HPC — OPR 40:1","The high-pressure compressor squeezes air to <span class='chip' style='background:#1e1c0e;color:#f5d76e;'>40× atmospheric</span> across up to 17 stages. Variable inlet guide vanes maintain surge margin across the full flight envelope from sea-level takeoff to Mach 0.85 cruise at 12,000 m. Active tip clearance control keeps isentropic efficiency above 90%."],
           ["Annular combustor at 1,600°C TIT","An annular combustor burns Jet-A or SAF continuously at <span class='chip' style='background:#1e0e08;color:#f5824f;'>1,600°C</span> TIT. TAPS (Twin Annular Pre-Swirl) combustors achieve ultra-low NOx while maintaining stability from idle to max thrust. Transpiration cooling and ceramic TBCs protect the HPT blades from temperatures far above nickel alloy melting point."],
           ["HPT drives core; LPT drives fan","A single-stage HPT extracts work to drive the HPC on the high shaft. A multi-stage LPT drives the large front fan, producing 75–100 kN net thrust. TSFC of <span class='chip' style='background:#0e1e15;color:#6fcf7a;'>0.50 kg/kN·h</span> — best in class for long-haul. The cold bypass and hot core exhaust mix at the convergent-divergent nozzle."],
+        ],
+        imgs: [
+          {src:'https://upload.wikimedia.org/wikipedia/commons/e/e3/Air_intake%2C_fan_and_compressor_of_sectioned_Rolls-Royce_Turbom%C3%A9ca_Adour_turbofan_01.jpg', alt:'High-bypass turbofan inlet and fan', cap:'Sectioned Rolls-Royce Turbomeca Adour turbofan — large front fan and bypass duct. High BPR (12:1 on CFM LEAP) is the primary driver of commercial aviation fuel economy. (Wikimedia Commons / CC BY-SA)'},
+          {src:'https://upload.wikimedia.org/wikipedia/commons/c/ca/Axial_compressor.gif', alt:'Axial compressor animation', cap:'Axial compressor — 17+ alternating rotor and stator rows compress air to 40× atmospheric in a modern turbofan. Variable inlet guide vanes maintain surge margin across the full flight envelope. (Wikimedia Commons)'},
+          {src:'https://upload.wikimedia.org/wikipedia/commons/6/64/Combustor_of_sectioned_Rolls-Royce_Turbom%C3%A9ca_Adour_turbofan.jpg', alt:'Annular combustor', cap:'Annular combustor — burns Jet-A or SAF continuously at 1,600°C TIT. TAPS (Twin Annular Pre-Swirl) design achieves ultra-low NOx while maintaining stability from idle to max thrust. (Wikimedia Commons / CC BY-SA)'},
+          {src:'https://upload.wikimedia.org/wikipedia/commons/e/e9/J79_GenElectr_BMW-liz_1961_%28Starfighter_F4%29_MTU-Museum_20231112_08w.jpg', alt:'High-pressure turbine section', cap:'Three-stage turbine — single HPT drives the HPC, multi-stage LPT drives the large front fan, producing 75–100 kN net thrust at TSFC 0.50 kg/kN·h. (Wikimedia Commons / CC BY-SA)'},
         ]
       },
       {
@@ -392,6 +406,12 @@
           ["10-stage HPC — OPR 25-30:1","Military HPC stages use titanium and nickel alloy blades designed for surge resistance at extreme angles of attack. OPR of <span class='chip' style='background:#1e1c0e;color:#f5d76e;'>25–30:1</span> in 10 stages. FADEC adjusts variable stator geometry in real time to prevent compressor stall during aggressive maneuvers at high alpha that can momentarily distort inlet flow."],
           ["Afterburner — 50% more thrust at 4× fuel","The dry combustor burns at <span class='chip' style='background:#1e0e08;color:#f5824f;'>1,700°C</span> TIT. Downstream, the afterburner (reheat) injects additional fuel into the hot exhaust, reaching ~2,000°C and adding 50% thrust — at the cost of 4× specific fuel consumption. A variable-area convergent-divergent nozzle opens to accommodate the massive exhaust volume at full reheat."],
           ["Single HPT — divergent nozzle thrust","A single-stage HPT extracts just enough work to drive the compressor. All remaining exhaust energy exits through the variable nozzle as <span class='chip' style='background:#0e1e15;color:#6fcf7a;'>thrust</span> — up to 180 kN with afterburner. Thrust vectoring nozzles (F119, AL-41) gimbal the exhaust to provide pitch/yaw control authority beyond what aerodynamic surfaces alone can deliver."],
+        ],
+        imgs: [
+          {src:'https://upload.wikimedia.org/wikipedia/commons/e/e3/Air_intake%2C_fan_and_compressor_of_sectioned_Rolls-Royce_Turbom%C3%A9ca_Adour_turbofan_01.jpg', alt:'Military turbofan inlet', cap:'Rolls-Royce Turbomeca Adour — the military turbofan powering the BAE Hawk and SEPECAT Jaguar. Supersonic fighters use variable-geometry ramp inlets to manage shock waves at Mach 2+ without losing inlet pressure recovery. (Wikimedia Commons / CC BY-SA)'},
+          {src:'https://upload.wikimedia.org/wikipedia/commons/c/ca/Axial_compressor.gif', alt:'Military HPC stages', cap:'Military HPC — titanium and Inconel blades engineered for surge resistance during high-alpha maneuvering. FADEC adjusts variable stator geometry in real time to prevent compressor stall during combat. (Wikimedia Commons)'},
+          {src:'https://upload.wikimedia.org/wikipedia/commons/6/64/Combustor_of_sectioned_Rolls-Royce_Turbom%C3%A9ca_Adour_turbofan.jpg', alt:'Military combustor with afterburner downstream', cap:'Military combustor section — dry TIT reaches 1,700°C. Downstream, the afterburner injects raw fuel into hot exhaust, adding 50% more thrust at 4× fuel flow. A variable convergent-divergent nozzle opens to accommodate full reheat volume. (Wikimedia Commons / CC BY-SA)'},
+          {src:'https://upload.wikimedia.org/wikipedia/commons/e/e9/J79_GenElectr_BMW-liz_1961_%28Starfighter_F4%29_MTU-Museum_20231112_08w.jpg', alt:'GE J79 military turbojet turbine', cap:'GE J79 turbine — the engine that powered the F-104 Starfighter and F-4 Phantom. A single HPT extracts minimum work to drive the compressor; all remaining exhaust energy becomes thrust — up to 180 kN with afterburner engaged. (Wikimedia Commons / CC BY-SA)'},
         ]
       },
       {
@@ -403,6 +423,12 @@
           ["OPR 23:1 — DLN bleed air control","The GE 7HA.03 achieves <span class='chip' style='background:#1e1c0e;color:#f5d76e;'>OPR 23.5:1</span> across 14 stages. Inter-stage bleed air supports DLN combustor premixing — critical for meeting EPA Tier 4 and EU IED NOx limits. Variable inlet guide vanes allow the turbine to operate efficiently from 40% to 100% load, enabling fast ramp without surge."],
           ["DLN combustors — &lt;25 ppm NOx","Dry Low-NOx combustors premix fuel and air before ignition, holding flame temperature at <span class='chip' style='background:#1e0e08;color:#f5824f;'>TIT 1,400°C</span>. H₂ co-firing up to 30% is commercially deployed today. 100% hydrogen combustion is in pilot testing for 2030 fleet availability — requiring flame speed and flashback management that conventional combustors cannot handle."],
           ["Generator output — up to 400 MW/block","The power turbine drives a generator at 3,000 or 3,600 RPM, producing up to <span class='chip' style='background:#0e1e15;color:#6fcf7a;'>400 MW</span> per block. In CCGT configuration, 570°C exhaust feeds a heat recovery steam generator (HRSG), adding 200 MW more and pushing plant efficiency above 63%. Grid response from standby to full load: under 30 minutes."],
+        ],
+        imgs: [
+          {src:'https://upload.wikimedia.org/wikipedia/commons/e/e3/Air_intake%2C_fan_and_compressor_of_sectioned_Rolls-Royce_Turbom%C3%A9ca_Adour_turbofan_01.jpg', alt:'Gas turbine inlet with evaporative cooler', cap:'Gas turbine inlet system — utility-scale turbines include multi-stage filter houses and evaporative coolers. Inlet air cooling by 10–15°C recovers 15%+ of power lost on peak-demand summer days when grid stress is highest. (Wikimedia Commons / CC BY-SA)'},
+          {src:'https://upload.wikimedia.org/wikipedia/commons/c/ca/Axial_compressor.gif', alt:'Axial compressor for grid-balancing turbine', cap:'Utility-scale compressor — 14–17 stages at OPR 23:1. Variable IGVs allow operation from 40–100% load without surge, enabling the rapid ramp rates (100 MW/min) that grid operators need to balance intermittent wind and solar. (Wikimedia Commons)'},
+          {src:'https://upload.wikimedia.org/wikipedia/commons/6/64/Combustor_of_sectioned_Rolls-Royce_Turbom%C3%A9ca_Adour_turbofan.jpg', alt:'DLN combustor for H2-capable turbine', cap:'DLN combustor — premixed flame keeps NOx below 25 ppm. H₂ co-firing up to 30% is commercially deployed today. The combustor must handle rapid load swings as the turbine ramps to fill gaps left by intermittent renewable generation. (Wikimedia Commons / CC BY-SA)'},
+          {src:'https://upload.wikimedia.org/wikipedia/commons/e/e9/J79_GenElectr_BMW-liz_1961_%28Starfighter_F4%29_MTU-Museum_20231112_08w.jpg', alt:'Power turbine driving synchronous generator', cap:'Power turbine stage — drives a synchronous generator at 3,000/3,600 RPM, up to 400 MW per block. In CCGT configuration, 570°C exhaust feeds a heat recovery steam generator (HRSG), pushing combined-cycle efficiency above 63%. (Wikimedia Commons / CC BY-SA)'},
         ]
       },
       {
@@ -414,6 +440,12 @@
           ["16-stage HPC — online washing","The axial compressor achieves OPR <span class='chip' style='background:#1e1c0e;color:#f5d76e;'>18–23:1</span> across 14–16 stages. Fouling from atmospheric particulates reduces efficiency by 1–2% per week; online compressor washing (water injection at load) and periodic offline crank washing restore performance without shutting down."],
           ["Fuel-flexible combustion at baseload","DLN combustors enable continuous operation on natural gas, liquid distillate backup, or H₂ blends at <span class='chip' style='background:#1e0e08;color:#f5824f;'>&lt;15 ppm NOx</span>. Dual-fuel capability (gas primary, diesel backup) provides fuel security for grid-critical plants. Combustion dynamics monitoring detects instability before hardware damage occurs."],
           ["Power turbine — 50–500 MW output","The turbine shaft drives a synchronous generator at grid frequency (50/60 Hz). Output ranges from <span class='chip' style='background:#0e1e15;color:#6fcf7a;'>50–500 MW</span>. CCGT plants add a heat recovery steam generator and steam turbine, using 570°C exhaust to generate additional power — pushing combined efficiency above 60%. Annual capacity factor: 85%+."],
+        ],
+        imgs: [
+          {src:'https://upload.wikimedia.org/wikipedia/commons/e/e3/Air_intake%2C_fan_and_compressor_of_sectioned_Rolls-Royce_Turbom%C3%A9ca_Adour_turbofan_01.jpg', alt:'Industrial gas turbine inlet with chilling', cap:'Gas turbine inlet — industrial turbines use mechanical chilling to increase air density. A 10°C inlet temperature reduction yields ~3% more output. Anti-icing heaters are mandatory in cold climates to prevent blade erosion and compressor stall. (Wikimedia Commons / CC BY-SA)'},
+          {src:'https://upload.wikimedia.org/wikipedia/commons/c/ca/Axial_compressor.gif', alt:'Industrial axial compressor with online water washing', cap:'Industrial axial compressor — 14–16 stages at OPR 18–23:1. Compressor fouling from atmospheric dust reduces efficiency 1–2% per week. Online water washing restores performance without shutdown at base-load power plants. (Wikimedia Commons)'},
+          {src:'https://upload.wikimedia.org/wikipedia/commons/6/64/Combustor_of_sectioned_Rolls-Royce_Turbom%C3%A9ca_Adour_turbofan.jpg', alt:'Dual-fuel DLN combustor for baseload power', cap:'Dual-fuel combustor — natural gas primary, liquid distillate backup for fuel security at grid-critical plants. NOx below 15 ppm on gas. Combustion dynamics monitoring detects instability before hardware damage occurs during continuous baseload operation. (Wikimedia Commons / CC BY-SA)'},
+          {src:'https://upload.wikimedia.org/wikipedia/commons/e/e9/J79_GenElectr_BMW-liz_1961_%28Starfighter_F4%29_MTU-Museum_20231112_08w.jpg', alt:'Power turbine for 50–500 MW baseload generation', cap:'Power turbine section — drives a synchronous generator at grid frequency (50/60 Hz), delivering 50–500 MW. Combined-cycle plants add an HRSG and steam turbine to use 570°C exhaust heat, pushing efficiency above 60%. Annual capacity factor: 85%+. (Wikimedia Commons / CC BY-SA)'},
         ]
       },
       {
@@ -425,6 +457,12 @@
           ["Corrosion-resistant stages — OPR 20:1","Compressor blades in marine engines use Inconel and coated titanium alloys to resist salt-accelerated corrosion. OPR <span class='chip' style='background:#1e1c0e;color:#f5d76e;'>20:1</span> across 15 stages. Offline high-pressure water wash every 100 operating hours is standard to remove salt deposits that reduce efficiency and cause stress-corrosion cracking."],
           ["Dual-fuel combustion — rapid acceleration","Marine combustors run on diesel or marine gas oil as primary fuel, with natural gas capability on LNG-equipped vessels. <span class='chip' style='background:#1e0e08;color:#f5824f;'>Rapid acceleration</span> from idle to full power in under 30 seconds is a naval requirement — placing extreme thermal transient demands on combustor liners and HPT blades."],
           ["Shaft drive — 30+ knots","The power turbine drives propeller shafts directly via a gearbox, or electric propulsion motors via a generator. GE LM2500+ delivers <span class='chip' style='background:#0e1e15;color:#6fcf7a;'>36 MW</span> per engine. CODLAG (Combined Diesel-Electric And Gas) arrangements use electric motors for quiet low-speed patrol and turbines for high-speed sprint — reducing acoustic signature for ASW operations."],
+        ],
+        imgs: [
+          {src:'https://upload.wikimedia.org/wikipedia/commons/e/e3/Air_intake%2C_fan_and_compressor_of_sectioned_Rolls-Royce_Turbom%C3%A9ca_Adour_turbofan_01.jpg', alt:'Marine gas turbine inlet with salt separator', cap:'Marine gas turbine inlet — at sea, inlets incorporate inertial separators, demisters, and heated anti-icing systems achieving 99.9% salt removal. Salt-laden air causes severe compressor blade corrosion within hours of unfiltered exposure. (Wikimedia Commons / CC BY-SA)'},
+          {src:'https://upload.wikimedia.org/wikipedia/commons/c/ca/Axial_compressor.gif', alt:'Marine axial compressor with corrosion-resistant blades', cap:'Marine compressor — Inconel and coated titanium blades resist salt-accelerated corrosion. High-pressure offline water washing every 100 operating hours removes salt deposits before stress-corrosion cracking can propagate through blade roots. (Wikimedia Commons)'},
+          {src:'https://upload.wikimedia.org/wikipedia/commons/6/64/Combustor_of_sectioned_Rolls-Royce_Turbom%C3%A9ca_Adour_turbofan.jpg', alt:'Naval gas turbine combustor for rapid acceleration', cap:'Naval combustor — runs on marine diesel or gas oil, with LNG capability on modern vessels. Rapid acceleration from idle to full power in under 30 seconds is a naval requirement, placing extreme thermal transient loads on combustor liners. (Wikimedia Commons / CC BY-SA)'},
+          {src:'https://upload.wikimedia.org/wikipedia/commons/e/e9/J79_GenElectr_BMW-liz_1961_%28Starfighter_F4%29_MTU-Museum_20231112_08w.jpg', alt:'Naval power turbine driving propeller shaft', cap:'Naval power turbine — drives propeller shafts via a reduction gearbox (GE LM2500+: 36 MW per engine) or electric motors via a generator. CODLAG arrangements use electric drive for quiet ASW patrol and turbines for 30+ knot sprint. (Wikimedia Commons / CC BY-SA)'},
         ]
       },
       {
@@ -436,6 +474,12 @@
           ["Centrifugal + axial — OPR 14-20:1","Turboshaft compressors combine axial and centrifugal stages in a very compact package. OPR of <span class='chip' style='background:#1e1c0e;color:#f5d76e;'>14–20:1</span> in 6–10 stages total — far fewer than industrial engines, because installed weight matters more than peak efficiency. The GE T700 uses 5 axial + 1 centrifugal for exceptional power density at low installed weight."],
           ["Reverse-flow combustor — compact design","Reverse-flow (annular) combustors fold the gas path back on itself, shortening overall engine length. TIT of <span class='chip' style='background:#1e0e08;color:#f5824f;'>1,250–1,350°C</span>. Altitude relight capability to 15,000 ft is a certification requirement — the combustor must sustain stable ignition in thin, cold air after an in-flight flameout, with the engine windmilling at low RPM."],
           ["Free power turbine — shaft output only","The gas generator turbine drives only the compressor. A second, mechanically independent free power turbine extracts all remaining energy as <span class='chip' style='background:#0e1e15;color:#6fcf7a;'>shaft torque</span> — 400 to 2,000+ kW depending on class. The free turbine speed is independent of gas generator speed, allowing rotor RPM to be held constant across wide power changes — essential for stable, controllable hover."],
+        ],
+        imgs: [
+          {src:'https://upload.wikimedia.org/wikipedia/commons/e/e3/Air_intake%2C_fan_and_compressor_of_sectioned_Rolls-Royce_Turbom%C3%A9ca_Adour_turbofan_01.jpg', alt:'Helicopter turboshaft inlet with particle separator', cap:'Turboshaft engine inlet — helicopter engines use inlet particle separators (IPS) that centrifugally remove sand, dust, and ice. Critical for desert brownout and Arctic ice operations. The Rolls-Royce RTM322 achieves 99% separation efficiency with minimal weight penalty. (Wikimedia Commons / CC BY-SA)'},
+          {src:'https://upload.wikimedia.org/wikipedia/commons/c/ca/Axial_compressor.gif', alt:'Turboshaft compressor — mixed axial-centrifugal stages', cap:'Turboshaft compressor — combines axial and centrifugal stages for compact, lightweight power density. The GE T700 uses 5 axial + 1 centrifugal stage, achieving OPR 17:1. Far fewer stages than industrial engines because installed weight directly limits rotor lift capacity. (Wikimedia Commons)'},
+          {src:'https://upload.wikimedia.org/wikipedia/commons/6/64/Combustor_of_sectioned_Rolls-Royce_Turbom%C3%A9ca_Adour_turbofan.jpg', alt:'Reverse-flow annular combustor for helicopter turboshaft', cap:'Reverse-flow combustor — folds the gas path back on itself to shorten engine length. TIT 1,250–1,350°C. Altitude relight to 15,000 ft is a certification requirement: must sustain ignition in thin, cold air after an in-flight flameout with the engine windmilling. (Wikimedia Commons / CC BY-SA)'},
+          {src:'https://upload.wikimedia.org/wikipedia/commons/6/69/Turboshaft_operation_%28multilanguage%29.svg', alt:'Turboshaft free power turbine driving helicopter rotor', cap:'Turboshaft schematic — a second mechanically independent free power turbine extracts all remaining energy as shaft torque (400–2,000+ kW). Free turbine speed is independent of gas generator speed, enabling constant rotor RPM across wide power changes for stable hover. (Wikimedia Commons)'},
         ]
       },
       {
@@ -447,6 +491,12 @@
           ["OPR 15-22:1 — extraction ports","Compressors for process drive applications include air extraction ports that supply instrument air and purge gas for pipeline safety systems. OPR <span class='chip' style='background:#1e1c0e;color:#f5d76e;'>15–22:1</span> across 14–18 stages. In contaminated environments (gas processing plants, chemical facilities), compressor fouling from process gas carryover requires more frequent water washing than in clean air applications."],
           ["Wide Wobbe index — fuel flexibility","Oil and gas turbines must handle widely varying fuel compositions — pipeline gas, wellhead gas, refinery off-gas — without combustor pressure oscillations. <span class='chip' style='background:#1e0e08;color:#f5824f;'>Wide Wobbe index</span> (WI) capability means the combustor tolerates large swings in heating value and hydrogen content. Lean-premix or diffusion flame combustors are selected based on fuel variability at the specific site."],
           ["Direct mechanical drive — no generator","The power turbine shaft connects directly to a centrifugal compressor via a coupling — <span class='chip' style='background:#0e1e15;color:#6fcf7a;'>no electrical conversion</span>. Shaft outputs from 5 to 50 MW drive process compressors at speeds matched by API-standard gearboxes. In cogeneration configurations, exhaust heat at 500–540°C drives a waste heat recovery unit (WHRU) producing process steam or hot oil — pushing total fuel utilization to 80%+."],
+        ],
+        imgs: [
+          {src:'https://upload.wikimedia.org/wikipedia/commons/e/e3/Air_intake%2C_fan_and_compressor_of_sectioned_Rolls-Royce_Turbom%C3%A9ca_Adour_turbofan_01.jpg', alt:'API 616 compliant inlet with gas fuel conditioning', cap:'Industrial gas turbine inlet — API 616-compliant systems include gas fuel treatment to remove H₂S, moisture, and heavy hydrocarbons. Enclosure ventilation prevents hazardous gas accumulation in enclosed offshore platform or pipeline compression station installations. (Wikimedia Commons / CC BY-SA)'},
+          {src:'https://upload.wikimedia.org/wikipedia/commons/c/ca/Axial_compressor.gif', alt:'Industrial compressor with air extraction ports', cap:'Process-drive compressor — extraction ports supply instrument air and safety purge gas for pipeline systems. Fouling from process gas carryover in chemical plants and refineries requires more frequent water washing than clean-air utility installations. (Wikimedia Commons)'},
+          {src:'https://upload.wikimedia.org/wikipedia/commons/6/64/Combustor_of_sectioned_Rolls-Royce_Turbom%C3%A9ca_Adour_turbofan.jpg', alt:'Wide Wobbe index combustor for variable pipeline gas', cap:'Wide Wobbe Index combustor — handles widely varying gas compositions (pipeline gas, wellhead gas, refinery off-gas) without combustion pressure oscillations. Lean-premix or diffusion flame configuration selected based on site-specific fuel variability and hydrogen content. (Wikimedia Commons / CC BY-SA)'},
+          {src:'https://upload.wikimedia.org/wikipedia/commons/e/e9/J79_GenElectr_BMW-liz_1961_%28Starfighter_F4%29_MTU-Museum_20231112_08w.jpg', alt:'Power turbine for direct mechanical drive to pipeline compressor', cap:'Power turbine section — shaft connects directly to a centrifugal process compressor via API-standard coupling, no electrical conversion. 5–50 MW mechanical drive. Exhaust at 500–540°C feeds a waste heat recovery unit (WHRU), pushing total fuel utilization to 80%+. (Wikimedia Commons / CC BY-SA)'},
         ]
       },
     ];
@@ -476,17 +526,26 @@
         document.getElementById(id+'lbl').textContent = a.stats[i][1];
       });
 
-      // Update stage content (fade)
+      // Update stage content + images (fade)
       ['h1','h2','h3','h4'].forEach((id, i) => {
         const hEl = document.getElementById(id);
         const bEl = document.getElementById('b'+(i+1));
+        const imgEl = document.getElementById('img'+(i+1));
+        const capEl = document.getElementById('cap'+(i+1));
         hEl.style.opacity = '0';
         bEl.style.opacity = '0';
+        imgEl.style.opacity = '0';
         setTimeout(() => {
           hEl.textContent = a.stages[i][0];
           bEl.innerHTML = a.stages[i][1];
+          const imgData = a.imgs[i];
+          imgEl.alt = imgData.alt;
+          imgEl.src = imgData.src;
+          imgEl.onerror = function() { this.src = FB[i]; this.onerror = null; };
+          capEl.textContent = imgData.cap;
           hEl.style.opacity = '1';
           bEl.style.opacity = '1';
+          imgEl.style.opacity = '1';
         }, 180);
       });
     }
