@@ -182,6 +182,38 @@
     .cap { font-size: 0.7rem; color: #444; margin-top: 6px; line-height: 1.4; }
     .chip { display: inline-block; font-size: 0.8rem; font-weight: 700; padding: 2px 8px; border-radius: 4px; }
 
+    /* ── O&M inline bullet lists ── */
+    .om-list { list-style: none; margin: 20px 0 24px; background: #111; border: 1px solid #1e1e1e; border-radius: 8px; overflow: hidden; }
+    .om-list li { padding: 8px 14px; border-bottom: 1px solid #141414; font-size: 0.79rem; color: #666; line-height: 1.5; font-family: "SF Mono","Fira Code",Consolas,monospace; }
+    .om-list li:last-child { border-bottom: none; }
+    .om-list li::before { content: "▶  "; color: #2a2a2a; font-size: 0.6rem; }
+    .om-list li.warn { color: #c4880a; background: rgba(245,166,35,0.04); }
+    .om-list li.warn::before { content: "⚠  "; color: #f5a623; }
+    .om-list li.crit { color: #bb3333; background: rgba(239,68,68,0.04); }
+    .om-list li.crit::before { content: "✕  "; color: #ef4444; }
+
+    /* ── Ops reference panel ── */
+    .ops-panel { margin-top: 64px; padding-top: 48px; border-top: 2px solid #1e1e1e; }
+    .ops-eyebrow { font-family: "SF Mono","Fira Code",Consolas,monospace; font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase; color: #f5a623; margin-bottom: 6px; }
+    .ops-title { font-size: 1.35rem; font-weight: 700; letter-spacing: -0.02em; color: #ddd; margin-bottom: 36px; }
+    .ops-block { margin-bottom: 32px; }
+    .ops-block-hdr { font-family: "SF Mono","Fira Code",Consolas,monospace; font-size: 0.62rem; letter-spacing: 0.14em; text-transform: uppercase; color: #555; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid #1e1e1e; }
+    .ops-table { width: 100%; border-collapse: collapse; font-size: 0.77rem; font-family: "SF Mono","Fira Code",Consolas,monospace; }
+    .ops-table th { font-size: 0.58rem; letter-spacing: 0.1em; text-transform: uppercase; color: #444; padding: 7px 10px; border-bottom: 1px solid #1e1e1e; text-align: left; }
+    .ops-table td { padding: 7px 10px; border-bottom: 1px solid #141414; color: #777; vertical-align: top; }
+    .ops-table td.key { color: #ccc; width: 32%; }
+    .ops-table td.val { color: #6fcf7a; }
+    .ops-table td.cwarn { color: #f5a623; }
+    .ops-table td.ccrit { color: #ef4444; }
+    .ops-table tr:last-child td { border-bottom: none; }
+    .ops-table tr:hover td { background: rgba(255,255,255,0.015); }
+    .maint-list { list-style: none; border: 1px solid #1e1e1e; border-radius: 8px; overflow: hidden; }
+    .maint-list li { display: flex; gap: 12px; padding: 8px 14px; border-bottom: 1px solid #141414; font-size: 0.77rem; font-family: "SF Mono","Fira Code",Consolas,monospace; }
+    .maint-list li:last-child { border-bottom: none; }
+    .maint-i { color: #f5a623; min-width: 120px; flex-shrink: 0; }
+    .maint-t { color: #999; flex: 1; }
+    .maint-s { color: #444; font-size: 0.68rem; min-width: 120px; }
+
     footer { text-align: center; padding: 64px 24px; border-top: 1px solid #1a1a1a; }
     footer a { color: #444; text-decoration: none; font-size: 0.9rem; }
     footer a:hover { color: #fff; }
@@ -336,7 +368,8 @@
       <div class="stage-block" id="s1" data-stage="1">
         <p class="stage-tag" style="color:#5bb8f5;">Stage 1 — Intake</p>
         <h2 class="stage-h2" id="h1">Large fan ingests 800+ kg/s</h2>
-        <p class="stage-body" id="b1">A high-bypass turbofan's large front fan accelerates <span class="chip" style="background:#0e1e2e;color:#5bb8f5;">800 kg/s</span> of air, with ~85% bypassing the core as cold thrust stream. The inlet duct is precisely contoured to avoid flow separation at all speeds and angles of attack. Bypass ratio (BPR 12:1 on CFM LEAP) is the primary driver of fuel economy — the higher the ratio, the more thrust per kilogram of fuel burned.</p>
+        <p class="stage-body" id="b1" style="margin-bottom:0;">A high-bypass turbofan's large front fan accelerates <span class="chip" style="background:#0e1e2e;color:#5bb8f5;">800 kg/s</span> of air, with ~85% bypassing the core as cold thrust stream. The inlet duct is precisely contoured to avoid flow separation at all speeds and angles of attack. Bypass ratio (BPR 12:1 on CFM LEAP) is the primary driver of fuel economy — the higher the ratio, the more thrust per kilogram of fuel burned.</p>
+        <ul class="om-list" id="om1"></ul>
         <img id="img1" src="https://upload.wikimedia.org/wikipedia/commons/e/e3/Air_intake%2C_fan_and_compressor_of_sectioned_Rolls-Royce_Turbom%C3%A9ca_Adour_turbofan_01.jpg" alt="Turbofan intake">
         <p class="cap" id="cap1">Sectioned Rolls-Royce Turbomeca Adour turbofan — large front fan and bypass duct. High BPR (12:1 on CFM LEAP) is the primary driver of commercial aviation fuel economy. (Wikimedia Commons / CC BY-SA)</p>
       </div>
@@ -345,6 +378,7 @@
         <p class="stage-tag" style="color:#f5d76e;">Stage 2 — Compression</p>
         <h2 class="stage-h2" id="h2">17-stage HPC — OPR 40:1</h2>
         <p class="stage-body" id="b2">The high-pressure compressor squeezes air to <span class="chip" style="background:#1e1c0e;color:#f5d76e;">40× atmospheric</span> across 17 stages (CFM56/LEAP). Variable inlet guide vanes and stator vanes adjust to maintain surge margin across the full flight envelope — from sea-level takeoff to Mach 0.85 cruise at 12,000 m. Tip clearance control via active thermal management keeps efficiency above 90%.</p>
+        <ul class="om-list" id="om2"></ul>
         <img id="img2" src="https://upload.wikimedia.org/wikipedia/commons/c/ca/Axial_compressor.gif" alt="Axial compressor animation">
         <p class="cap" id="cap2">Axial compressor — 17+ alternating rotor and stator rows compress air to 40× atmospheric in a modern turbofan. Variable inlet guide vanes maintain surge margin across the flight envelope. (Wikimedia Commons)</p>
       </div>
@@ -353,6 +387,7 @@
         <p class="stage-tag" style="color:#f5824f;">Stage 3 — Combustion</p>
         <h2 class="stage-h2" id="h3">Annular combustor at 1,600°C TIT</h2>
         <p class="stage-body" id="b3">An annular combustor burns Jet-A or SAF continuously at a turbine inlet temperature of <span class="chip" style="background:#1e0e08;color:#f5824f;">1,600°C</span> — far above nickel alloy melting point. Transpiration and film cooling plus thermal barrier coatings protect HPT blades. Modern TAPS (Twin Annular Pre-Swirl) combustors achieve ultra-low NOx while maintaining combustion stability from idle to max thrust.</p>
+        <ul class="om-list" id="om3"></ul>
         <img id="img3" src="https://upload.wikimedia.org/wikipedia/commons/6/64/Combustor_of_sectioned_Rolls-Royce_Turbom%C3%A9ca_Adour_turbofan.jpg" alt="Combustor">
         <p class="cap" id="cap3">Annular combustor — burns Jet-A or SAF continuously at 1,600°C TIT. TAPS (Twin Annular Pre-Swirl) design achieves ultra-low NOx while maintaining stability from idle to max thrust. (Wikimedia Commons / CC BY-SA)</p>
       </div>
@@ -361,8 +396,52 @@
         <p class="stage-tag" style="color:#6fcf7a;">Stage 4 — Power Out</p>
         <h2 class="stage-h2" id="h4">HPT drives core; LPT drives fan</h2>
         <p class="stage-body" id="b4">A single-stage HPT (TBC-coated, cooled) extracts energy to drive the HPC on the high-speed shaft. A multi-stage LPT on the low-speed shaft drives the large front fan, producing ~75–100 kN of net thrust. The cold bypass stream and hot core exhaust mix at the nozzle, with TSFC of <span class="chip" style="background:#0e1e15;color:#6fcf7a;">0.50 kg/kN·h</span> — the best in class for long-haul aircraft.</p>
+        <ul class="om-list" id="om4"></ul>
         <img id="img4" src="https://upload.wikimedia.org/wikipedia/commons/e/e9/J79_GenElectr_BMW-liz_1961_%28Starfighter_F4%29_MTU-Museum_20231112_08w.jpg" alt="GE J79 turbine">
         <p class="cap" id="cap4">Three-stage turbine — single HPT drives the HPC, multi-stage LPT drives the front fan. Together they deliver 75–100 kN net thrust at TSFC 0.50 kg/kN·h. (Wikimedia Commons / CC BY-SA)</p>
+      </div>
+
+      <!-- O&M Reference Panel -->
+      <div class="ops-panel">
+        <p class="ops-eyebrow">Operations &amp; Maintenance Reference</p>
+        <p class="ops-title" id="omTitle">Turbofan — Commercial Aviation</p>
+
+        <div class="ops-block">
+          <p class="ops-block-hdr">§1 — Quick-Reference Specifications</p>
+          <table class="ops-table">
+            <thead><tr><th>Parameter</th><th>Value</th><th>Notes</th></tr></thead>
+            <tbody id="specsBody"></tbody>
+          </table>
+        </div>
+
+        <div class="ops-block">
+          <p class="ops-block-hdr">§2 — Key Operational Parameters — Normal / Caution / Alarm</p>
+          <table class="ops-table">
+            <thead><tr><th>Parameter</th><th>Normal Range</th><th>Caution</th><th>Alarm / Trip</th></tr></thead>
+            <tbody id="paramsBody"></tbody>
+          </table>
+        </div>
+
+        <div class="ops-block">
+          <p class="ops-block-hdr">§3 — Common Fault Indicators</p>
+          <table class="ops-table">
+            <thead><tr><th>Symptom</th><th>Likely Cause</th><th>Immediate Action</th></tr></thead>
+            <tbody>
+              <tr><td class="key">Rising EGT at constant load</td><td>Compressor fouling, blade damage, combustor degradation, TBC loss</td><td>Trend monitor; if &gt;10°C above baseline in 24h — schedule borescope</td></tr>
+              <tr><td class="key">High EGT spread</td><td>Fuel nozzle coking, failed igniter, combustor liner damage, hot streak</td><td>Inspect combustor; if &gt;70°C spread — controlled shutdown</td></tr>
+              <tr><td class="key">N1/N2 fluctuation</td><td>Compressor stall, FADEC fault, fuel supply instability</td><td>Reduce load; check fuel pressure and control valves; monitor for surge</td></tr>
+              <tr><td class="key">High vibration — step change</td><td class="ccrit">Blade loss, bearing damage, coupling misalignment, rotor imbalance</td><td>If sudden: trip immediately; if gradual: reduce load and investigate</td></tr>
+              <tr><td class="key">Rising lube oil temperature</td><td>Lube oil cooler fouling, loss of cooling flow, bearing wear</td><td>Increase cooling flow; check oil analysis for metal particles</td></tr>
+              <tr><td class="key">Inlet filter ΔP rising rapidly</td><td>Icing, FOD, filter media failure, high dust or pollen loading</td><td>Activate anti-icing; check for icing; initiate filter replacement</td></tr>
+              <tr><td class="key">Loss of output / power drop</td><td>Compressor fouling, inlet temperature rise, blade damage, fuel quality change</td><td>Perform offline wash; compare corrected output vs. OEM baseline curve</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="ops-block">
+          <p class="ops-block-hdr">§4 — Maintenance Schedule</p>
+          <ul class="maint-list" id="maintBody"></ul>
+        </div>
       </div>
 
       <footer><a href="../index.html">← Back to gallery</a></footer>
@@ -501,6 +580,322 @@
       },
     ];
 
+    // ── O&M data (7 apps) ─────────────────────────────────────────────
+    const omData = [
+      { // 0 — Turbofan
+        specs:[
+          {p:"Overall Pressure Ratio",v:"35–50:1",n:"LEAP/GE9X class; higher than industrial frames"},
+          {p:"Turbine Inlet Temp",v:"1,600–1,750°C",n:"Advanced blade cooling & TBC; material-limited"},
+          {p:"Bypass Ratio (BPR)",v:"8–12:1",n:"Higher BPR → lower TSFC → lower community noise"},
+          {p:"TSFC (cruise)",v:"0.47–0.55 kg/kN·h",n:"Target <0.50 on long-haul missions"},
+          {p:"Shop Visit Interval",v:"20,000–30,000 FH",n:"HPT blade LMP and LCF limits drive date"},
+          {p:"EGT Limit",v:"Per OEM SN baseline",n:"ΔEGT from build standard tracked per engine log"},
+        ],
+        bullets:[
+          [{t:"FOD — runway debris, bird strike, ground ingestion; inspect inlet screen per pre-departure checklist; post-strike borescope before return to service",l:"warn"},
+           {t:"Ice crystal icing above 22,000 ft in convective IMC; inlet anti-ice per aircraft flight manual; pitot heat confirmation before IMC departure"},
+           {t:"Inlet cowl anti-ice valve: test at engine run; frozen valve prevents anti-ice flow and can cause core ice accretion leading to compressor surge"},
+           {t:"Inlet barrier filter ΔP: trend monitored by ground crew; rising above OEM limit — clean before next flight cycle"}],
+          [{t:"HPC stall at high-power transient (rotation, go-around): EGT spike + rpm fluctuation + loud report; FADEC surge recovery auto-initiates; assess for blade damage post-flight",l:"warn"},
+           {t:"HPC blade erosion from sand or volcanic ash ingestion: increase wash frequency; post-ingestion borescope within 100 flight cycles"},
+           {t:"VIGV/VSV actuator rigging: check at shop visit; mis-rigged stators reduce surge margin at max-climb power setting"},
+           {t:"Online (crank) wash with demineralized water during ground run; frequency per OEM environment-based wash schedule"}],
+          [{t:"EGT spread >15°C above average thermocouple: fuel nozzle coking or damaged swirler; combustor inspection at next shop visit",l:"warn"},
+           {t:"TAPS combustor fuel nozzle carbon cleaning at shop visit; coking raises local TIT above HPT blade limit without visible smoke output"},
+           {t:"Cross-igniter reliability: track light-off success rate; >2 failed starts per 1,000 cycles → igniter replacement before next flight"},
+           {t:"Wet motoring purge required after in-flight flameout before re-light; skipping purge cycle risks fuel-rich detonation on re-ignition",l:"crit"}],
+          [{t:"ΔEGT rising trend >10°C above SN baseline at constant thrust: HPT degradation indicator; escalate shop visit date",l:"warn"},
+           {t:"HPT blade creep (Larson–Miller parameter): tracked per blade SN at shop visit; blades at LMP limit must not be re-installed"},
+           {t:"LPT tip rub: increased clearance raises EGT and reduces efficiency; trend clearance at each shop visit via borescope"},
+           {t:"Never exceed published EGT redline — single transient exceedances accelerate creep and may void OEM warranty",l:"crit"}],
+        ],
+        params:[
+          {p:"EGT (takeoff)",n:"<OEM SN T/O limit −20°C",c:"Within 20°C of limit",a:"At/above limit → reduce thrust immediately"},
+          {p:"EGT Spread",n:"<15°C TC-to-TC",c:"15–25°C",a:">25°C → schedule combustor inspection"},
+          {p:"N1 Fan Speed",n:"94–100% rated",c:">100%",a:">102% → overspeed protection activates"},
+          {p:"N2 Core Speed",n:"98–100% rated",c:">100%",a:">105% → engine shutdown"},
+          {p:"Oil Temperature",n:"65–90°C",c:"90–105°C",a:">115°C → in-flight shutdown"},
+          {p:"Oil Pressure",n:"40–90 psi",c:"<40 psi",a:"<25 psi → immediate shutdown"},
+          {p:"Vibration",n:"<3.5 ips",c:"3.5–5.0 ips",a:">5.0 ips → land as soon as possible"},
+        ],
+        maint:[
+          {i:"Pre/post-flight",t:"Inlet screen visual, oil level, fan blade leading edge, chip detector",s:"Flight crew / line crew"},
+          {i:"500 FH (Transit)",t:"Borescope HPC S1 & combustor visual, oil analysis, igniter resistance check",s:"Line maintenance"},
+          {i:"4,000 FH (C check)",t:"Full HPC/HPT borescope, combustor liner & TP seals, fuel nozzle cleaning",s:"Base maintenance"},
+          {i:"20,000–30,000 FH",t:"Shop visit: HPT blade replacement, HPC overhaul, combustor replacement, full rotor balance",s:"Approved MRO facility"},
+        ]
+      },
+      { // 1 — Military
+        specs:[
+          {p:"Overall Pressure Ratio",v:"25–35:1",n:"Military low-bypass / turbojet; trades OPR for response speed"},
+          {p:"TIT dry / afterburner",v:"1,700°C / 2,000°C+",n:"AB exits into variable convergent-divergent nozzle"},
+          {p:"Thrust-to-Weight",v:"8–12:1",n:"F119 (F-22): 10.5:1; highest of any propulsion system"},
+          {p:"MTBO",v:"1,500–4,000 TACs",n:"TAC = Total Accumulated Cycles; starts weighted 2–3× clock hours"},
+          {p:"Afterburner On-Time",v:"Tracked separately",n:"Accelerates LCF budget; ratio of AB sorties drives early HSI"},
+          {p:"Fuel",v:"JP-8 / F-34 (NATO)",n:"Mil-spec fuel; water contamination monitored at each upload"},
+        ],
+        bullets:[
+          [{t:"Variable-geometry ramp actuator inspection after every supersonic sortie; ramp seal wear accelerates at sustained Mach 1.5+",l:"warn"},
+           {t:"FOD protocol before every takeoff: rubber ramp trim, screws, and ordnance fragments are primary sources; walk-down required"},
+           {t:"Serpentine inlet duct (F-22, F-35): borescope via forward access port only; inspect for duct liner delamination at depot check"},
+           {t:"Anti-icing in freezing drizzle at low altitude; ice crystal icing is less of a risk at high-speed low-level mission profiles"}],
+          [{t:"Compressor surge after high-alpha maneuver: bang + EGT spike + rpm drop; FADEC surge bleed initiates; post-flight blade damage assessment mandatory",l:"warn"},
+           {t:"High-cycle fatigue tracking per sortie profile via HUMS/AVDIRS data download; rapid-accel sorties consume LCF budget faster than training flights"},
+           {t:"Compressor wash mandatory on return from desert theater; salt/sand in blade roots accelerates HCF crack initiation",l:"crit"},
+           {t:"VSV rigging check at each phase inspection; mis-rigged stators reduce surge margin during combat power pulls at high angle-of-attack"}],
+          [{t:"Afterburner flameholder inspection at phase interval; cracked flameholders cause unreliable AB ignition and exhaust flow asymmetry",l:"warn"},
+           {t:"Variable nozzle actuator seal leakage: hot exhaust at 600°C+ contacts actuators; seal replacement at phase interval or on leakage detection"},
+           {t:"EGT spread post-AB sortie: thermal cycling from AB on/off causes combustor liner distortion; trend spread over sortie count"},
+           {t:"AB ignition system test at preflight; cold weather failure: exhaust gas purge required before re-attempt"}],
+          [{t:"HPT blade life in combat EOH: AB sortie = 2×, field start = 3× standard hour; track per blade SN in CEMS"},
+           {t:"EGT creep >15°C above baseline within 50 sorties: HPT blade oxidation or TBC loss; schedule HSI before next deployment cycle",l:"warn"},
+           {t:"Thrust vectoring actuator (if fitted): hydraulic seal inspection at phase interval; high-thermal environment reduces seal life vs. standard"},
+           {t:"Abort hot start: if EGT exceeds limit during light-off, move throttle to OFF immediately; do not motor until OEM procedure followed",l:"crit"}],
+        ],
+        params:[
+          {p:"EGT (Mil Power dry)",n:"Per T.O. limit for SN",c:"Within 15°C of limit",a:"At/above limit → throttle reduction mandatory"},
+          {p:"EGT (Afterburner)",n:"Per A/B nozzle schedule",c:"Uneven exhaust distortion",a:"Nozzle failure indication → A/B off, RTB"},
+          {p:"N1 (LP shaft)",n:"95–100% rated",c:"101–105%",a:">107% → overspeed trip"},
+          {p:"N2 (HP shaft)",n:"98–100% rated",c:">100%",a:">110% → shutdown"},
+          {p:"Oil Temperature",n:"60–80°C",c:"80–95°C",a:">100°C → RTB"},
+          {p:"Oil Pressure",n:"40–80 psi",c:"<35 psi",a:"<20 psi → engine shutdown"},
+          {p:"Vibration",n:"<4 ips",c:"4–8 ips",a:">8 ips → immediate shutdown"},
+        ],
+        maint:[
+          {i:"Pre-flight",t:"Inlet FOD walk, oil level, nozzle visual, igniter resistance, AB ignition test",s:"Crew chief"},
+          {i:"Post-flight",t:"EGT/ΔEGT review, HUMS data download, oil consumption log, inlet/exhaust visual",s:"Crew chief + QA"},
+          {i:"25 TAC hours",t:"Engine bay visual, fuel filter element, oil sample, VSV actuation check",s:"Propulsion shop"},
+          {i:"100 TAC hours",t:"Compressor wash, borescope HPC & HPT S1, igniter replacement, AB flameholder visual",s:"Phase maintenance"},
+          {i:"300–500 sorties (HSI)",t:"Hot section: HPT blade replacement, combustor liner, AB flameholder overhaul",s:"Depot or on-wing HSI team"},
+        ]
+      },
+      { // 2 — Renewable Energy
+        specs:[
+          {p:"Overall Pressure Ratio",v:"20–24:1",n:"e.g. GE 7HA.03: OPR 23.5; optimized for fast ramp not peak OPR"},
+          {p:"Turbine Inlet Temp",v:"1,350–1,500°C",n:"Balanced for 25,000+ EOH MTBO and rapid-cycle operation"},
+          {p:"Ramp Rate",v:"50–100 MW/min",n:"Market-leading peakers; grid operator FCAS requirement"},
+          {p:"Cold Start to Full Load",v:"<10 min",n:"Aero-derivative; heavy-frame: 20–30 min"},
+          {p:"EOH per Peaking Cold Start",v:"5–10 EOH equivalent",n:"Track EOH, not clock hours; start count drives HSI date"},
+          {p:"H₂ Co-fire (commercial)",v:"Up to 30% vol.",n:"Currently deployed; 100% H₂ target in pilot programs by 2030"},
+        ],
+        bullets:[
+          [{t:"Evaporative cooler media fouling: biological growth in warm/humid climates blocks airflow; inspect quarterly and treat with biocide; reduced cooling = lost MW on peak demand days",l:"warn"},
+           {t:"Inlet filter ΔP trending >20% above clean baseline: replace before next grid call-up window to avoid power output penalty at dispatch"},
+           {t:"Anti-icing activation at OAT <5°C with visible moisture; inlet icing narrows effective inlet area and risks surge during fast ramp from standby"},
+           {t:"Mechanical chiller/fogger nozzle clogging reduces cooling output; test effectiveness monthly against baseline kW/°C curve"}],
+          [{t:"Each cold peaking start = 5–10 EOH equivalent; track EOH not clock hours for all maintenance interval decisions",l:"warn"},
+           {t:"Online (crank) wash: demineralized water only; 2–3× per week in dusty/high-pollen environments; do not wash above minimum stable load"},
+           {t:"VIGV position monitoring at part-load: sticking VIGV during rapid ramp increases surge risk between 40–60% load; check VIGV schedule monthly"},
+           {t:"Fouling impact: 1% compressor efficiency loss ≈ 3 MW output reduction on 300 MW class frame; offline wash at every forced outage opportunity"}],
+          [{t:"DLN combustion dynamics (humming/rumble): thermoacoustic oscillations accelerate liner fatigue; monitor via P-taps; adjust fuel staging split at each dispatch",l:"warn"},
+           {t:"H₂ co-firing flashback risk above 15% H₂ vol. in current DLN combustors without hardware upgrade; Wobbe index monitoring mandatory when H₂ source varies"},
+           {t:"Rapid load swing thermal cycling (100 MW/min): cyclic loads on transition piece seals; inspect TP seals at each HSI; earlier replacement in high-start-frequency plants"},
+           {t:"Fuel nozzle inspection every 8,000 EOH; premix nozzle tip coking degrades premix quality and raises NOx above permit level on peaker dispatch"}],
+          [{t:"Generator bearing vibration trending above 3 mm/s RMS warrants dynamic balancing inspection; check at each annual outage",l:"warn"},
+           {t:"HRSG back-pressure: fouled finned tubes raise exhaust backpressure, reducing turbine output 0.5–1%; schedule HRSG water wash at planned outage"},
+           {t:"Coupling disc pack inspection every 4,000 EOH; torsional peaks during fast ramp-up fatigue disc packs prematurely"},
+           {t:"Frequency response governor test monthly: droop and dead-band must meet grid code spec for FCAS/AEMO market participation"}],
+        ],
+        params:[
+          {p:"EGT (full load)",n:"480–545°C",c:">545°C",a:">580°C → load reduction"},
+          {p:"EGT Spread",n:"<25°C",c:"25–40°C",a:">70°C → controlled shutdown"},
+          {p:"N1 Speed",n:"95–100% rated",c:"100–103%",a:">105% → trip"},
+          {p:"N2 Speed",n:"98–102% rated",c:">102%",a:">107% → overspeed trip"},
+          {p:"Oil Temperature",n:"60–80°C",c:"80–90°C",a:">95°C alarm; >105°C trip"},
+          {p:"Oil Pressure",n:"3.5–5.5 bar",c:"<3.0 bar",a:"<2.0 bar → trip"},
+          {p:"Generator Output",n:"Per dispatch schedule",c:"±3% of contract",a:"Sustained deviation → DCS alarm"},
+        ],
+        maint:[
+          {i:"Daily",t:"Oil level, alarm review, inlet filter ΔP log, evaporative cooler visual",s:"Plant operator"},
+          {i:"Weekly",t:"Online compressor wash (dusty/coastal); evaporative cooler nozzle check",s:"O&M team"},
+          {i:"1,000 EOH",t:"Oil sample, fuel filter element, igniter resistance, VIGV actuation test",s:"O&M team"},
+          {i:"4,000 EOH",t:"Borescope: HPC S1–5, combustor visual, HPT S1 nozzle; coupling inspection",s:"Outage required"},
+          {i:"8,000 EOH (HSI)",t:"HPT blades/vanes, combustor liners, TP seals, fuel nozzles overhaul",s:"Major outage 10–21 days"},
+          {i:"24,000 EOH (MI)",t:"Full strip, compressor/turbine replacement, bearing replacement, rotor balance",s:"Workshop or modular on-site"},
+        ]
+      },
+      { // 3 — Power Generation
+        specs:[
+          {p:"Overall Pressure Ratio",v:"18–23:1",n:"Heavy-frame industrial (GE 7/9HA, Siemens SGT5-8000H)"},
+          {p:"Turbine Inlet Temp",v:"1,450–1,600°C",n:"TBC-limited; lower than aero-derivative by design for MTBO"},
+          {p:"CCGT Efficiency",v:"60–63%",n:"Combined-cycle: turbine + HRSG + steam turbine"},
+          {p:"Capacity Factor",v:"80–90%",n:"Baseload CCGT; tracked in annual energy accounting"},
+          {p:"MTBO",v:"32,000–50,000 EOH",n:"Heavy-frame; longer interval than aero-derivative"},
+          {p:"HSI Interval",v:"8,000 EOH",n:"Hot Section Inspection; critical path in plant outage planning"},
+        ],
+        bullets:[
+          [{t:"Inlet filter replacement at each planned outage; self-cleaning pulse-jet filters can be serviced online at reduced load without full shutdown"},
+           {t:"Anti-icing in winter baseload: activation below OAT 5°C with RH >90%; inlet icing shifts running line toward surge on high-OPR heavy frames"},
+           {t:"Inlet depression trending upward at constant load: indicates filter loading; schedule filter change before winter peak demand period",l:"warn"},
+           {t:"Evaporative cooler media fouling in summer: biological growth in warm climates reduces cooling output; biocide treatment and media cleaning at annual service"}],
+          [{t:"Compressor fouling: 1–2% efficiency loss per week in industrial/coastal environments; track corrected heat rate vs. OEM baseline curve weekly",l:"warn"},
+           {t:"Online (crank) wash: weekly in dusty/coastal sites; demineralized water only; do not wash during grid demand response ramp mode"},
+           {t:"Offline detergent wash: schedule at each planned outage; restores inner HPC stage fouling unreachable by online washing"},
+           {t:"VIGV actuation check at each outage; sticking VIGV at part-load increases surge risk during demand response ramp sequences"}],
+          [{t:"DLN combustion dynamics monitoring via P-tap sensors; oscillations >0.5% of mean combustor pressure → flashback or lean blow-off margin encroachment",l:"warn"},
+           {t:"Fuel nozzle inspection every 8,000 EOH; DLN premix nozzle coking degrades premixing and raises NOx above permit threshold during load-following"},
+           {t:"Transition piece seal inspection at every HSI; leakage injects cold compressor air into hot gas path, distorting HPT temperature distribution"},
+           {t:"Dual-fuel switchover test: annual; distillate pilot must establish within 3 seconds of changeover for grid reliability code compliance"}],
+          [{t:"ΔEGT rising trend >15°C above corrected baseline at constant load: primary HPT degradation indicator; schedule earlier HSI",l:"warn"},
+           {t:"Generator AVR and exciter: annual maintenance per OEM; AVR fault can cause reactive power oscillation and local grid stability event"},
+           {t:"Coupling torque check at each outage; torsional resonance from grid disturbances can fatigue flexible disc packs prematurely on large frames"},
+           {t:"Never exceed rated EGT limit — transient exceedances accumulate creep damage and accelerate HPT replacement before published interval",l:"crit"}],
+        ],
+        params:[
+          {p:"EGT (base load)",n:"490–545°C",c:">555°C",a:">610°C → controlled shutdown"},
+          {p:"EGT Spread",n:"<25°C",c:"25–40°C",a:">70°C → shutdown and investigate"},
+          {p:"N1 Speed",n:"95–102% rated",c:"102–105%",a:">107% → overspeed trip"},
+          {p:"N2 Speed",n:"98–102% rated",c:">102%",a:">110% → overspeed trip"},
+          {p:"Oil Temperature",n:"60–80°C supply",c:"80–90°C",a:">95°C alarm; >105°C trip"},
+          {p:"Oil Pressure",n:"3.5–5.5 bar",c:"<3.0 bar",a:"<2.0 bar → trip"},
+          {p:"Stack Temp (HRSG inlet)",n:"490–570°C",c:">575°C",a:">600°C → HRSG protection limit"},
+        ],
+        maint:[
+          {i:"Daily",t:"Oil level, visual leak check, alarm review, stack temperature log",s:"Plant operator log"},
+          {i:"Weekly",t:"Online compressor wash (dusty/coastal), inlet filter ΔP check",s:"O&M team"},
+          {i:"2,000 EOH",t:"Oil analysis (spectrometric), offline compressor wash, fuel nozzle visual",s:"Outage required"},
+          {i:"4,000 EOH",t:"Borescope: inlet, HPC S1–5, combustor, HPT S1 nozzle; VIGV calibration",s:"Videoscope — OEM procedure"},
+          {i:"8,000 EOH (HSI)",t:"HPT blades/vanes, combustor liners, TP seals full replacement, fuel nozzles overhaul",s:"Major outage 10–21 days"},
+          {i:"24,000 EOH (MI)",t:"Full compressor/turbine strip, blade replacement, bearing replacement, rotor balance",s:"On-site or workshop"},
+        ]
+      },
+      { // 4 — Naval
+        specs:[
+          {p:"Overall Pressure Ratio",v:"18–23:1",n:"Marinized aero-derivative (GE LM2500) or purpose-built"},
+          {p:"Turbine Inlet Temp",v:"1,100–1,260°C",n:"Derated vs. aero version for corrosion and MTBO life"},
+          {p:"Power per Engine",v:"25–36 MW",n:"GE LM2500+G4: 36 MW; 2–4 engines per destroyer-class vessel"},
+          {p:"MTBO",v:"25,000 EOH",n:"Full overhaul; biannual drydock inspection regardless of EOH"},
+          {p:"Drydock Inspection",v:"Every 2–3 years",n:"Biannual inspection cycle per vessel class schedule"},
+          {p:"Fuel",v:"NATO F-76 / F-44 / diesel",n:"Dual-fuel capable; cleanliness to NATO STANAG 1110"},
+        ],
+        bullets:[
+          [{t:"Inertial separator salt loading: inspect and clean every 100 operating hours underway; saturated separator loses effectiveness, allowing corrosive salt through to compressor",l:"warn"},
+           {t:"Enclosure pressurization check: positive pressure prevents exhaust gas recirculation on deck; inspect door seals at biannual inspection"},
+           {t:"Anti-icing in Arctic operations: activation in freezing spray and IMC; ice bridging across separator vanes can cause sudden full blockage of inlet airflow"},
+           {t:"FOD screen inspection before/after each sortie; high sea states deposit debris on flight decks adjacent to intake structures"}],
+          [{t:"Offline fresh water wash every 100 EOH underway; salt deposits cause stress-corrosion cracking in titanium blade roots; use OEM-specified corrosion inhibitor in wash water",l:"warn"},
+           {t:"Biannual (drydock) full borescope: check leading edge corrosion pitting, blade root cracking, and labyrinth seal condition on all stages"},
+           {t:"VSV corrosion: salt-induced bushing seizure reduces actuation range; lubricate per schedule and verify full actuation travel at biannual inspection"},
+           {t:"Inconel blade leading edge: inspect at every drydock; polished leading edge from salt erosion reduces surge margin — do not buff beyond OEM limit"}],
+          [{t:"Rapid acceleration thermal cycling: naval requirement (0 to full power <30 sec) stresses combustor liner and TP seals; liner inspection at 500 EOH in high-tempo vessels",l:"warn"},
+           {t:"Dual-fuel switchover test: monthly; failed switchover reduces propulsion to diesel-electric only — loss of sprint capability in combat scenarios"},
+           {t:"Combustor seals at each drydock: salt-laden environment accelerates Inconel seal oxidation; seal failure injects hot gas into turbine disc cooling passages"},
+           {t:"Cross-igniter check at each 1,000 EOH; single-igniter re-light must be demonstrated for mission-critical single-engine-out scenarios"}],
+          [{t:"Reduction gearbox oil analysis every 500 h: Fe and Cu particle trend indicates gear or bearing wear; >10 ppm above baseline → extend sample to every 200 h and inspect",l:"warn"},
+           {t:"Propeller shaft seal inspection at each drydock; running seal leakage contaminates lube oil and introduces seawater corrosion into gearbox housing"},
+           {t:"CODLAG generator health: track winding temperature and insulation resistance annually; salt-air environment accelerates winding insulation degradation"},
+           {t:"Shaft vibration monitoring: 1× and 2× running speed amplitude increase indicates shaft misalignment or cavitation damage; address before bearing failure"}],
+        ],
+        params:[
+          {p:"EGT (full power)",n:"480–540°C",c:">550°C",a:">600°C → reduce power or shutdown"},
+          {p:"EGT Spread",n:"<25°C",c:"25–45°C",a:">70°C → shutdown and investigate"},
+          {p:"N1 Speed",n:"95–100% rated",c:">100%",a:">105% → trip"},
+          {p:"N2 Speed",n:"98–102% rated",c:">102%",a:">110% → overspeed trip"},
+          {p:"Lube Oil Temperature",n:"60–80°C",c:"80–92°C",a:">98°C → trip"},
+          {p:"Gearbox Oil Temperature",n:"55–75°C",c:"75–90°C",a:">95°C → reduce shaft speed"},
+          {p:"Shaft Vibration",n:"<5 mm/s RMS",c:"5–10 mm/s",a:">12 mm/s → trip"},
+        ],
+        maint:[
+          {i:"Daily (underway)",t:"Salt separator visual, oil levels, enclosure ventilation, fuel filter ΔP",s:"Engineering watch"},
+          {i:"100 EOH",t:"Offline fresh water wash (salt removal), separator cleaning, shaft seal visual",s:"Engineering department"},
+          {i:"500 EOH",t:"Gearbox oil analysis, combustor liner borescope, VSV actuation check, oil sample",s:"Planned maintenance system"},
+          {i:"1,000 EOH",t:"Full borescope: compressor, combustor, HPT S1; igniter replacement; coupling inspection",s:"Ship's staff + OEM support"},
+          {i:"Drydock (biannual)",t:"Full compressor borescope, propeller shaft seals, gearbox inspection, hull intake grate",s:"Drydock facility + OEM team"},
+        ]
+      },
+      { // 5 — Helicopter
+        specs:[
+          {p:"Overall Pressure Ratio",v:"14–20:1",n:"Fewer stages than industrial; installed weight limits override peak OPR"},
+          {p:"Turbine Inlet Temp",v:"1,250–1,350°C",n:"Lower TIT than fixed-wing aero; MTBO prioritized over peak power"},
+          {p:"Power-to-Weight",v:"5+ kW/kg",n:"GE T700: 1,940 hp from 192 kg engine weight"},
+          {p:"MTBO (military / civil)",v:"3,000–5,000 / 4,000–6,000 FH",n:"Brownout operations significantly reduce MTBO"},
+          {p:"In-flight Restart",v:"<30 sec",n:"Certification requirement; demonstrated at 15,000 ft pressure altitude"},
+          {p:"Chip Detector",v:"Check after each flight",n:"Ferrous = bearing wear; non-ferrous may indicate impeller damage"},
+        ],
+        bullets:[
+          [{t:"Inlet particle separator (IPS) bypass door: pre-flight actuation check; failed door stuck closed blocks airflow and can cause engine shutdown on takeoff",l:"warn"},
+           {t:"IPS cleaning after brownout or sandy operation: sand loading degrades separation efficiency; flush per field maintenance manual before next flight"},
+           {t:"De-icing system test in icing conditions: most turboshafts require manual activation; OEI icing risk is certification-critical on multi-engine aircraft"},
+           {t:"Maritime operation: IPS salt loading faster than desert; offshore operators — increase IPS cleaning frequency to every flight in high sea-state and spray conditions"}],
+          [{t:"Sand/dust erosion on centrifugal impeller: primary cause of premature MTBO reduction; post-brownout borescope mandatory; >1% efficiency loss per 100 h in desert environment",l:"warn"},
+           {t:"Axial stage blade erosion at inlet: inspect at scheduled HSI; erosion sharpens leading edge, reducing surge margin and raising ITT at constant power"},
+           {t:"Compressor wash after salt-air operation; turboshaft compressors have more accessible borescope ports than industrial — more frequent offline wash is practical"},
+           {t:"Centrifugal impeller crack: impeller failure is instantaneous and catastrophic; replace at interval limit regardless of apparent visual condition",l:"crit"}],
+          [{t:"Altitude relight test every 500 FH or per airworthiness directive; demonstrate successful relight at max continuous power at 15,000 ft pressure altitude",l:"warn"},
+           {t:"Combustor liner crack inspection at HSI: hot-day OEI power imposes peak thermal loads; hairline cracks in dilution holes are acceptable; throughwall cracks → immediate replacement"},
+           {t:"Reverse-flow combustor igniter check at each periodic inspection; igniter lead fouling in salt-air is common; replace on resistance increase above OEM limit"},
+           {t:"Cooling air flow verification at HSI: blocked cooling holes (carbon deposit) raise local TIT above blade limit without any EGT exceedance being observed"}],
+          [{t:"Free power turbine N2 governor test at each periodic inspection; N2 overspeed is the last line of defense against rotor over-torque on power recovery from autorotation",l:"warn"},
+           {t:"MGB oil temperature and pressure monitoring: MGB oil temp above 110°C on most types triggers master caution; chip detector check after each flight"},
+           {t:"Chip detector during flight: LAND AS SOON AS PRACTICABLE; examine chip type (ferrous vs. non-ferrous) before any further flight",l:"crit"},
+           {t:"OEI power check: 6-month intervals; confirm available power meets published ITT and torque limits within OEI rating certificate for that engine SN"}],
+        ],
+        params:[
+          {p:"ITT / TGT",n:"<Continuous limit −15°C",c:"Within 15°C of cont. limit",a:"At/above limit → reduce torque"},
+          {p:"Torque (Tq%)",n:"<Max continuous",c:"90–100% max cont.",a:"At MCP limit → reduce collective"},
+          {p:"N1 (gas generator speed)",n:"Per approved range",c:"At max N1",a:"Above max N1 → reduce throttle"},
+          {p:"N2 / Nr (rotor speed)",n:"100 ±2% Nr",c:"Nr <97% or >103%",a:"Nr exceedance → maintenance action required"},
+          {p:"MGB Oil Temperature",n:"<95°C (most types)",c:"95–110°C",a:">110°C → caution; land ASAP"},
+          {p:"Chip Detector",n:"Clear",c:"Single chip — non-ferrous",a:"Ferrous chip → land ASAP"},
+          {p:"Airframe Vibration",n:"<0.2 IPS (4/rev)",c:"0.2–0.4 IPS",a:">0.4 IPS → ground and inspect"},
+        ],
+        maint:[
+          {i:"Pre/post-flight",t:"IPS visual, chip detector check, oil level, inlet screen, cowling security",s:"Flight crew / crew chief"},
+          {i:"25 FH",t:"Oil analysis, IPS cleaning (desert ops), igniter resistance check",s:"Organizational maintenance"},
+          {i:"100 FH",t:"Compressor wash, borescope if desert ops, oil filter element replacement",s:"Field maintenance"},
+          {i:"300 FH",t:"HPC/HPT borescope, combustor liner visual, governor calibration, chip detector service",s:"Intermediate maintenance"},
+          {i:"600 FH (HSI)",t:"HPT blades/vanes, combustor liner, reverse-flow combustor overhaul",s:"Intermediate/depot"},
+          {i:"MTBO (3,000–6,000 FH)",t:"Full overhaul: impeller replacement, full compressor/turbine, bearing replacement",s:"Depot MRO facility"},
+        ]
+      },
+      { // 6 — Oil & Gas
+        specs:[
+          {p:"Overall Pressure Ratio",v:"15–22:1",n:"Industrial frame for continuous mechanical drive"},
+          {p:"Turbine Inlet Temp",v:"1,100–1,350°C",n:"Conservative TIT for 25,000+ EOH continuous-duty MTBO"},
+          {p:"MTBO",v:"25,000–40,000 EOH",n:"Continuous duty; longest interval achievable in industrial turbines"},
+          {p:"API Standard",v:"API 616",n:"Mandatory for oil and gas; covers inlet, fuel, lube oil, couplings"},
+          {p:"Online Wash Frequency",v:"Every 100–200 h",n:"Much higher than clean-air utility due to process gas carryover fouling"},
+          {p:"Cogen Exhaust Temperature",v:"500–540°C",n:"Available for WHRU producing process steam or hot oil"},
+        ],
+        bullets:[
+          [{t:"Coalescing filter element ΔP: check daily; rising ΔP in gas fuel conditioning train indicates H₂S-laden liquid accumulation; bypass without replacement risks combustor coking",l:"warn"},
+           {t:"Enclosure gas detector calibration: monthly function test with known concentration; a false-negative is a life-safety failure in enclosed pipeline compression buildings"},
+           {t:"API 616 inlet protection compliance: document filter change history for regulatory audit; unauthorized modifications to inlet system may void insurance coverage"},
+           {t:"H₂S scrubber resin (where present): breakthrough detected by downstream sensor; expired resin allows H₂S to combustor, forming sulphurous acid deposits"}],
+          [{t:"Compressor fouling from process gas carryover (oil mist, amine, glycol): online wash every 100–200 h; OPR drop raises EGT within days in heavily contaminated environments",l:"warn"},
+           {t:"Blade stress-corrosion cracking from H₂S: inspect blade root attachments at every planned outage; cracking is not visible until advanced — use penetrant inspection at HSI"},
+           {t:"Air extraction port filter screens: inspect monthly; blocked ports reduce instrument air supply, causing false sensor readings and spurious trips at pipeline stations"},
+           {t:"VSV actuator seals: process chemical vapors degrade seals faster than clean-air installations; replace at 50% of OEM standard clean-air interval"}],
+          [{t:"Fuel Wobbe index monitoring: log GHV and SG at every shift handover; a 5% WI change can shift combustion stability toward lean blow-off or flashback",l:"warn"},
+           {t:"Heavy hydrocarbon coking: C4+ compounds form coke in fuel nozzle orifices; inspect and clean every 4,000–6,000 EOH or on EGT spread exceedance"},
+           {t:"Variable gas composition from multi-source supply: pre-notify DCS operator before fuel source switch; monitor combustion dynamics for 10 min post-changeover",l:"warn"},
+           {t:"Wide Wobbe diffusion combustors (high-variability sites): water/steam injection for NOx; inspect injection nozzles monthly for scaling and plugging"}],
+          [{t:"API 614 lube oil: sample every 1,000 EOH for Fe, Ni, Cu, Si particles; rising Si → abrasive bearing contamination; rising Cu → bearing overlay loss; escalate immediately",l:"warn"},
+           {t:"Process compressor coupling vibration: API 670 proximity probe monitoring; 1× and 2× running speed increase indicates misalignment — correct before bearing failure"},
+           {t:"WHRU back-pressure: fouled finned tubes raise exhaust backpressure; schedule hot-water flushing at planned outage; 10% ΔP increase ≈ 0.5% power turbine output loss"},
+           {t:"Never operate with API 614 lube oil pressure below trip setpoint; turbine and process compressor bearings fail within seconds at oil starvation; do not bypass lube oil trip",l:"crit"}],
+        ],
+        params:[
+          {p:"EGT (full load)",n:"490–545°C",c:">555°C",a:">610°C → controlled shutdown"},
+          {p:"EGT Spread",n:"<25°C",c:"25–40°C",a:">70°C → shutdown"},
+          {p:"N1 Speed",n:"95–100% rated",c:">100%",a:">105% → trip"},
+          {p:"N2 Speed",n:"98–102% rated",c:">102%",a:">110% → overspeed trip"},
+          {p:"Lube Oil Temp (API 614)",n:"60–80°C",c:"80–90°C",a:">95°C alarm; >105°C trip"},
+          {p:"Wobbe Index (fuel gas)",n:"±5% of site spec",c:"5–10% variation",a:">10% → combustor instability risk — notify ops"},
+          {p:"Process Compressor Vibration",n:"<5 mm/s RMS",c:"5–10 mm/s",a:">12 mm/s → trip"},
+        ],
+        maint:[
+          {i:"Daily",t:"Oil level, gas detector check, fuel filter ΔP, EGT baseline comparison, Wobbe index log",s:"Operator log / DCS historian"},
+          {i:"100–200 EOH",t:"Online compressor wash; gas fuel coalescer element inspection",s:"O&M technician"},
+          {i:"1,000 EOH",t:"Oil sample (Fe, Ni, Cu, Si), fuel nozzle visual, coupling torque check",s:"Rotating equipment team"},
+          {i:"4,000 EOH",t:"Borescope: HPC, combustor, HPT S1; blade root penetrant inspection; VSV seal replacement",s:"Outage required — 5–7 days"},
+          {i:"8,000 EOH (HSI)",t:"HPT blades/vanes, combustor liners, TP seals, full fuel nozzle overhaul",s:"Major outage 10–21 days"},
+          {i:"25,000 EOH (MI)",t:"Full compressor/turbine strip, blade replacement, bearing replacement, API 616 re-certification",s:"Workshop or modular on-site"},
+        ]
+      },
+    ];
+    apps.forEach((a, i) => a.om = omData[i]);
+
     // ── State ─────────────────────────────────────────────────────────
     let currentApp = 0;
 
@@ -526,6 +921,9 @@
         document.getElementById(id+'lbl').textContent = a.stats[i][1];
       });
 
+      // Update O&M section
+      updateOM(a);
+
       // Update stage content + images (fade)
       ['h1','h2','h3','h4'].forEach((id, i) => {
         const hEl = document.getElementById(id);
@@ -550,6 +948,33 @@
       });
     }
 
+    function updateOM(a) {
+      const om = a.om;
+      document.getElementById('omTitle').textContent = a.name;
+
+      // Stage bullets (4 lists)
+      om.bullets.forEach((list, i) => {
+        document.getElementById('om' + (i+1)).innerHTML = list.map(b =>
+          `<li class="${b.l||''}">${b.t}</li>`
+        ).join('');
+      });
+
+      // Specs table
+      document.getElementById('specsBody').innerHTML = om.specs.map(r =>
+        `<tr><td class="key">${r.p}</td><td class="val">${r.v}</td><td>${r.n}</td></tr>`
+      ).join('');
+
+      // Params table
+      document.getElementById('paramsBody').innerHTML = om.params.map(r =>
+        `<tr><td class="key">${r.p}</td><td class="val">${r.n}</td><td class="cwarn">${r.c}</td><td class="ccrit">${r.a}</td></tr>`
+      ).join('');
+
+      // Maintenance list
+      document.getElementById('maintBody').innerHTML = om.maint.map(r =>
+        `<li><span class="maint-i">${r.i}</span><span class="maint-t">${r.t}</span><span class="maint-s">${r.s}</span></li>`
+      ).join('');
+    }
+
     // ── Scroll-spy ────────────────────────────────────────────────────
     const stageBlocks = document.querySelectorAll('.stage-block');
     const pills  = document.querySelectorAll('.nav-pill');
@@ -570,6 +995,7 @@
 
     stageBlocks.forEach(b => spy.observe(b));
     setActiveStage(1);
+    updateOM(apps[0]);
   </script>
 
 </body>
