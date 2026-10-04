@@ -3,268 +3,446 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gas Turbines — Sales Reference — v25</title>
+  <title>How a Gas Turbine Works — v25</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #f8f8f6; color: #111; line-height: 1.65; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #0f0f0f; color: #f0f0f0; }
 
-    /* Hero */
-    .hero { background: #0d1f3c; color: #fff; padding: 96px 24px 80px; text-align: center; }
-    .hero .eyebrow { font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: #7aa0d4; margin-bottom: 20px; }
-    .hero h1 { font-size: clamp(2rem, 5vw, 3.4rem); font-weight: 800; letter-spacing: -0.03em; line-height: 1.12; max-width: 760px; margin: 0 auto 24px; }
-    .hero h1 span { color: #60a5fa; }
-    .hero p { font-size: 1.05rem; color: #9ab5d4; max-width: 600px; margin: 0 auto; line-height: 1.75; }
+    /* ── Sticky stage nav ── */
+    .stage-nav {
+      position: sticky; top: 0; z-index: 200;
+      background: rgba(15,15,15,0.94);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid #1e1e1e;
+      padding: 10px 24px;
+      display: flex; justify-content: center; gap: 8px;
+    }
+    .nav-pill {
+      padding: 6px 20px; border-radius: 999px;
+      font-size: 0.78rem; font-weight: 600; letter-spacing: 0.04em;
+      color: #444; border: 1px solid #222; background: transparent;
+      text-decoration: none; transition: all 0.2s;
+    }
+    .nav-pill[data-stage="1"].active { color: #5bb8f5; border-color: #5bb8f5; background: rgba(91,184,245,0.08); }
+    .nav-pill[data-stage="2"].active { color: #f5d76e; border-color: #f5d76e; background: rgba(245,215,110,0.08); }
+    .nav-pill[data-stage="3"].active { color: #f5824f; border-color: #f5824f; background: rgba(245,130,80,0.08); }
+    .nav-pill[data-stage="4"].active { color: #6fcf7a; border-color: #6fcf7a; background: rgba(111,207,122,0.08); }
 
-    /* Wrap */
-    .wrap { max-width: 920px; margin: 0 auto; padding: 0 28px; }
+    /* ── Editorial header ── */
+    .editorial { max-width: 860px; margin: 0 auto; padding: 72px 24px 0; }
+    .editorial h1 { font-size: clamp(2.2rem, 4.5vw, 3.4rem); font-weight: 700; letter-spacing: -0.03em; line-height: 1.12; margin-bottom: 16px; }
+    .editorial .lead { color: #666; font-size: 1rem; max-width: 560px; line-height: 1.75; }
 
-    /* Section title */
-    .sec-title { font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; color: #aaa; margin-bottom: 8px; }
-    .sec-heading { font-size: 1.6rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 32px; }
+    /* ── Stats ── */
+    .stats {
+      max-width: 860px; margin: 48px auto 0;
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 2px; background: #1a1a1a; border-radius: 14px; overflow: hidden;
+    }
+    .stat { background: #0f0f0f; padding: 28px 16px; text-align: center; transition: opacity 0.25s; }
+    .stat-num { font-size: 2rem; font-weight: 800; letter-spacing: -0.04em; line-height: 1; margin-bottom: 6px; }
+    .stat-label { font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: #555; line-height: 1.4; }
 
-    /* Stats bar */
-    .stats-section { padding: 72px 0 0; }
-    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; background: #e0e0da; border-radius: 14px; overflow: hidden; }
-    .stat-cell { background: #fff; padding: 32px 20px; text-align: center; }
-    .stat-num { font-size: 2.4rem; font-weight: 900; letter-spacing: -0.04em; color: #1a56db; line-height: 1; margin-bottom: 8px; }
-    .stat-label { font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; color: #888; line-height: 1.4; }
+    /* ── Why It Matters ── */
+    .why { max-width: 860px; margin: 40px auto 0; padding: 32px; background: #161616; border: 1px solid #2a2a2a; border-radius: 12px; }
+    .eyebrow { font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; color: #555; margin-bottom: 14px; }
+    .why p { font-size: 1.02rem; line-height: 1.85; color: #ccc; transition: opacity 0.25s; }
 
-    /* Why win */
-    .win-section { padding: 72px 0 0; }
-    .win-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-    .win-card { background: #fff; border-radius: 12px; padding: 32px 24px; border-top: 3px solid #1a56db; box-shadow: 0 2px 12px rgba(0,0,0,0.05); }
-    .win-card .win-icon { font-size: 2rem; margin-bottom: 14px; }
-    .win-card h3 { font-size: 1.05rem; font-weight: 800; margin-bottom: 10px; color: #0d1f3c; }
-    .win-card p { font-size: 0.88rem; color: #666; line-height: 1.65; }
-    .check { color: #1a56db; font-weight: 700; }
+    /* ── Applications ── */
+    .apps { max-width: 860px; margin: 40px auto 0; }
+    .apps-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 10px; margin-top: 14px; }
+    .app-card {
+      background: #111d2b; border: 1px solid #1e3048; border-radius: 10px;
+      padding: 16px 14px; cursor: pointer; transition: border-color 0.2s, background 0.2s;
+    }
+    .app-card.active { border-color: #5bb8f5; background: #0e1e2e; }
+    .app-icon { font-size: 1.6rem; margin-bottom: 8px; }
+    .app-name { font-weight: 700; font-size: 0.88rem; margin-bottom: 4px; color: #e0e0e0; }
+    .app-desc { font-size: 0.76rem; color: #666; line-height: 1.4; }
 
-    /* Demand */
-    .demand-section { padding: 72px 0 0; }
-    .demand-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
-    .demand-card { background: #fff; border-radius: 12px; padding: 28px 24px; box-shadow: 0 2px 12px rgba(0,0,0,0.05); }
-    .demand-card .market-tag { font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: #1a56db; font-weight: 700; margin-bottom: 10px; }
-    .demand-card h3 { font-size: 1.05rem; font-weight: 800; margin-bottom: 10px; color: #0d1f3c; }
-    .demand-card p { font-size: 0.88rem; color: #666; line-height: 1.65; }
-    .demand-card .opportunity { display: inline-block; background: #eff6ff; color: #1a56db; font-size: 0.78rem; font-weight: 700; padding: 4px 12px; border-radius: 999px; margin-top: 12px; }
+    /* ── Application selector bar (sticky above split) ── */
+    .app-bar {
+      position: sticky; top: 45px; z-index: 190;
+      background: rgba(10,10,10,0.97);
+      border-bottom: 1px solid #1e1e1e;
+      padding: 10px 24px;
+      display: flex; gap: 6px; overflow-x: auto; justify-content: center;
+      scrollbar-width: none;
+    }
+    .app-bar::-webkit-scrollbar { display: none; }
+    .app-tab {
+      flex-shrink: 0;
+      padding: 5px 14px; border-radius: 6px;
+      font-size: 0.73rem; font-weight: 600; letter-spacing: 0.03em;
+      color: #555; border: 1px solid #222; background: transparent;
+      cursor: pointer; transition: all 0.18s; white-space: nowrap;
+    }
+    .app-tab.active { color: #fff; border-color: #fff; background: #1e1e1e; }
 
-    /* How it works */
-    .how-section { padding: 72px 0 0; }
-    .how-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
-    .how-card { background: #fff; border-radius: 12px; padding: 24px 18px; box-shadow: 0 2px 12px rgba(0,0,0,0.05); }
-    .how-num { font-size: 2.5rem; font-weight: 900; color: #e8edf5; line-height: 1; margin-bottom: 10px; }
-    .how-card h4 { font-size: 0.95rem; font-weight: 800; color: #0d1f3c; margin-bottom: 8px; }
-    .how-card p { font-size: 0.82rem; color: #666; line-height: 1.6; }
+    /* ── Split layout ── */
+    .split { display: grid; grid-template-columns: 1fr 1fr; }
 
-    /* Objections */
-    .obj-section { padding: 72px 0 0; }
-    .obj-card { background: #fff; border-radius: 12px; margin-bottom: 16px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.05); }
-    .obj-q { padding: 22px 24px; font-weight: 700; font-size: 0.95rem; color: #0d1f3c; border-bottom: 1px solid #f0f0ee; display: flex; align-items: flex-start; gap: 12px; cursor: pointer; user-select: none; }
-    .obj-q::before { content: "Q"; background: #eff6ff; color: #1a56db; font-size: 0.72rem; font-weight: 900; padding: 3px 8px; border-radius: 5px; flex-shrink: 0; margin-top: 1px; }
-    .obj-a { padding: 20px 24px; font-size: 0.9rem; color: #444; line-height: 1.75; border-left: 3px solid #1a56db; background: #fafaf8; }
-    .obj-a strong { color: #0d1f3c; }
+    /* Left sticky schematic */
+    .left-pane {
+      position: sticky; top: 88px; height: calc(100vh - 88px);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      background: #0d0d0d; border-right: 1px solid #1e1e1e;
+      padding: 24px 24px;
+    }
+    .left-label { font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: #444; margin-bottom: 16px; }
+    .schematic-wrap { position: relative; width: 100%; }
+    .schematic-wrap img { width: 100%; display: block; border-radius: 8px; }
+    .ov {
+      position: absolute; top: 0; height: 100%;
+      pointer-events: none; opacity: 0; transition: opacity 0.35s;
+    }
+    .ov.active { opacity: 1; }
+    #ov1 { left:0;   width:14%; background:rgba(91,184,245,0.28); border-right:2px solid rgba(91,184,245,0.7); }
+    #ov2 { left:14%; width:38%; background:rgba(245,215,110,0.22); border-right:2px solid rgba(245,215,110,0.6); }
+    #ov3 { left:52%; width:20%; background:rgba(245,130,80,0.28); border-right:2px solid rgba(245,130,80,0.65); }
+    #ov4 { left:72%; width:28%; background:rgba(111,207,122,0.22); }
 
-    /* Schematics */
-    .schem-section { padding: 72px 0; }
-    .schem-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
-    .schem-card { background: #fff; border-radius: 12px; padding: 24px; box-shadow: 0 2px 12px rgba(0,0,0,0.05); }
-    .schem-label { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 14px; color: #1a56db; }
-    .schem-card img { width: 100%; display: block; border-radius: 8px; }
-    .schem-card p { font-size: 0.85rem; color: #666; margin-top: 12px; line-height: 1.6; }
+    .stage-legend { display: flex; gap: 10px; margin-top: 14px; flex-wrap: wrap; justify-content: center; }
+    .leg { font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600; opacity: 0.28; transition: opacity 0.3s; }
+    .leg.active { opacity: 1; }
 
-    /* CTA */
-    .cta { background: #0d1f3c; color: #fff; text-align: center; padding: 80px 24px; }
-    .cta h2 { font-size: 2rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 14px; }
-    .cta p { font-size: 1rem; color: #7aa0d4; max-width: 480px; margin: 0 auto 32px; line-height: 1.75; }
-    .cta-btn { display: inline-block; background: #1a56db; color: #fff; font-size: 0.95rem; font-weight: 700; padding: 14px 36px; border-radius: 999px; text-decoration: none; transition: background 0.15s; }
-    .cta-btn:hover { background: #1447b5; }
+    /* Application label on left */
+    .app-indicator {
+      margin-top: 18px; padding: 6px 14px;
+      background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 8px;
+      font-size: 0.72rem; font-weight: 600; color: #888;
+      text-align: center; transition: all 0.25s;
+    }
 
-    footer { background: #0d1f3c; border-top: 1px solid #1a2e50; text-align: center; padding: 24px; }
-    footer a { color: #4a6f9e; text-decoration: none; font-size: 0.85rem; }
+    /* Right scrollable */
+    .right-pane { padding: 72px 48px 0; }
+
+    .stage-block {
+      min-height: 70vh; display: flex; flex-direction: column;
+      justify-content: center; margin-bottom: 32px;
+      border-top: 1px solid #1a1a1a; padding-top: 56px;
+    }
+    .stage-block:first-child { border-top: none; padding-top: 0; }
+
+    .stage-tag { font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 700; margin-bottom: 14px; }
+    .stage-h2 { font-size: 1.85rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 16px; line-height: 1.2; transition: opacity 0.2s; }
+    .stage-body { color: #999; line-height: 1.82; font-size: 0.95rem; max-width: 480px; margin-bottom: 20px; transition: opacity 0.2s; }
+    .stage-block img { width: 100%; border-radius: 10px; max-height: 220px; object-fit: cover; display: block; }
+    .cap { font-size: 0.7rem; color: #444; margin-top: 6px; line-height: 1.4; }
+    .chip { display: inline-block; font-size: 0.8rem; font-weight: 700; padding: 2px 8px; border-radius: 4px; }
+
+    footer { text-align: center; padding: 64px 24px; border-top: 1px solid #1a1a1a; }
+    footer a { color: #444; text-decoration: none; font-size: 0.9rem; }
     footer a:hover { color: #fff; }
 
-    @media (max-width: 700px) {
-      .stats-grid { grid-template-columns: repeat(2, 1fr); }
-      .win-grid { grid-template-columns: 1fr; }
-      .demand-grid { grid-template-columns: 1fr; }
-      .how-grid { grid-template-columns: repeat(2, 1fr); }
-      .schem-grid { grid-template-columns: 1fr; }
+    @media (max-width: 768px) {
+      .split { grid-template-columns: 1fr; }
+      .left-pane { position: relative; top: auto; height: auto; border-right: none; border-bottom: 1px solid #1e1e1e; }
+      .right-pane { padding: 40px 24px 0; }
+      .stats { grid-template-columns: repeat(2, 1fr); }
+      .app-bar { justify-content: flex-start; }
     }
   </style>
 </head>
 <body>
 
-  <!-- Hero -->
-  <div class="hero">
-    <p class="eyebrow">Sales Reference Guide</p>
-    <h1>The Engine Behind <span>Modern Civilization</span></h1>
-    <p>Gas turbines power 20% of the world's electricity, every commercial flight, and the fastest naval vessels on the planet. Here is what your customers need to know — and what you need to tell them.</p>
+  <!-- Stage nav -->
+  <nav class="stage-nav">
+    <a class="nav-pill" data-stage="1" href="#s1">Intake</a>
+    <a class="nav-pill" data-stage="2" href="#s2">Compression</a>
+    <a class="nav-pill" data-stage="3" href="#s3">Combustion</a>
+    <a class="nav-pill" data-stage="4" href="#s4">Power Out</a>
+  </nav>
+
+  <!-- Editorial header -->
+  <div class="editorial">
+    <h1>How a Gas Turbine Works</h1>
+    <p class="lead">One machine. Seven industries. Select an application to see how each stage changes across turbofan jets, power plants, naval vessels, helicopters, and more.</p>
   </div>
 
-  <div class="wrap">
-
-    <!-- By the numbers -->
-    <div class="stats-section">
-      <p class="sec-title">By the Numbers</p>
-      <p class="sec-heading">The market opportunity, in four data points</p>
-      <div class="stats-grid">
-        <div class="stat-cell">
-          <div class="stat-num">20%</div>
-          <div class="stat-label">of world electricity from gas turbines</div>
-        </div>
-        <div class="stat-cell">
-          <div class="stat-num">$40B+</div>
-          <div class="stat-label">global gas turbine market size</div>
-        </div>
-        <div class="stat-cell">
-          <div class="stat-num">&lt;10 min</div>
-          <div class="stat-label">from cold start to full power</div>
-        </div>
-        <div class="stat-cell">
-          <div class="stat-num">60%</div>
-          <div class="stat-label">efficiency in combined-cycle plants</div>
-        </div>
-      </div>
+  <!-- Stats (dynamic) -->
+  <div class="stats">
+    <div class="stat" id="stat1">
+      <div class="stat-num" style="color:#5bb8f5;" id="s1num">12:1</div>
+      <div class="stat-label" id="s1lbl">Bypass Ratio<br>(BPR)</div>
     </div>
-
-    <!-- Why gas turbines win -->
-    <div class="win-section">
-      <p class="sec-title">Competitive Position</p>
-      <p class="sec-heading">Why gas turbines win</p>
-      <div class="win-grid">
-        <div class="win-card">
-          <div class="win-icon">⚡</div>
-          <h3>Unmatched Power Density</h3>
-          <p><span class="check">✓</span> More power per kilogram than any competing technology.<br><span class="check">✓</span> Small footprint means lower civil works cost.<br><span class="check">✓</span> Ideal for space-constrained sites: offshore platforms, ships, urban peakers.</p>
-        </div>
-        <div class="win-card">
-          <div class="win-icon">🚀</div>
-          <h3>Fast Ramp Capability</h3>
-          <p><span class="check">✓</span> Full power in under 10 minutes from cold.<br><span class="check">✓</span> Unrivalled for grid stabilisation and emergency backup.<br><span class="check">✓</span> Coal and nuclear plants take hours — gas turbines don't.</p>
-        </div>
-        <div class="win-card">
-          <div class="win-icon">⛽</div>
-          <h3>Fuel Flexibility</h3>
-          <p><span class="check">✓</span> Runs on natural gas, distillate, naphtha, and hydrogen blends.<br><span class="check">✓</span> Future-ready: hydrogen combustion development is underway across all major OEMs.<br><span class="check">✓</span> One asset, multiple fuel pathways.</p>
-        </div>
-      </div>
+    <div class="stat" id="stat2">
+      <div class="stat-num" style="color:#f5d76e;" id="s2num">40×</div>
+      <div class="stat-label" id="s2lbl">Overall Pressure<br>Ratio</div>
     </div>
-
-    <!-- Where the demand is -->
-    <div class="demand-section">
-      <p class="sec-title">Market Opportunities</p>
-      <p class="sec-heading">Where the demand is</p>
-      <div class="demand-grid">
-        <div class="demand-card">
-          <div class="market-tag">⚡ Grid Balancing</div>
-          <h3>The Renewables Boom Creates Gas Turbine Demand</h3>
-          <p>As wind and solar capacity grows, grids need more fast-response backup generation to handle intermittency. Gas turbines are the only technology that can fill this role at scale today. Every gigawatt of renewables installed increases the need for fast-response firm capacity.</p>
-          <span class="opportunity">↑ Growing market</span>
-        </div>
-        <div class="demand-card">
-          <div class="market-tag">🪖 Defense &amp; Aerospace</div>
-          <h3>Government Contracts, Long-term Reliability</h3>
-          <p>Military aviation and naval propulsion demand the highest power density and proven reliability. Government contracts provide multi-decade revenue visibility with upgrade and sustainment cycles. Switching costs are extremely high once a platform is qualified.</p>
-          <span class="opportunity">↑ Stable demand</span>
-        </div>
-        <div class="demand-card">
-          <div class="market-tag">🛢️ Oil &amp; Gas</div>
-          <h3>Upstream Power &amp; Pipeline Compression</h3>
-          <p>Remote oil and gas facilities require reliable, self-contained power generation where grid connection is not viable. Pipeline compression is a continuous-duty application with high uptime requirements — exactly where gas turbines excel. Low total cost of ownership vs. diesel at scale.</p>
-          <span class="opportunity">↑ Growing with LNG</span>
-        </div>
-        <div class="demand-card">
-          <div class="market-tag">🚢 Marine</div>
-          <h3>Naval and Commercial Vessel Propulsion</h3>
-          <p>Naval platforms (destroyers, frigates, LNG carriers) demand maximum power-to-weight. Gas turbine propulsion enables speeds and maneuverability not achievable with diesel alone. COGAG and CODAG hybrid arrangements balance cruise efficiency with sprint capability.</p>
-          <span class="opportunity">↑ Navy modernisation</span>
-        </div>
-      </div>
+    <div class="stat" id="stat3">
+      <div class="stat-num" style="color:#f5824f;" id="s3num">1,600°C</div>
+      <div class="stat-label" id="s3lbl">Turbine Inlet<br>Temp</div>
     </div>
-
-    <!-- How it works -->
-    <div class="how-section">
-      <p class="sec-title">Product Knowledge</p>
-      <p class="sec-heading">How it works — in plain language</p>
-      <div class="how-grid">
-        <div class="how-card">
-          <div class="how-num">01</div>
-          <h4>Air In</h4>
-          <p>A large fan draws in massive volumes of air. This is the raw material the engine turns into power.</p>
-        </div>
-        <div class="how-card">
-          <div class="how-num">02</div>
-          <h4>Compress</h4>
-          <p>Spinning blades squeeze the air to 40 times atmospheric pressure. Compressed air holds far more energy when ignited.</p>
-        </div>
-        <div class="how-card">
-          <div class="how-num">03</div>
-          <h4>Ignite</h4>
-          <p>Fuel is injected and burns continuously at 1,500°C. This sustained combustion is the engine's power source.</p>
-        </div>
-        <div class="how-card">
-          <div class="how-num">04</div>
-          <h4>Power Out</h4>
-          <p>Hot gas spins turbine blades. That rotation becomes electricity, thrust, or shaft torque — depending on the application.</p>
-        </div>
-      </div>
+    <div class="stat" id="stat4">
+      <div class="stat-num" style="color:#6fcf7a;" id="s4num">100 kN</div>
+      <div class="stat-label" id="s4lbl">Max Net<br>Thrust</div>
     </div>
+  </div>
 
-    <!-- Objection handlers -->
-    <div class="obj-section">
-      <p class="sec-title">Objection Handling</p>
-      <p class="sec-heading">Ready answers to common questions</p>
+  <!-- Why It Matters -->
+  <div class="why">
+    <p class="eyebrow">Why It Matters</p>
+    <p id="why-text">Gas turbines are one of the most consequential technologies in modern civilization. Every time you board a flight, switch on a light, or heat your home, there is a good chance a gas turbine made it possible. Their extraordinary power-to-weight ratio — producing thousands of horsepower from an engine small enough to fit in a living room — makes them irreplaceable in applications where size and weight are critical.</p>
+  </div>
 
-      <div class="obj-card">
-        <div class="obj-q">Aren't gas turbines expensive?</div>
-        <div class="obj-a">Capital cost is higher than diesel generators, but <strong>total cost of ownership tells a different story</strong>. Gas turbines have 40–60% thermal efficiency vs. 30–35% for diesel at scale, directly lowering fuel spend over the asset's 25+ year life. Higher uptime (MTBO of 25,000–50,000 equivalent hours) means fewer outages and less revenue lost. For any application running more than 4,000 hours per year, the economics consistently favour gas turbines.</div>
+  <!-- Applications overview -->
+  <div class="apps">
+    <p class="eyebrow" style="margin-left:0;">Select an Application</p>
+    <div class="apps-grid" id="appGrid">
+      <div class="app-card active" data-app="0" onclick="selectApp(0)">
+        <div class="app-icon">✈️</div>
+        <div class="app-name">Turbofan</div>
+        <div class="app-desc">Commercial aviation — high-bypass turbofans</div>
       </div>
-
-      <div class="obj-card">
-        <div class="obj-q">What about renewables replacing gas turbines?</div>
-        <div class="obj-a">Gas turbines are <strong>the backbone of the energy transition, not its victim</strong>. Renewable energy is intermittent — the sun doesn't always shine and the wind doesn't always blow. Every gigawatt of solar or wind installed increases demand for fast-response firm capacity to balance the grid. Gas turbines are the only proven technology that can fulfil this role today. And as hydrogen becomes available, gas turbines can run on it directly — making them a zero-carbon asset in the future grid.</div>
+      <div class="app-card" data-app="1" onclick="selectApp(1)">
+        <div class="app-icon">🪖</div>
+        <div class="app-name">Military Jet</div>
+        <div class="app-desc">Fighter aircraft with afterburners</div>
       </div>
-
-      <div class="obj-card">
-        <div class="obj-q">How does it compare to diesel generators?</div>
-        <div class="obj-a">For small, intermittent loads under 5 MW, diesel wins on capital cost. But at scale, the comparison reverses decisively: <strong>gas turbines offer 30–40% lower fuel cost per MWh</strong>, 50–70% lower CO₂ emissions, higher availability, and a fraction of the maintenance labour hours per MWh generated. For industrial facilities, data centres, and grid-scale applications, gas turbines are the right tool.</div>
+      <div class="app-card" data-app="2" onclick="selectApp(2)">
+        <div class="app-icon">🌿</div>
+        <div class="app-name">Renewable Energy</div>
+        <div class="app-desc">Grid balancing and H₂ co-firing</div>
       </div>
-
-      <div class="obj-card">
-        <div class="obj-q">How long does it take to install and commission?</div>
-        <div class="obj-a">Aero-derivative gas turbines in modular containerized packages can be <strong>installed and commissioned in 12–18 months</strong> — significantly faster than combined-cycle steam plants (36–48 months) or nuclear (10+ years). Simple-cycle peaking units can be on contract-to-power in under 12 months for urgent grid needs. Speed to market is one of the strongest selling points in today's constrained grid environment.</div>
+      <div class="app-card" data-app="3" onclick="selectApp(3)">
+        <div class="app-icon">⚡</div>
+        <div class="app-name">Power Generation</div>
+        <div class="app-desc">Baseload and peaker CCGT plants</div>
       </div>
-    </div>
-
-  </div><!-- end wrap -->
-
-  <!-- Engine schematics -->
-  <div style="background:#fff;padding:72px 28px;">
-    <div style="max-width:920px;margin:0 auto;">
-      <p class="sec-title">Application Reference</p>
-      <p class="sec-heading">Thrust applications vs. Power applications</p>
-      <div class="schem-grid">
-        <div class="schem-card">
-          <div class="schem-label">✈️ Thrust Applications — Turbofan</div>
-          <img src="https://upload.wikimedia.org/wikipedia/commons/7/75/Turbofan_operation.svg" alt="Turbofan schematic">
-          <p>Designed to produce forward thrust. A large fan pushes air around the core for fuel efficiency. Powers all commercial aviation and most military aircraft. Customer value: unmatched fuel efficiency at cruise, low emissions, long TBO.</p>
-        </div>
-        <div class="schem-card">
-          <div class="schem-label">⚡ Power Applications — Turboshaft</div>
-          <img src="https://upload.wikimedia.org/wikipedia/commons/6/69/Turboshaft_operation_%28multilanguage%29.svg" alt="Turboshaft schematic">
-          <p>All energy extracted as shaft power — no net thrust from exhaust. Drives generators, helicopter rotors, ship propellers, and pipeline compressors. Customer value: highest power density for shaft-drive applications, fast start, fuel flexibility.</p>
-        </div>
+      <div class="app-card" data-app="4" onclick="selectApp(4)">
+        <div class="app-icon">🚢</div>
+        <div class="app-name">Naval / Maritime</div>
+        <div class="app-desc">Destroyers, frigates, fast vessels</div>
+      </div>
+      <div class="app-card" data-app="5" onclick="selectApp(5)">
+        <div class="app-icon">🚁</div>
+        <div class="app-name">Helicopters</div>
+        <div class="app-desc">Turboshaft free-power-turbine drive</div>
+      </div>
+      <div class="app-card" data-app="6" onclick="selectApp(6)">
+        <div class="app-icon">🛢️</div>
+        <div class="app-name">Oil, Gas & Chemicals</div>
+        <div class="app-desc">Pipeline compression & process drive</div>
       </div>
     </div>
   </div>
 
-  <!-- CTA -->
-  <div class="cta">
-    <h2>Ready to close the deal?</h2>
-    <p>Talk to our applications team for site-specific performance modelling, TCO analysis, and proposal support.</p>
-    <a href="#" class="cta-btn">Talk to our team →</a>
+  <!-- Sticky application bar -->
+  <div class="app-bar" id="appBar" style="margin-top:40px;">
+    <button class="app-tab active" data-app="0" onclick="selectApp(0)">✈️ Turbofan</button>
+    <button class="app-tab" data-app="1" onclick="selectApp(1)">🪖 Military Jet</button>
+    <button class="app-tab" data-app="2" onclick="selectApp(2)">🌿 Renewable Energy</button>
+    <button class="app-tab" data-app="3" onclick="selectApp(3)">⚡ Power Gen</button>
+    <button class="app-tab" data-app="4" onclick="selectApp(4)">🚢 Naval</button>
+    <button class="app-tab" data-app="5" onclick="selectApp(5)">🚁 Helicopters</button>
+    <button class="app-tab" data-app="6" onclick="selectApp(6)">🛢️ Oil & Gas</button>
   </div>
 
-  <footer><a href="../index.html">← Back to gallery</a></footer>
+  <!-- Split layout -->
+  <div class="split">
+
+    <!-- Left: sticky schematic -->
+    <div class="left-pane">
+      <p class="left-label">Engine Cross-Section</p>
+      <div class="schematic-wrap">
+        <img src="../jet_engine.svg" alt="Gas turbine cross-section schematic">
+        <div class="ov" id="ov1"></div>
+        <div class="ov" id="ov2"></div>
+        <div class="ov" id="ov3"></div>
+        <div class="ov" id="ov4"></div>
+      </div>
+      <div class="stage-legend">
+        <span class="leg" id="leg1" style="color:#5bb8f5;">Intake</span>
+        <span class="leg" id="leg2" style="color:#f5d76e;">Compression</span>
+        <span class="leg" id="leg3" style="color:#f5824f;">Combustion</span>
+        <span class="leg" id="leg4" style="color:#6fcf7a;">Power Out</span>
+      </div>
+      <div class="app-indicator" id="appIndicator">Turbofan — Commercial Aviation</div>
+    </div>
+
+    <!-- Right: scrollable stages -->
+    <div class="right-pane">
+
+      <div class="stage-block" id="s1" data-stage="1">
+        <p class="stage-tag" style="color:#5bb8f5;">Stage 1 — Intake</p>
+        <h2 class="stage-h2" id="h1">Large fan ingests 800+ kg/s</h2>
+        <p class="stage-body" id="b1">A high-bypass turbofan's large front fan accelerates <span class="chip" style="background:#0e1e2e;color:#5bb8f5;">800 kg/s</span> of air, with ~85% bypassing the core as cold thrust stream. The inlet duct is precisely contoured to avoid flow separation at all speeds and angles of attack. Bypass ratio (BPR 12:1 on CFM LEAP) is the primary driver of fuel economy — the higher the ratio, the more thrust per kilogram of fuel burned.</p>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/e/e3/Air_intake%2C_fan_and_compressor_of_sectioned_Rolls-Royce_Turbom%C3%A9ca_Adour_turbofan_01.jpg" alt="Turbofan intake">
+        <p class="cap">Sectioned Rolls-Royce Turbomeca Adour turbofan — intake and fan. (Wikimedia Commons / CC BY-SA)</p>
+      </div>
+
+      <div class="stage-block" id="s2" data-stage="2">
+        <p class="stage-tag" style="color:#f5d76e;">Stage 2 — Compression</p>
+        <h2 class="stage-h2" id="h2">17-stage HPC — OPR 40:1</h2>
+        <p class="stage-body" id="b2">The high-pressure compressor squeezes air to <span class="chip" style="background:#1e1c0e;color:#f5d76e;">40× atmospheric</span> across 17 stages (CFM56/LEAP). Variable inlet guide vanes and stator vanes adjust to maintain surge margin across the full flight envelope — from sea-level takeoff to Mach 0.85 cruise at 12,000 m. Tip clearance control via active thermal management keeps efficiency above 90%.</p>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/c/ca/Axial_compressor.gif" alt="Axial compressor animation">
+        <p class="cap">Axial compressor — alternating rotor and stator blade rows. (Wikimedia Commons)</p>
+      </div>
+
+      <div class="stage-block" id="s3" data-stage="3">
+        <p class="stage-tag" style="color:#f5824f;">Stage 3 — Combustion</p>
+        <h2 class="stage-h2" id="h3">Annular combustor at 1,600°C TIT</h2>
+        <p class="stage-body" id="b3">An annular combustor burns Jet-A or SAF continuously at a turbine inlet temperature of <span class="chip" style="background:#1e0e08;color:#f5824f;">1,600°C</span> — far above nickel alloy melting point. Transpiration and film cooling plus thermal barrier coatings protect HPT blades. Modern TAPS (Twin Annular Pre-Swirl) combustors achieve ultra-low NOx while maintaining combustion stability from idle to max thrust.</p>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/64/Combustor_of_sectioned_Rolls-Royce_Turbom%C3%A9ca_Adour_turbofan.jpg" alt="Combustor">
+        <p class="cap">Combustor of a sectioned Rolls-Royce Turbomeca Adour turbofan. (Wikimedia Commons / CC BY-SA)</p>
+      </div>
+
+      <div class="stage-block" id="s4" data-stage="4">
+        <p class="stage-tag" style="color:#6fcf7a;">Stage 4 — Power Out</p>
+        <h2 class="stage-h2" id="h4">HPT drives core; LPT drives fan</h2>
+        <p class="stage-body" id="b4">A single-stage HPT (TBC-coated, cooled) extracts energy to drive the HPC on the high-speed shaft. A multi-stage LPT on the low-speed shaft drives the large front fan, producing ~75–100 kN of net thrust. The cold bypass stream and hot core exhaust mix at the nozzle, with TSFC of <span class="chip" style="background:#0e1e15;color:#6fcf7a;">0.50 kg/kN·h</span> — the best in class for long-haul aircraft.</p>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/e/e9/J79_GenElectr_BMW-liz_1961_%28Starfighter_F4%29_MTU-Museum_20231112_08w.jpg" alt="GE J79 turbine">
+        <p class="cap">Three-stage turbine section of a GE J79 engine. (Wikimedia Commons / CC BY-SA)</p>
+      </div>
+
+      <footer><a href="../index.html">← Back to gallery</a></footer>
+    </div>
+  </div>
+
+  <script>
+    // ── Application data ──────────────────────────────────────────────
+    const apps = [
+      {
+        name: "Turbofan — Commercial Aviation",
+        why: "Commercial aviation depends entirely on gas turbines. Modern high-bypass turbofans have transformed air travel — cutting fuel burn by 40% since 1990, reducing noise by 30 dB, and enabling routes that were impossible a generation ago. Every widebody flight, every regional jet, every air cargo operation runs on a gas turbine. The economics of aviation are inseparable from turbine efficiency.",
+        stats: [["12:1","Bypass Ratio (BPR)"],["40×","Overall Pressure Ratio"],["1,600°C","Turbine Inlet Temp"],["100 kN","Max Net Thrust"]],
+        stages: [
+          ["Large fan ingests 800+ kg/s","A high-bypass turbofan's large front fan accelerates <span class='chip' style='background:#0e1e2e;color:#5bb8f5;'>800 kg/s</span> of air, with ~85% bypassing the core as cold thrust. The inlet duct is contoured to prevent flow separation at all speeds. Bypass ratio (BPR 12:1 on CFM LEAP) is the primary driver of fuel economy — the higher the ratio, the more thrust per kilogram of fuel."],
+          ["17-stage HPC — OPR 40:1","The high-pressure compressor squeezes air to <span class='chip' style='background:#1e1c0e;color:#f5d76e;'>40× atmospheric</span> across up to 17 stages. Variable inlet guide vanes maintain surge margin across the full flight envelope from sea-level takeoff to Mach 0.85 cruise at 12,000 m. Active tip clearance control keeps isentropic efficiency above 90%."],
+          ["Annular combustor at 1,600°C TIT","An annular combustor burns Jet-A or SAF continuously at <span class='chip' style='background:#1e0e08;color:#f5824f;'>1,600°C</span> TIT. TAPS (Twin Annular Pre-Swirl) combustors achieve ultra-low NOx while maintaining stability from idle to max thrust. Transpiration cooling and ceramic TBCs protect the HPT blades from temperatures far above nickel alloy melting point."],
+          ["HPT drives core; LPT drives fan","A single-stage HPT extracts work to drive the HPC on the high shaft. A multi-stage LPT drives the large front fan, producing 75–100 kN net thrust. TSFC of <span class='chip' style='background:#0e1e15;color:#6fcf7a;'>0.50 kg/kN·h</span> — best in class for long-haul. The cold bypass and hot core exhaust mix at the convergent-divergent nozzle."],
+        ]
+      },
+      {
+        name: "Military Fighter Jet",
+        why: "Fighter jets demand the highest thrust-to-weight ratio achievable with any power source. Gas turbines deliver — Mach 2+ capability, afterburner thrust doubling, and rapid acceleration that no piston or electric system can match. From air superiority to close air support, the turbine is the defining technology of modern air power. Its survivability under combat conditions and fuel flexibility are operational imperatives.",
+        stats: [["10:1","Thrust-to-Weight Ratio"],["30:1","Overall Pressure Ratio"],["1,700°C","Max TIT (Dry)"],["180 kN","Max Thrust (AB)"]],
+        stages: [
+          ["Variable-geometry inlet — Mach 2+","Military inlets use ramps or wedges that physically adjust to manage supersonic shock waves. Inlet total pressure recovery must exceed <span class='chip' style='background:#0e1e2e;color:#5bb8f5;'>95%</span> at Mach 2 to preserve engine performance. F119 (F-22) uses a serpentine duct that hides the compressor face from radar, combining inlet design with stealth geometry."],
+          ["10-stage HPC — OPR 25-30:1","Military HPC stages use titanium and nickel alloy blades designed for surge resistance at extreme angles of attack. OPR of <span class='chip' style='background:#1e1c0e;color:#f5d76e;'>25–30:1</span> in 10 stages. FADEC adjusts variable stator geometry in real time to prevent compressor stall during aggressive maneuvers at high alpha that can momentarily distort inlet flow."],
+          ["Afterburner — 50% more thrust at 4× fuel","The dry combustor burns at <span class='chip' style='background:#1e0e08;color:#f5824f;'>1,700°C</span> TIT. Downstream, the afterburner (reheat) injects additional fuel into the hot exhaust, reaching ~2,000°C and adding 50% thrust — at the cost of 4× specific fuel consumption. A variable-area convergent-divergent nozzle opens to accommodate the massive exhaust volume at full reheat."],
+          ["Single HPT — divergent nozzle thrust","A single-stage HPT extracts just enough work to drive the compressor. All remaining exhaust energy exits through the variable nozzle as <span class='chip' style='background:#0e1e15;color:#6fcf7a;'>thrust</span> — up to 180 kN with afterburner. Thrust vectoring nozzles (F119, AL-41) gimbal the exhaust to provide pitch/yaw control authority beyond what aerodynamic surfaces alone can deliver."],
+        ]
+      },
+      {
+        name: "Renewable Energy & Grid Balancing",
+        why: "As solar and wind capacity surges, grid operators face a relentless challenge: the sun does not always shine and the wind does not always blow. Gas turbines are the essential complement — starting from cold in under 10 minutes, ramping at over 100 MW per minute, and capable of co-firing hydrogen blends as the fuel mix evolves. Modern CCGT plants exceed 63% thermal efficiency. As storage costs fall, gas turbines will shift toward fast-response backup and frequency regulation — but energy density means they remain the grid's most reliable insurance for decades.",
+        stats: [["<10 min","Cold Start to Full Load"],["100 MW/min","Ramp Rate"],["63%","CCGT Efficiency"],["30%","H₂ Co-fire (commercial)"]],
+        stages: [
+          ["Filtered inlet — evaporative cooling","Utility turbines ingest <span class='chip' style='background:#0e1e2e;color:#5bb8f5;'>400–800 kg/s</span> through multi-stage inlet filter houses. Evaporative coolers or mechanical chillers lower inlet temperature by 10–15°C — recovering 15%+ of output lost on hot summer days when grid demand peaks. Inlet heating prevents icing on cold mornings."],
+          ["OPR 23:1 — DLN bleed air control","The GE 7HA.03 achieves <span class='chip' style='background:#1e1c0e;color:#f5d76e;'>OPR 23.5:1</span> across 14 stages. Inter-stage bleed air supports DLN combustor premixing — critical for meeting EPA Tier 4 and EU IED NOx limits. Variable inlet guide vanes allow the turbine to operate efficiently from 40% to 100% load, enabling fast ramp without surge."],
+          ["DLN combustors — &lt;25 ppm NOx","Dry Low-NOx combustors premix fuel and air before ignition, holding flame temperature at <span class='chip' style='background:#1e0e08;color:#f5824f;'>TIT 1,400°C</span>. H₂ co-firing up to 30% is commercially deployed today. 100% hydrogen combustion is in pilot testing for 2030 fleet availability — requiring flame speed and flashback management that conventional combustors cannot handle."],
+          ["Generator output — up to 400 MW/block","The power turbine drives a generator at 3,000 or 3,600 RPM, producing up to <span class='chip' style='background:#0e1e15;color:#6fcf7a;'>400 MW</span> per block. In CCGT configuration, 570°C exhaust feeds a heat recovery steam generator (HRSG), adding 200 MW more and pushing plant efficiency above 63%. Grid response from standby to full load: under 30 minutes."],
+        ]
+      },
+      {
+        name: "Power Generation",
+        why: "Gas turbines produce approximately 20% of the world's electricity. Their combination of fast start capability, high efficiency at scale, and relatively low capital cost makes them the dominant technology for both baseload CCGT plants and peaker units. In deregulated markets, the ability to start in under 10 minutes and sell into the spot market at peak prices is a direct revenue advantage. No other dispatchable generation technology combines this flexibility with this efficiency.",
+        stats: [["60%","CCGT Thermal Efficiency"],["<10 min","Startup (Simple Cycle)"],["500 MW","Largest Single Block"],["20%","World Electricity Share"]],
+        stages: [
+          ["Inlet chilling — power augmentation","Industrial turbines use inlet air cooling (evaporative or mechanical chilling) to increase air density and recover power output lost on hot days. <span class='chip' style='background:#0e1e2e;color:#5bb8f5;'>10°C</span> inlet temperature reduction = ~3% more power output. Anti-icing protection is mandatory in cold climates to prevent blade erosion and compressor stall."],
+          ["16-stage HPC — online washing","The axial compressor achieves OPR <span class='chip' style='background:#1e1c0e;color:#f5d76e;'>18–23:1</span> across 14–16 stages. Fouling from atmospheric particulates reduces efficiency by 1–2% per week; online compressor washing (water injection at load) and periodic offline crank washing restore performance without shutting down."],
+          ["Fuel-flexible combustion at baseload","DLN combustors enable continuous operation on natural gas, liquid distillate backup, or H₂ blends at <span class='chip' style='background:#1e0e08;color:#f5824f;'>&lt;15 ppm NOx</span>. Dual-fuel capability (gas primary, diesel backup) provides fuel security for grid-critical plants. Combustion dynamics monitoring detects instability before hardware damage occurs."],
+          ["Power turbine — 50–500 MW output","The turbine shaft drives a synchronous generator at grid frequency (50/60 Hz). Output ranges from <span class='chip' style='background:#0e1e15;color:#6fcf7a;'>50–500 MW</span>. CCGT plants add a heat recovery steam generator and steam turbine, using 570°C exhaust to generate additional power — pushing combined efficiency above 60%. Annual capacity factor: 85%+."],
+        ]
+      },
+      {
+        name: "Naval / Maritime",
+        why: "Naval gas turbines offer warships a power density no diesel or steam plant can match. A destroyer-class ship can accelerate from 0 to 30 knots in under two minutes using gas turbines — critical for threat response and maneuverability in combat. Their compact installation saves topside weight and allows damage-control decoupling. Dual-fuel capability (gas turbine + diesel electric) gives commanding officers operational flexibility across all peacetime and combat scenarios.",
+        stats: [["36 MW","Per Engine (GE LM6000)"],["<30 sec","Startup from Warm"],["30+ kts","Enabled Top Speed"],["Dual","Gas & Diesel Capable"]],
+        stages: [
+          ["Marine-filtered inlet — salt removal","Marine inlets incorporate inertial separators, demisters, and heated anti-icing systems to strip salt, moisture, and sand from air before it reaches the compressor. Salt-laden air causes severe blade corrosion — <span class='chip' style='background:#0e1e2e;color:#5bb8f5;'>99.9%</span> salt removal efficiency is required. Enclosure pressurization prevents exhaust recirculation on deck."],
+          ["Corrosion-resistant stages — OPR 20:1","Compressor blades in marine engines use Inconel and coated titanium alloys to resist salt-accelerated corrosion. OPR <span class='chip' style='background:#1e1c0e;color:#f5d76e;'>20:1</span> across 15 stages. Offline high-pressure water wash every 100 operating hours is standard to remove salt deposits that reduce efficiency and cause stress-corrosion cracking."],
+          ["Dual-fuel combustion — rapid acceleration","Marine combustors run on diesel or marine gas oil as primary fuel, with natural gas capability on LNG-equipped vessels. <span class='chip' style='background:#1e0e08;color:#f5824f;'>Rapid acceleration</span> from idle to full power in under 30 seconds is a naval requirement — placing extreme thermal transient demands on combustor liners and HPT blades."],
+          ["Shaft drive — 30+ knots","The power turbine drives propeller shafts directly via a gearbox, or electric propulsion motors via a generator. GE LM2500+ delivers <span class='chip' style='background:#0e1e15;color:#6fcf7a;'>36 MW</span> per engine. CODLAG (Combined Diesel-Electric And Gas) arrangements use electric motors for quiet low-speed patrol and turbines for high-speed sprint — reducing acoustic signature for ASW operations."],
+        ]
+      },
+      {
+        name: "Helicopters — Turboshaft",
+        why: "Turboshaft engines revolutionized rotorcraft by delivering far more power per kilogram than any piston alternative. A helicopter turboshaft extracts nearly all turbine energy as shaft torque — none as jet thrust. This allows compact, lightweight engines to drive multi-thousand-horsepower rotor systems. For military rotorcraft, medical evacuation, offshore oil transport, and search-and-rescue, the turboshaft's altitude capability and restart reliability are non-negotiable operational requirements.",
+        stats: [["5+ kW/kg","Power-to-Weight"],["3,500 hrs","MTBO (Military)"],["15,000 ft","Altitude Capability"],["<30 sec","In-flight Restart"]],
+        stages: [
+          ["Particle separator — sand & dust removal","Helicopter intakes must survive desert brownout, sea spray, and Arctic ice. Inlet particle separators (IPS) use centrifugal force to separate sand, dust, and ice from intake air — <span class='chip' style='background:#0e1e2e;color:#5bb8f5;'>99%</span> separation efficiency. The Rolls-Royce RTM322 uses a plenum chamber separator that adds minimal weight while enabling operations in the most contaminated environments."],
+          ["Centrifugal + axial — OPR 14-20:1","Turboshaft compressors combine axial and centrifugal stages in a very compact package. OPR of <span class='chip' style='background:#1e1c0e;color:#f5d76e;'>14–20:1</span> in 6–10 stages total — far fewer than industrial engines, because installed weight matters more than peak efficiency. The GE T700 uses 5 axial + 1 centrifugal for exceptional power density at low installed weight."],
+          ["Reverse-flow combustor — compact design","Reverse-flow (annular) combustors fold the gas path back on itself, shortening overall engine length. TIT of <span class='chip' style='background:#1e0e08;color:#f5824f;'>1,250–1,350°C</span>. Altitude relight capability to 15,000 ft is a certification requirement — the combustor must sustain stable ignition in thin, cold air after an in-flight flameout, with the engine windmilling at low RPM."],
+          ["Free power turbine — shaft output only","The gas generator turbine drives only the compressor. A second, mechanically independent free power turbine extracts all remaining energy as <span class='chip' style='background:#0e1e15;color:#6fcf7a;'>shaft torque</span> — 400 to 2,000+ kW depending on class. The free turbine speed is independent of gas generator speed, allowing rotor RPM to be held constant across wide power changes — essential for stable, controllable hover."],
+        ]
+      },
+      {
+        name: "Oil, Gas & Chemicals",
+        why: "In the oil and gas industry, gas turbines are mechanical drive engines first and foremost — spinning compressors directly on the shaft rather than generating electricity. Pipeline compression stations every 60–150 km use turbines driving centrifugal compressors to push natural gas across continents. On offshore platforms, weight-limited deck space makes the gas turbine the only viable driver for large process compressors. Chemical plants rely on gas turbines for cogeneration — simultaneous shaft power and process steam from a single fuel input.",
+        stats: [["50 MW","Max Mechanical Drive"],["25,000 hrs","MTBO (Industrial)"],["API 616","Compliance Standard"],["80%","Cogen Efficiency"]],
+        stages: [
+          ["API 616 inlet — gas fuel conditioning","Industrial oil and gas turbines require API 616-compliant inlet systems with gas fuel treatment — removing H₂S, moisture, and heavy hydrocarbons that cause compressor fouling or combustor coking. Enclosure ventilation <span class='chip' style='background:#0e1e2e;color:#5bb8f5;'>prevents gas accumulation</span>. Dual fuel (gas primary, liquid backup) is standard for fuel security in remote pipeline locations without reliable supply."],
+          ["OPR 15-22:1 — extraction ports","Compressors for process drive applications include air extraction ports that supply instrument air and purge gas for pipeline safety systems. OPR <span class='chip' style='background:#1e1c0e;color:#f5d76e;'>15–22:1</span> across 14–18 stages. In contaminated environments (gas processing plants, chemical facilities), compressor fouling from process gas carryover requires more frequent water washing than in clean air applications."],
+          ["Wide Wobbe index — fuel flexibility","Oil and gas turbines must handle widely varying fuel compositions — pipeline gas, wellhead gas, refinery off-gas — without combustor pressure oscillations. <span class='chip' style='background:#1e0e08;color:#f5824f;'>Wide Wobbe index</span> (WI) capability means the combustor tolerates large swings in heating value and hydrogen content. Lean-premix or diffusion flame combustors are selected based on fuel variability at the specific site."],
+          ["Direct mechanical drive — no generator","The power turbine shaft connects directly to a centrifugal compressor via a coupling — <span class='chip' style='background:#0e1e15;color:#6fcf7a;'>no electrical conversion</span>. Shaft outputs from 5 to 50 MW drive process compressors at speeds matched by API-standard gearboxes. In cogeneration configurations, exhaust heat at 500–540°C drives a waste heat recovery unit (WHRU) producing process steam or hot oil — pushing total fuel utilization to 80%+."],
+        ]
+      },
+    ];
+
+    // ── State ─────────────────────────────────────────────────────────
+    let currentApp = 0;
+
+    function selectApp(idx) {
+      currentApp = idx;
+      const a = apps[idx];
+
+      // Update app cards
+      document.querySelectorAll('.app-card').forEach(c => c.classList.toggle('active', parseInt(c.dataset.app) === idx));
+      document.querySelectorAll('.app-tab').forEach(t => t.classList.toggle('active', parseInt(t.dataset.app) === idx));
+
+      // Update indicator
+      document.getElementById('appIndicator').textContent = a.name;
+
+      // Update why
+      document.getElementById('why-text').textContent = a.why;
+
+      // Update stats
+      const sc = ['#5bb8f5','#f5d76e','#f5824f','#6fcf7a'];
+      ['s1','s2','s3','s4'].forEach((id, i) => {
+        document.getElementById(id+'num').textContent = a.stats[i][0];
+        document.getElementById(id+'num').style.color = sc[i];
+        document.getElementById(id+'lbl').textContent = a.stats[i][1];
+      });
+
+      // Update stage content (fade)
+      ['h1','h2','h3','h4'].forEach((id, i) => {
+        const hEl = document.getElementById(id);
+        const bEl = document.getElementById('b'+(i+1));
+        hEl.style.opacity = '0';
+        bEl.style.opacity = '0';
+        setTimeout(() => {
+          hEl.textContent = a.stages[i][0];
+          bEl.innerHTML = a.stages[i][1];
+          hEl.style.opacity = '1';
+          bEl.style.opacity = '1';
+        }, 180);
+      });
+    }
+
+    // ── Scroll-spy ────────────────────────────────────────────────────
+    const stageBlocks = document.querySelectorAll('.stage-block');
+    const pills  = document.querySelectorAll('.nav-pill');
+    const ovEls  = { 1: document.getElementById('ov1'), 2: document.getElementById('ov2'), 3: document.getElementById('ov3'), 4: document.getElementById('ov4') };
+    const legEls = { 1: document.getElementById('leg1'), 2: document.getElementById('leg2'), 3: document.getElementById('leg3'), 4: document.getElementById('leg4') };
+
+    function setActiveStage(n) {
+      pills.forEach(p => p.classList.toggle('active', parseInt(p.dataset.stage) === n));
+      for (let i = 1; i <= 4; i++) {
+        ovEls[i].classList.toggle('active', i === n);
+        legEls[i].classList.toggle('active', i === n);
+      }
+    }
+
+    const spy = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) setActiveStage(parseInt(e.target.dataset.stage)); });
+    }, { threshold: 0.4 });
+
+    stageBlocks.forEach(b => spy.observe(b));
+    setActiveStage(1);
+  </script>
 
 </body>
 </html>
